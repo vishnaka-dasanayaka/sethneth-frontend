@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { signOut } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +23,6 @@ export class HeaderComponent {
 
   async LogOut() {
     try {
-      await signOut();
       localStorage.clear();
       this.router.navigate(['/login']);
       

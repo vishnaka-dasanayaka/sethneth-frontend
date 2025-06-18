@@ -16,8 +16,6 @@ import {
 } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { FormsModule } from "@angular/forms";
-import { AuthHeader } from "./core/_guards/auth.header";
-import { ApplicationConfig } from "@angular/core";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { providePrimeNG } from "primeng/config";
 import Aura from "@primeng/themes/aura";
@@ -37,20 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     HttpClientModule,
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHeader,
-      multi: true,
-    },
-    provideClientHydration(withEventReplay()),
-    provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-        preset: Preset,
-      },
-    }),
-  ],
+  providers: [provideClientHydration(withEventReplay())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

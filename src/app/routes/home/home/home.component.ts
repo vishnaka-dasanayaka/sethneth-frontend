@@ -1,11 +1,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { EventService } from "../../../core/_services/event.service";
 import { LocationService } from "../../../core/_services/location.service";
-import { fetchUserAttributes } from "aws-amplify/auth";
-import { Amplify } from "aws-amplify";
-import { environment } from "../../../../environments/environment";
 import moment from "moment";
-import { CognitoService } from "../../../core/_services/cognito.service";
 
 @Component({
   selector: "app-home",
@@ -43,7 +39,6 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(
-    private cognitoService: CognitoService,
     private eventService: EventService,
     private locationService: LocationService
   ) {}
@@ -54,9 +49,6 @@ export class HomeComponent implements OnInit {
   }
 
   getEvents(filters?: any) {
-    const user = localStorage.getItem(
-      `CognitoIdentityServiceProvider.${environment.cognito.ClientId}.LastAuthUser`
-    );
 
     filters = filters || {};
     filters.status = "ACTIVE";
@@ -64,10 +56,6 @@ export class HomeComponent implements OnInit {
     filters.searchQuery = this.serchText;
     filters.page = this.page;
 
-
-    if (user) {
-      this.authorized = true;
-    }
 
     this.eventService.getEvents(filters, this.authorized).subscribe((data) => {
       if (data) {

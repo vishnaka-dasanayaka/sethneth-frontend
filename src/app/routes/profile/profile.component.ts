@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { UserService } from '../../core/_services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { updatePassword } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-profile',
@@ -72,10 +71,6 @@ export class ProfileComponent {
       const { password, oldPassword } = this.changePasswordForm.value;
 
       try {
-        await updatePassword({
-          oldPassword: oldPassword,
-          newPassword: password,
-        });
 
         this.changePasswordForm.reset();
         this.loading = false;

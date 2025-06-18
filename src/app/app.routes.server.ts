@@ -43,7 +43,16 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
+    path: 'orgernizers/detail/:id',
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+       const ids = routesIDs;
+       return ids.map(id => ({ id }));
+    },
+  },
+  {
     path: "**",
     renderMode: RenderMode.Prerender,
   },
 ];
+

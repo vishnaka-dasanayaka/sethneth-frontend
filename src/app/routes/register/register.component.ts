@@ -1,9 +1,7 @@
 import { Component } from "@angular/core";
 import { AuthService } from "../../core/_services/auth.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { CognitoService, IUser } from "../../core/_services/cognito.service";
 import { Router } from "@angular/router";
-import { signUp } from "aws-amplify/auth";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -19,7 +17,6 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private cognitoService: CognitoService,
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {
@@ -94,22 +91,7 @@ export class RegisterComponent {
     localStorage.setItem("email", email);
 
     try {
-      const { isSignUpComplete, userId, nextStep } = await signUp({
-        username: email,
-        password: password,
-        options: {
-          userAttributes: {
-            phone_number: phone,
-            given_name: firstName,
-            family_name: lastName,
-
-            "custom:role": organizer ? "ORGANIZER" : "USER",
-          },
-          autoSignIn: {
-            enabled: true,
-          },
-        },
-      });
+      
       this.toastr.success("Sign-up successful! Check your email for confirmation.", "Done");
       this.router.navigate(["/verify"]);
     } catch (err: any) {

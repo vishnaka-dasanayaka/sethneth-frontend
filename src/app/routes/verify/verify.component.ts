@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CognitoService } from '../../core/_services/cognito.service';
 import { Router } from '@angular/router';
-import { autoSignIn, confirmSignUp, fetchAuthSession, fetchUserAttributes, getCurrentUser, resendSignUpCode } from 'aws-amplify/auth';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../core/_services/user.service';
-import { environment } from '../../../environments/environment';
-import { Amplify } from 'aws-amplify';
 
 @Component({
   selector: 'app-verify',
@@ -25,7 +21,6 @@ export class VerifyComponent {
 
   constructor(
     private router: Router,
-    private cognitoService: CognitoService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private userService: UserService
@@ -79,28 +74,7 @@ export class VerifyComponent {
       this.loading = true;
 
       try {
-        const { nextStep: confirmSignUpNextStep } = await confirmSignUp({
-          username: this.email,
-          confirmationCode: code,
-        });
-        
-        if (confirmSignUpNextStep.signUpStep === 'COMPLETE_AUTO_SIGN_IN') {
-          const { nextStep } = await autoSignIn();
-          
-          if (nextStep.signInStep === 'DONE') {
-            try {
-              await this.userService.addUser().subscribe();
-              this.toastr.success('Successfully signed in', 'Tada');
-
-              await this.addRole();
-              
-              this.router.navigate(['/home']);
-            } catch (userAddError) {
-              console.error('Error adding user:', userAddError);
-              this.toastr.warning('Signed in, but failed to register user', 'Tada');
-            }
-          }
-        }
+       
       } catch (error: any) {
         console.error('Verification error:', error);
         this.toastr.error(error.message || 'Verification failed', 'Tada');
@@ -115,7 +89,6 @@ export class VerifyComponent {
 
   async resend(){
     if (this.email) {
-      await resendSignUpCode({username: this.email});
 
       this.codeDigits = ['', '', '', '', '', ''];
 
@@ -146,20 +119,6 @@ export class VerifyComponent {
   }
 
   async addRole(){
-      Amplify.configure({
-        Auth: {
-          Cognito: {
-            userPoolId: environment.cognito.UserPoolId,
-            userPoolClientId: environment.cognito.ClientId,
-          }
-        }
-      });
-      const userAttributes = await fetchUserAttributes();
-      const role = userAttributes["custom:role"];
-      if (role) {
-        localStorage.setItem("role", role);
-      } else {
-        console.warn("User role is undefined");
-      }
+      
     }
 }

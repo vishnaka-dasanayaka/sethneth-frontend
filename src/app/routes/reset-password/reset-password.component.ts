@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CognitoService } from '../../core/_services/cognito.service';
 import { Router } from '@angular/router';
-import { autoSignIn, confirmResetPassword, confirmSignUp, fetchAuthSession, fetchUserAttributes, getCurrentUser, resendSignUpCode, resetPassword } from 'aws-amplify/auth';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../core/_services/user.service';
-import { environment } from '../../../environments/environment';
-import { Amplify } from 'aws-amplify';
 
 @Component({
   selector: 'app-reset-password',
@@ -24,7 +20,6 @@ export class resetPasswordComponent {
 
   constructor(
     private router: Router,
-    private cognitoService: CognitoService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private userService: UserService
@@ -71,10 +66,7 @@ export class resetPasswordComponent {
     if (this.addEmailForm.valid) {
       const { email } = this.addEmailForm.value;
 
-      await resetPassword({username: email});
-      this.userEmail = email;
-      this.confirmPart = false;
-
+      
     } else {
       const controls = this.addEmailForm.controls;
       if (controls['email'].hasError('required') || controls['password'].hasError('required')) {
@@ -99,11 +91,7 @@ export class resetPasswordComponent {
       const { code, password } = this.resetPasswordForm.value;
 
       try {
-        await confirmResetPassword({
-          username: this.userEmail,
-          confirmationCode: code,
-          newPassword: password,
-        });
+        
 
         this.confirmPart = false;
         this.toastr.success('Password reset successful', 'Done');

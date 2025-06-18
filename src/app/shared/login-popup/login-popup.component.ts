@@ -1,11 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Amplify } from 'aws-amplify';
-import { fetchUserAttributes, signIn, signInWithRedirect } from 'aws-amplify/auth';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from '../../../environments/environment';
-import { CognitoService } from '../../core/_services/cognito.service';
 
 @Component({
   selector: 'app-login-popup',
@@ -19,7 +15,7 @@ export class LoginPopupComponent {
 
   @Output() loginStatus = new EventEmitter<boolean>();
 
-  constructor( private cognitoService: CognitoService, private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
+  constructor( private fb: FormBuilder, private router: Router, private toastr: ToastrService) {
     this.LogInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
@@ -34,10 +30,6 @@ export class LoginPopupComponent {
       const { email, password } = this.LogInForm.value;
       try{
 
-        await signIn({
-          username: email,
-          password: password,
-        });
         
         await this.addRole();
         
@@ -58,30 +50,8 @@ export class LoginPopupComponent {
   }
 
   async addRole(){
-    Amplify.configure({
-      Auth: {
-        Cognito: {
-          userPoolId: environment.cognito.UserPoolId,
-          userPoolClientId: environment.cognito.ClientId,
-        }
-      }
-    });
-    const userAttributes = await fetchUserAttributes();
-    const role = userAttributes["custom:role"];
-    if (role) {
-      localStorage.setItem("role", role);
-    } else {
-      console.warn("User role is undefined");
-    }
-  }
-
-  async signInWithGoogle() {
-    try {
-      await signInWithRedirect({ provider: 'Google' });
-    } catch (err) {
-      console.error('Google sign-in error', err);
-      this.toastr.error('Google Sign-in failed', 'Error');
-    }
+    
+    
   }
 
   onClose() {

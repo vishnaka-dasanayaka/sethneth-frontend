@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { EventService } from "../../../core/_services/event.service";
 import { PaymentService } from "../../../core/_services/payment.service";
 import { BookingService } from "../../../core/_services/booking.service";
-import { environment } from "../../../../environments/environment";
-import { CognitoService } from "../../../core/_services/cognito.service";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
 
@@ -48,7 +46,6 @@ export class EventDetailComponent implements OnInit {
     private paymentService: PaymentService,
     private bookingService: BookingService,
     private router: Router,
-    private cognitoService: CognitoService,
     private toastr: ToastrService
   ) {}
 
@@ -97,14 +94,7 @@ export class EventDetailComponent implements OnInit {
   }
 
   openPopup() {
-    const user = localStorage.getItem(
-      `CognitoIdentityServiceProvider.${environment.cognito.ClientId}.LastAuthUser`
-    );
-    if (user) {
-      this.openBuyTickets = true;
-    } else {
-      this.openLogin = true;
-    }
+    this.openBuyTickets = true;
   }
 
   closePopup() {
