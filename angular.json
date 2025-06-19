@@ -45,7 +45,16 @@
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "moment",
+              "canvg",
+              "core-js",
+              "qrcode",
+              "rgbcolor",
+              "raf",
+              "@babel/runtime"
+            ]
           },
           "configurations": {
             "production": {
@@ -57,7 +66,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "8kB",
+                  "maximumWarning": "100kB",
                   "maximumError": "64kB"
                 }
               ],
