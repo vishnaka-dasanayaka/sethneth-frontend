@@ -1,79 +1,135 @@
-<app-header></app-header>
-
-<div *ngIf="loading" class="loading-spinner-overlay">
-  <div class="spinner"></div>
-</div>
-
 <div
-  class="h-[757.5px] py-3 bg-gradient-to-r from-[#001960] via-[#325EDA] to-[#001960]"
+  class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex items-center justify-center p-4"
 >
-  <div class="w-full h-full bg-white p-[7.5px]">
+  <div class="w-full max-w-md relative">
     <div
-      class="bg-[url('/auth/login_bg.jpg')] bg-cover bg-center bg-no-repeat bg-[#001960] w-full h-full flex rounded-b-[45px] p-[22.5px]"
+      class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden"
     >
-      <!-- <div class="flex lg:w-[1200px]"> -->
-        <div
-          class="bg-white h-full w-[504.75px] rounded-[42px] px-[22.5px] py-[33px] flex flex-col items-center gap-8"
-        >
-          <div class="w-full flex flex-col items-center">
-            <div class="bg-[url('/auth/logo.png')] bg-cover bg-center bg-no-repeat w-[232px] h-[156px]"></div>
-            <h1 class="text-3xl font-bold leading-9 text-center text-[#001960] mt-6">
-              Sign in to your account
-            </h1>
-            <p class="text-[14px] mt-2">
-              Or <span [routerLink]="'/register'" class="text-[#325EDA] cursor-pointer">create a fresh account</span>
-            </p>
-          </div>
-          <form [formGroup]="LogInForm" (ngSubmit)="onSubmit()">
-            <div class="w-full flex flex-col gap-6">
-              <div>
-                <input
-                  formControlName="email"
-                  class="appearance-none border border-gray-300 rounded-t w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
-                  placeholder="Email address"
-                />
-                <input
-                  formControlName="password"
-                  class="appearance-none border border-gray-300 rounded-b w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-                  type="password"
-                  placeholder="Password"
-                />
-              </div>
-              <div class="w-full flex justify-between">
-                <label class="text-[#001960] flex">
-                  <input class="mr-2 leading-tight" type="checkbox" />
-                  <span class="text-sm"> Remember me </span>
-                </label>
-                <span [routerLink]="'/reset-password'" class="text-sm text-[#325EDA] cursor-pointer"> Forgot your password? </span>
-              </div>
-              <div class="w-full flex flex-col gap-3">
-                <button
-                  class="bg-[#325EDA] hover:bg-blue-700 text-white w-full py-2 px-3 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-                  type="submit"
-                >
-                  Sign in
-                </button>
-                <button
-                  class="bg-[#325EDA] hover:bg-blue-700 text-white w-full py-2 px-3 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-                  type="button"
-                >
-                  <i class="fa-brands text-white mr-2 fa-lg fa-facebook"></i>
-                  Log In with Facebook
-                </button>
-                <button
-                  class="bg-white hover:bg-gray-300 border border-gray-300 text-black w-full py-2 px-3 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-                  type="button"
-                >
-                  Log In with Google 
-                </button>
-              </div>
+      <div
+        class="bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-8 text-center"
+      >
+        <h1 class="text-2xl font-bold text-white mb-2">Welcome Back</h1>
+        <p class="text-orange-100 text-sm">
+          Sign in to your Seth Neth ERP account
+        </p>
+      </div>
+
+      <div class="px-8 py-8">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <div>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700 mb-2"
+              >Username</label
+            >
+            <input
+              id="username"
+              formControlName="username"
+              type="text"
+              class="block w-full pl-3 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white placeholder:text-gray-400 placeholder:text-opacity-70"
+              placeholder="Enter your username"
+            />
+            <div
+              *ngIf="
+                loginForm.get('username')?.invalid &&
+                loginForm.get('username')?.touched
+              "
+              class="text-red-600 text-sm mt-1"
+            >
+              Username is required.
             </div>
-          </form>
+          </div>
+
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700 mb-2"
+              >Password</label
+            >
+            <div class="relative">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                class="block w-full pl-3 pr-10 placeholder:text-gray-400 placeholder:text-opacity-70 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-gray-50 focus:bg-white"
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                (click)="showPassword = !showPassword"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                <span class="material-icons text-gray-500">
+                  <i *ngIf="!showPassword" class="fa-solid fa-eye"></i>
+                  <i *ngIf="showPassword" class="fa-solid fa-eye-slash"></i>
+                </span>
+              </button>
+            </div>
+            <div
+              *ngIf="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+              class="text-red-600 text-sm mt-1"
+            >
+              Password is required.
+            </div>
+          </div>
+
+          <!-- <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                id="rememberMe"
+                type="checkbox"
+                formControlName="rememberMe"
+                class="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+              />
+              <label for="rememberMe" class="ml-2 block text-sm text-gray-700"
+                >Remember me</label
+              >
+            </div>
+            <a
+              href="#"
+              class="text-sm text-orange-600 hover:text-orange-800 font-medium"
+              >Forgot password?</a
+            >
+          </div> -->
+
+          <button
+            type="submit"
+            [disabled]="isLoading || loginForm.invalid"
+            class="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          >
+            <ng-container *ngIf="isLoading; else signIn">
+              <span
+                class="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"
+              ></span>
+              Signing in...
+            </ng-container>
+            <ng-template #signIn>
+              Sign In
+              <span class="material-icons ml-2 text-sm"
+                ><i class="fa-regular fa-circle-right"></i
+              ></span>
+            </ng-template>
+          </button>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-gray-200">
+          <p class="text-center text-sm text-gray-600">
+            Don't have an account?
+            <a
+              href="#"
+              class="text-orange-600 hover:text-orange-800 font-medium"
+              >Contact Administrator</a
+            >
+          </p>
         </div>
-      <!-- </div> -->
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <p class="text-sm text-gray-500">© 2025 ERP. All rights reserved.</p>
     </div>
   </div>
 </div>
-
-<app-footer></app-footer>

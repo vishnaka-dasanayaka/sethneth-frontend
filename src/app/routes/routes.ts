@@ -17,16 +17,11 @@ import { resetPasswordComponent } from "./reset-password/reset-password.componen
 import { OrgernizersModule } from "./orgernizers/orgernizers.module";
 
 export const routes: Routes = [
-  { path: "", redirectTo: "home", pathMatch: "full" },
   {
     path: "",
     component: LayoutComponent,
     children: [
-      //   {
-      //     path: "settings",
-      //     loadChildren: () =>
-      //       import("./settings/settings.module").then((m) => m.SettingsModule),
-      //   },
+      { path: "", redirectTo: "home", pathMatch: "full" },
       {
         path: "tickets",
         loadChildren: () =>
@@ -35,25 +30,39 @@ export const routes: Routes = [
       { path: "dashboard", component: DashboardComponent },
       { path: "profile", component: ProfileComponent },
       { path: "my-tickets", component: MyTicketsComponent },
+      {
+        path: "home",
+        component: LayoutComponent,
+        loadChildren: () =>
+          import("./home/home.module").then((m) => m.HomeModule),
+      },
+      {
+        path: "event",
+        component: LayoutComponent,
+        loadChildren: () =>
+          import("./events/events.module").then((m) => EventsModule),
+      },
+      {
+        path: "orgernizers",
+        component: LayoutComponent,
+        loadChildren: () =>
+          import("./orgernizers/orgernizers.module").then(
+            (m) => OrgernizersModule
+          ),
+      },
+
+      {
+        path: "verify",
+        component: VerifyComponent,
+      },
+      {
+        path: "reset-password",
+        component: resetPasswordComponent,
+      },
     ],
+    canActivate: [AuthGuard],
   },
-  {
-    path: "home",
-    component: LayoutComponent,
-    loadChildren: () => import("./home/home.module").then((m) => m.HomeModule),
-  },
-  {
-    path: "event",
-    component: LayoutComponent,
-    loadChildren: () =>
-      import("./events/events.module").then((m) => EventsModule),
-  },
-  {
-    path: "orgernizers",
-    component: LayoutComponent,
-    loadChildren: () =>
-      import("./orgernizers/orgernizers.module").then((m) => OrgernizersModule),
-  },
+
   {
     path: "login",
     component: LoginComponent,
@@ -61,14 +70,6 @@ export const routes: Routes = [
   {
     path: "register",
     component: RegisterComponent,
-  },
-  {
-    path: "verify",
-    component: VerifyComponent,
-  },
-  {
-    path: "reset-password",
-    component: resetPasswordComponent,
   },
 
   // Not found
