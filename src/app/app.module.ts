@@ -20,6 +20,9 @@ import { provideAnimationsAsync } from "@angular/platform-browser/animations/asy
 import { providePrimeNG } from "primeng/config";
 import Aura from "@primeng/themes/aura";
 import Preset from "./preset";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; // this is needed!
+import { JwtInterceptor } from "./core/_helpers/jwt.interceptor";
+import { ErrorInterceptor } from "./core/_helpers/error.interceptor";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -34,8 +37,13 @@ export function createTranslateLoader(http: HttpClient) {
     LayoutModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
-  providers: [provideClientHydration(withEventReplay())],
+  providers: [
+    provideClientHydration(withEventReplay()),
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
