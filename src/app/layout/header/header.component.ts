@@ -1,33 +1,62 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthenticationService } from "../../core/_services/authentication.service";
 
 @Component({
-  selector: 'app-header',
+  selector: "app-header",
   standalone: false,
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  templateUrl: "./header.component.html",
+  styleUrl: "./header.component.css",
 })
 export class HeaderComponent {
-  role: string = '';
-  showDropdown = false;
+  sysuser: any;
+  private sub: any;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
-    this.getRole();
-  }
+    console.log("jhjh");
 
-  getRole() {
-    this.role = localStorage.getItem('role') || '';
-  }
+    console.log("AuthService", this.authenticationService);
 
-  async LogOut() {
-    try {
-      localStorage.clear();
-      this.router.navigate(['/login']);
-      
-    } catch (error) {
-      console.error('Error during sign out:', error);
-    }
+    this.sub = this.authenticationService
+      .validateUser()
+      .subscribe((sysuser) => {
+        this.sysuser = sysuser;
+
+        // if (
+        //   this.sysuser.app_settings.admin_settings.header_name &&
+        //   this.sysuser.app_settings.admin_settings.header_name != null
+        // ) {
+        //   this.header_name = this.sysuser.app_settings.admin_settings.header_name;
+        // }
+        // if (
+        //   this.sysuser.app_settings.admin_settings.header_name &&
+        //   this.sysuser.app_settings.admin_settings.header_name != null
+        // ) {
+        //   this.titleService.setTitle(
+        //     this.sysuser.app_settings.admin_settings.index_page_name
+        //   );
+        // } else {
+        //   this.titleService.setTitle("SISKA");
+        // }
+        // if (
+        //   this.settings.getAppSetting("version") <
+        //   sysuser.codevus_settings[0].s_key
+        // ) {
+        //   //check for updates
+        //   this.blockUI.start(
+        //     "Upgrade to the newest, improved version of our software now!  Installing version " +
+        //       sysuser.codevus_settings[0].s_key +
+        //       " in a moment.."
+        //   );
+        //   setTimeout(function () {
+        //     location.reload();
+        //   }, 5000);
+        // }
+      });
   }
 }

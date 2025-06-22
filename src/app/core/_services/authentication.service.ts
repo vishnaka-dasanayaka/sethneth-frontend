@@ -9,13 +9,14 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string, token: any) {
+  login(username: string, password: string, step: number, token: any) {
     let APIurl = this.BaseAPIurl + "login";
     return this.http
       .post<any>(APIurl, {
         username: username,
         password: password,
         token: token,
+        step: step,
       })
       .pipe(
         map((res: any) => {
@@ -33,6 +34,8 @@ export class AuthenticationService {
   }
 
   validateUser() {
+    console.log("here");
+
     let APIurl = this.BaseAPIurl + "validate-logged-in";
     return this.http.get<any>(APIurl);
   }
