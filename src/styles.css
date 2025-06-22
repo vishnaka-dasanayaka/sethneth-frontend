@@ -91,3 +91,13 @@
   position: relative;
   z-index: 1; /* Ensure it's under the loading overlay */
 }
+
+* {
+  font-family: "National Park", sans-serif;
+  font-optical-sizing: auto;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}

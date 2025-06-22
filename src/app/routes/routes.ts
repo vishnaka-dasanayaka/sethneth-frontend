@@ -15,6 +15,7 @@ import { PendingEventsComponent } from "./events/pending-events/pending-events.c
 import { MyTicketsComponent } from "./tickets/my-tickets/my-tickets.component";
 import { resetPasswordComponent } from "./reset-password/reset-password.component";
 import { OrgernizersModule } from "./orgernizers/orgernizers.module";
+import { SettingsModule } from "./settings/settings.module";
 
 export const routes: Routes = [
   {
@@ -22,6 +23,13 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: "", redirectTo: "home", pathMatch: "full" },
+
+      {
+        path: "settings",
+        loadChildren: () =>
+          import("./settings/settings.module").then((m) => SettingsModule),
+      },
+
       {
         path: "tickets",
         loadChildren: () =>

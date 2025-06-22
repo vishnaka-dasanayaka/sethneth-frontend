@@ -47,23 +47,12 @@ export class SidebarComponent implements OnInit {
   }
 
   setMenuItems() {
-    if (this.role === "ADMIN") {
-      this.menuItems = [
-        { label: "Profile", value: 4, path: "/profile" },
-        { label: "All Events", value: 6, path: "/event/new-events" },
-        { label: "Edited Events", value: 7, path: "/event/edited-events" },
-      ];
-    } else if (this.role === "ORGANIZER") {
-      this.menuItems = [
-        { label: "Profile", value: 4, path: "/profile" },
-        { label: "My Events", value: 1, path: "/event/my-events" },
-        { label: "Pending Events", value: 6, path: "/event/pending-events" },
-      ];
-    } else {
-      this.menuItems = [
-        { label: "Profile", value: 4, path: "/profile" },
-        { label: "My Tickets", value: 1, path: "/tickets/booked-events" },
-      ];
-    }
+    this.menuItems = [
+      { label: "Dashboard", value: 4, path: "/home" },
+      { label: "Patients", value: 6, path: "/event/new-events" },
+      { label: "Invoices", value: 6, path: "/event/new-events" },
+      { label: "Payments", value: 6, path: "/event/new-events" },
+      { label: "Settings", value: 7, path: "/settings/settings-menu" },
+    ];
   }
 }
