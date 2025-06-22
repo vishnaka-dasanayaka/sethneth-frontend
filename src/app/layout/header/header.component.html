@@ -1,78 +1,29 @@
-<div class="bg-white dark:bg-[#121212]">
+<div class="bg-[#ff820d] h-16 flex items-center">
   <div
-    class="lg:w-[1200px] w-full px-3 lg:px-0 z-10 m-auto flex items-center justify-between py-2"
+    class="mx-10 w-full lg:px-0 z-10 m-auto flex items-center justify-between py-2"
   >
-    <h1
-      class="text-2xl font-semibold cursor-pointer"
-      [routerLink]="['/home']"
-      routerLinkActive="router-link-active"
-    >
-      findout.lk
-    </h1>
+    <!-- lg:w-[1200px] -->
     <div class="flex items-center justify-center">
-      <button
-        *ngIf="role === 'ORGANIZER'"
-        class="mr-5 text-sm light_btn"
-        [routerLink]="['/event/add-event']"
+      <h1
+        class="text-xl text-white cursor-pointer tracking-wider"
+        [routerLink]="['/home']"
+        routerLinkActive="router-link-active"
       >
-        Add Event
-      </button>
-      <!-- <button *ngIf="role === 'USER'" class="mr-5 text-sm light_btn">
-        My tickets
-      </button> -->
-      <!-- <button
-        *ngIf="role === 'ORGANIZER'"
-        class="mr-5 text-sm light_btn"
-        [routerLink]="['/my-events']"
-      >a
-        My events
-      </button> -->
-      <button
-        *ngIf="!role"
-        class="mr-5 text-sm light_btn"
-        [routerLink]="['/login']"
-      >
-        Sign in
-      </button>
-      <button
-        *ngIf="!role"
-        class="mr-5 text-sm light_btn"
-        [routerLink]="['/register']"
-      >
-        Sign up
-      </button>
-      <div *ngIf="role" class="relative">
-        <img
-          class="w-8 border-2 border-[#325EDA] h-8 rounded-full object-cover cursor-pointer"
-          src="https://d2r9b9tkveqsoh.cloudfront.net/16-2025-04-05T08:34:20.119903.png"
-          alt="Profile"
-          (click)="showDropdown = !showDropdown"
-        />
+        SETHNETH
+      </h1>
 
-        <!-- Dropdown Menu -->
-        <div
-          *ngIf="showDropdown"
-          class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50"
-        >
-          <a
-            (click)="showDropdown = false"
-            [routerLink]="['/profile']"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
-            Profile
-          </a>
-          <button
-            (click)="LogOut(); showDropdown = false"
-            class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
-            Logout
-          </button>
-        </div>
+      <div class="flex items-center justify-center cursor-pointer">
+        <i class="ml-10 text-white hover:text-gray-300 fa-regular fa-user"></i>
+        <p class="text-white hover:text-gray-300 ml-3">
+          {{ sysuser?.firstname }} {{ sysuser?.lastname }}
+        </p>
       </div>
     </div>
-  </div>
 
-  <div
-    class="bg-gradient-to-r from-[#001960] via-[#325EDA] to-[#001960] h-[5px]"
-  ></div>
+    <a href="" title="Log Out" [routerLink]="'/login'">
+      <i
+        class="fa-solid text-white scale-110 fa-arrow-right-from-bracket cursor-pointer"
+      ></i>
+    </a>
+  </div>
 </div>
