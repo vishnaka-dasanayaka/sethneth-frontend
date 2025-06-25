@@ -101,3 +101,11 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
+.add_btn {
+  color: white;
+  background-color: #ff820d;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+}

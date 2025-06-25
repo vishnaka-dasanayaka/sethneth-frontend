@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettiingsMenuComponent } from './settiings-menu.component';
+import { AddSupplierComponent } from './add-supplier.component';
 
-describe('SettiingsMenuComponent', () => {
-  let component: SettiingsMenuComponent;
-  let fixture: ComponentFixture<SettiingsMenuComponent>;
+describe('AddSupplierComponent', () => {
+  let component: AddSupplierComponent;
+  let fixture: ComponentFixture<AddSupplierComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SettiingsMenuComponent]
+      declarations: [AddSupplierComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SettiingsMenuComponent);
+    fixture = TestBed.createComponent(AddSupplierComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

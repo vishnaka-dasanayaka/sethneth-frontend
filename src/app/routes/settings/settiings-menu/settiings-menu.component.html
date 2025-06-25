@@ -1,8 +1,24 @@
 <section class="">
+  <h6 class="text-xs mb-2">Settings</h6>
   <h1 class="text-xl font-semibold">Settings</h1>
   <h5 class="text-xs font-thin">Alter General Settings of your ERP system</h5>
 
-  <div class="min-h-screen pt-5">
+  <div *ngIf="!LoadUI">
+    <div class="card">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6"
+      >
+        <p-skeleton height="4rem" />
+        <p-skeleton height="4rem" />
+        <p-skeleton height="4rem" />
+        <p-skeleton height="4rem" />
+        <p-skeleton height="4rem" />
+        <p-skeleton height="4rem" />
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="LoadUI" class="min-h-screen pt-5">
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6"
     >
@@ -25,7 +41,7 @@
 
       <!-- Tile -->
       <a
-        href="#"
+        [routerLink]="['/settings/supplier-config']"
         class="flex items-start p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
       >
         <div
@@ -47,7 +63,7 @@
 
       <!-- Security -->
       <a
-        href="#"
+        [routerLink]="['/settings/stock-config']"
         class="flex items-start p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
       >
         <div
