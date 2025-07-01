@@ -17,7 +17,7 @@ export class EventDetailComponent implements OnInit {
   showDropdown = false;
 
   getRole() {
-    this.role = localStorage.getItem("role") || "";
+    this.role = "admim"; // localStorage.getItem("role") || "";
   }
 
   LoadUI: boolean = false;
@@ -279,5 +279,4 @@ export class EventDetailComponent implements OnInit {
       }
     });
   }
-
 }

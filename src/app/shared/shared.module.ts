@@ -18,6 +18,9 @@ import { LOAD_WASM, NgxScannerQrcodeComponent } from "ngx-scanner-qrcode";
 import { DropdownModule } from "primeng/dropdown";
 import { LoginPopupComponent } from "./login-popup/login-popup.component";
 import { TabsModule } from "primeng/tabs";
+import { LoaderComponent } from "./loader/loader.component";
+import { AddSupplierComponent } from "./modals/add-supplier/add-supplier.component";
+import { ModalModule } from "ngx-bootstrap/modal";
 
 @NgModule({
   imports: [
@@ -32,6 +35,7 @@ import { TabsModule } from "primeng/tabs";
     DatePickerModule,
     NgxScannerQrcodeComponent,
     DropdownModule,
+    ModalModule.forRoot(),
     TabsModule,
   ],
   providers: [],
@@ -40,6 +44,8 @@ import { TabsModule } from "primeng/tabs";
     CardLoaderComponent,
     EventLoaderComponent,
     LoginPopupComponent,
+    LoaderComponent,
+    AddSupplierComponent,
   ],
   exports: [
     BlockUIModule,
@@ -56,6 +62,9 @@ import { TabsModule } from "primeng/tabs";
     DropdownModule,
     LoginPopupComponent,
     TabsModule,
+    LoaderComponent,
+    AddSupplierComponent,
+    ModalModule,
   ],
 })
 
