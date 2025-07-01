@@ -1,0 +1,215 @@
+<section class="">
+  <h6 class="text-xs mb-2">
+    <span
+      [routerLink]="['/settings/settings-menu']"
+      routerLinkActive="router-link-active"
+      class="text-blue-500 cursor-pointer"
+      >Settings</span
+    >
+    > Stock Configurations
+  </h6>
+  <h1 class="text-xl font-semibold">Stock Configurations</h1>
+  <h5 class="text-xs font-thin">
+    Manage your product brand settings and inventory categorization
+  </h5>
+
+  <div class="min-h-screen pt-5">
+    <div class="row mt-2">
+      <!-- <div class="col-md-5">
+        <div class="card card-default">
+          <div class="card-body">
+            <form
+              [formGroup]="addBrandValForm"
+              class="form-validate form-horizontal"
+              (submit)="submitForm($event, addBrandValForm.value)"
+              novalidate=""
+            >
+              <fieldset>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h2>Add Service Type</h2>
+
+                    <div class="form-group row mt-3">
+                      <label class="col-sm-3 col-form-label text-right"
+                        >Service Name <span class="text-danger">*</span></label
+                      >
+                      <div class="col-sm-9">
+                        <input
+                          class="form-control"
+                          type="text"
+                          formControlName="service_name"
+                          [formControl]="
+                            addBrandValForm.controls['service_name']
+                          "
+                        />
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            addBrandValForm.controls['service_name'].hasError(
+                              'required'
+                            ) &&
+                            (addBrandValForm.controls['service_name'].dirty ||
+                              addBrandValForm.controls['service_name'].touched)
+                          "
+                          >This field is required</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group row mt-3">
+                      <label class="col-sm-3 col-form-label text-right"
+                        >Service Type <span class="text-danger">*</span></label
+                      >
+                      <div class="col-sm-9">
+                        <select
+                          class="form-control"
+                          formControlName="service_type"
+                          [formControl]="
+                            addBrandValForm.controls['service_type']
+                          "
+                        >
+                          <option value="MAIN">MAIN</option>
+                          <option value="OTHER">OTHER</option>
+                        </select>
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            addBrandValForm.controls['service_type'].hasError(
+                              'required'
+                            ) &&
+                            (addBrandValForm.controls['service_type'].dirty ||
+                              addBrandValForm.controls['service_type'].touched)
+                          "
+                          >This field is required</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                    <div class="form-group row mt-3">
+                      <label class="col-sm-3 col-form-label text-right"
+                        >Service For <span class="text-danger">*</span></label
+                      >
+                      <div class="col-sm-9">
+                        <select
+                          class="form-control"
+                          formControlName="service_for"
+                          [formControl]="
+                            addBrandValForm.controls['service_for']
+                          "
+                        >
+                          <option value="INDIVIDUAL">INDIVIDUAL</option>
+                          <option value="COMPANY">COMPANY</option>
+                          <option value="BOTH">BOTH</option>
+                        </select>
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            addBrandValForm.controls['service_for'].hasError(
+                              'required'
+                            ) &&
+                            (addBrandValForm.controls['service_for'].dirty ||
+                              addBrandValForm.controls['service_for'].touched)
+                          "
+                          >This field is required</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div class="card-footer text-center">
+                <button class="btn btn-oval btn-primary" type="submit">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="col-md-7">
+        <p-table
+          [value]="service_types"
+          [paginator]="true"
+          [rows]="5"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [responsive]="false"
+          [autoLayout]="true"
+          styleClass="p-datatable-sm p-datatable-striped ui-table-v2"
+          [rowHover]="true"
+          [rowsPerPageOptions]="[5, 15, 25]"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="text-center" [pSortableColumn]="'id'">
+                ID<p-sortIcon [field]="'id'"></p-sortIcon>
+              </th>
+              <th class="text-center" [pSortableColumn]="'service_name'">
+                Service Name<p-sortIcon [field]="'service_name'"></p-sortIcon>
+              </th>
+              <th class="text-center" [pSortableColumn]="'service_type'">
+                Service Type<p-sortIcon [field]="'service_type'"></p-sortIcon>
+              </th>
+              <th class="text-center" [pSortableColumn]="'service_for'">
+                Service For<p-sortIcon [field]="'service_for'"></p-sortIcon>
+              </th>
+              <th class="text-center" [pSortableColumn]="'status'">
+                Status<p-sortIcon [field]="'status'"></p-sortIcon>
+              </th>
+
+              <th class="text-center" width="20%" [pSortableColumn]="'actions'">
+                Actions
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td class="text-center">{{ item.id }}</td>
+              <td>{{ item.service_name }}</td>
+              <td class="text-center">{{ item.service_type }}</td>
+              <td class="text-center">{{ item.service_for }}</td>
+              <td class="text-center">
+                <span *ngIf="item.status == 1" class="badge badge-success"
+                  >Active</span
+                >
+                <span *ngIf="item.status == 0" class="badge badge-danger"
+                  >Disabled</span
+                >
+              </td>
+
+              <td class="text-center d-flex">
+                <button
+                  (click)="openEditModal(item, editModal)"
+                  class="btn btn-warning btn-sm btn-oval mr-1"
+                >
+                  <i class="fas fa-edit"></i>
+                </button>
+
+                <button
+                  (click)="updateStatus(item, 1)"
+                  *ngIf="item.status == 0"
+                  class="btn btn-oval btn-sm btn-outline-success"
+                >
+                  Enable
+                </button>
+                <button
+                  (click)="updateStatus(item, 0)"
+                  *ngIf="item.status == 1"
+                  class="btn btn-oval btn-sm btn-outline-danger"
+                >
+                  Disable
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div> -->
+    </div>
+  </div>
+</section>

@@ -23,13 +23,14 @@ import Preset from "./preset";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; // this is needed!
 import { JwtInterceptor } from "./core/_helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./core/_helpers/error.interceptor";
+import { AddSupplierComponent } from './modals/add-supplier/add-supplier.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AddSupplierComponent],
   imports: [
     BrowserModule,
     RoutesModule,
@@ -41,6 +42,11 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     provideClientHydration(withEventReplay()),
+    providePrimeNG({
+      theme: {
+        preset: Preset,
+      },
+    }),
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

@@ -1,27 +1,24 @@
 <button
-  class="fixed top-16 left-4 z-50 p-2 bg-gray-200 rounded md:hidden"
+  class="fixed top-3 text-white left-4 z-50 p-2 lg:hidden"
   (click)="isSidebarOpen = !isSidebarOpen"
 >
-  ☰
+  <i class="fa-solid fa-bars fa-xl"></i>
 </button>
-
 <div
-  class="fixed top-12 left-0 w-[200px] lg:w-[255px] bg-white dark:bg-[#121212] z-40 transform transition-transform duration-300 ease-in-out"
+  class="fixed left-0 w-[200px] lg:w-[110px] pb-3 lg:h-full top-12 md:top-12 z-40 transform transition-transform duration-300 ease-in-out backdrop-blur-md bg-[#ff820d]/20 dark:bg-[#ff820d]/10 border border-[#ff820d]/30 dark:border-[#ff820d]/20 shadow-xl rounded-tr-2xl rounded-br-2xl"
   [ngClass]="{
     '-translate-x-full': !isSidebarOpen,
     'translate-x-0': isSidebarOpen,
-    'md:translate-x-0': true,
-    'top-[120px]': isSidebarOpen,
-    'top-12 md:top-12': !isSidebarOpen || true 
+    'lg:translate-x-0': true
   }"
 >
-  <div class="flex mt-5 pl-2 flex-col">
+  <div class="flex mt-6 pl-4 pr-2 flex-col gap-2">
     <h2
       *ngFor="let item of menuItems"
-      class="text-lg font-thin py-2 px-2 rounded-md cursor-pointer"
+      class="text-xs py-3 px-3 rounded-md cursor-pointer transition-all duration-200"
       [ngClass]="{
-        'bg-[#325EDA] text-white': currentPath == item.path,
-        'hover:bg-gray-100': currentPath !== item.path
+        'bg-[#ff820d] text-white shadow-md': currentPath === item.path,
+        'hover:bg-[#ff820d]/30 hover:text-white': currentPath !== item.path
       }"
       (click)="onClickMenu(item.path, item.value)"
     >
