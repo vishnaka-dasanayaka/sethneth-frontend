@@ -36,7 +36,7 @@ export class SidebarComponent implements OnInit {
   }
 
   getRole() {
-    this.role = localStorage.getItem("role") || "";
+    this.role = "ADMIN"; // localStorage.getItem("role") || "";
     this.setMenuItems();
   }
 
