@@ -39,8 +39,6 @@ export class AuthenticationService {
   }
 
   validateUser() {
-    console.log("here");
-
     let APIurl = this.BaseAPIurl + "validate-logged-in";
     return this.http.get<any>(APIurl);
   }

@@ -1,14 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Output,
-  ViewChild,
-} from "@angular/core";
-import { Subscription } from "rxjs";
-import { ModalDirective } from "ngx-bootstrap/modal";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { SharedService } from "../../../core/_services/shared.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Subscription } from "rxjs";
+import { CustomValidators } from "../../validators/custom-validators";
+import { SettingsService } from "../../../core/_services/settings.service";
+import { ToastrService } from "ngx-toastr";
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-add-supplier",
@@ -17,54 +14,85 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
   styleUrl: "./add-supplier.component.css",
 })
 export class AddSupplierComponent {
-  sysuser: any;
-  uniqueid: string = "";
-
-  clickEventsubscription: Subscription | undefined;
-
-  @ViewChild("addSupplierModal")
-  public addSupplierModal!: ModalDirective;
-
-  @Output("parentFun") parentFun: EventEmitter<any> = new EventEmitter();
+  @Output() parentFun: EventEmitter<any> = new EventEmitter();
 
   valForm: FormGroup;
+  uniqueid: string = "";
+  showModal: boolean = false;
 
-  constructor(private sharedService: SharedService) {
-    this.clickEventsubscription = this.sharedService
+  clickEventSubscription: Subscription;
+
+  constructor(
+    private sharedService: SharedService,
+    private fb: FormBuilder,
+    private settingsService: SettingsService,
+    private toastr: ToastrService
+  ) {
+    this.valForm = this.fb.group({
+      supplier_name: ["", Validators.required],
+      contact_person: ["", Validators.required],
+      email: [
+        "",
+        [Validators.required, Validators.email, CustomValidators.strictEmail],
+      ],
+      phone: ["", [Validators.required, CustomValidators.phoneFormat]],
+    });
+
+    this.clickEventSubscription = this.sharedService
       .getAddSupplierClickEvent()
       .subscribe(() => {
         this.openModal();
-        this.generateuniquekey();
+        this.generateUniqueKey();
       });
-
-    const fb = inject(FormBuilder);
-    this.valForm = fb.group({
-      supplier_name: ["", Validators.required],
-      contact_person: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
-      phone: ["", Validators.required],
-    });
   }
 
   openModal() {
-    this.addSupplierModal?.show();
+    this.showModal = true;
   }
 
   closeModal() {
-    this.addSupplierModal?.hide();
+    this.showModal = false;
+    this.valForm.reset();
   }
 
-  submitForm() {
+  submitForm(value: any) {
+    for (let c in this.valForm.controls) {
+      this.valForm.controls[c].markAsTouched();
+    }
+
     if (this.valForm.valid) {
-      this.parentFun.emit(this.valForm.value);
-      this.valForm.reset();
-      this.closeModal();
+      value.uniquekey = this.uniqueid;
+
+      this.settingsService.createSupplier(value).subscribe(
+        (data) => {
+          if (data.status) {
+            this.parentFun.emit();
+            this.closeModal();
+            this.valForm.reset();
+            swal.fire({
+              title: "Success!",
+              text: "Supplier has been created successfully.",
+              icon: "success",
+              confirmButtonColor: "#28a745", // Optional: green color for success
+            });
+          } else {
+            this.toastr.warning(data.err, "ERROR !!", {
+              positionClass: "toast-top-right",
+              closeButton: true,
+            });
+            this.generateUniqueKey();
+          }
+        },
+        (error) => {
+          alert("API ERROR [ERRCODE:001]");
+        }
+      );
     }
   }
 
-  generateuniquekey() {
-    var num1 = new Date().valueOf();
-    var num2 = Math.random().toString(36).substring(7);
-    this.uniqueid = num1 + num2;
+  generateUniqueKey() {
+    const timestamp = new Date().valueOf();
+    const random = Math.random().toString(36).substring(2);
+    this.uniqueid = `${timestamp}${random}`;
   }
 }
