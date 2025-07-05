@@ -21,6 +21,7 @@ import { TabsModule } from "primeng/tabs";
 import { LoaderComponent } from "./loader/loader.component";
 import { AddSupplierComponent } from "./modals/add-supplier/add-supplier.component";
 import { ModalModule } from "ngx-bootstrap/modal";
+import { TableModule } from "primeng/table";
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
     DropdownModule,
     ModalModule.forRoot(),
     TabsModule,
+    TableModule,
   ],
   providers: [],
   declarations: [
@@ -65,6 +67,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
     LoaderComponent,
     AddSupplierComponent,
     ModalModule,
+    TableModule,
   ],
 })
 

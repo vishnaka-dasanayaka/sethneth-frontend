@@ -49,9 +49,9 @@ export class SidebarComponent implements OnInit {
   setMenuItems() {
     this.menuItems = [
       { label: "Dashboard", value: 4, path: "/home" },
-      { label: "Patients", value: 6, path: "/event/new-events" },
-      { label: "Invoices", value: 6, path: "/event/new-events" },
-      { label: "Payments", value: 6, path: "/event/new-events" },
+      // { label: "Patients", value: 6, path: "/event/new-events" },
+      // { label: "Invoices", value: 6, path: "/event/new-events" },
+      // { label: "Payments", value: 6, path: "/event/new-events" },
       { label: "Settings", value: 7, path: "/settings/settings-menu" },
     ];
   }

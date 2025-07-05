@@ -32,205 +32,129 @@
     </div>
   </div>
 
-  <div *ngIf="LoadUI" class="min-h-screen pt-5">
-    <div class="row mt-2">
-      <!-- <div class="col-md-5">
-        <div class="card card-default">
-          <div class="card-body">
-            <form
-              [formGroup]="addBrandValForm"
-              class="form-validate form-horizontal"
-              (submit)="submitForm($event, addBrandValForm.value)"
-              novalidate=""
+  <div *ngIf="LoadUI" class="min-h-screen pt-5 bg-gray-50">
+    <div class="mt-4">
+      <p-table
+        #dt1
+        [columns]="cols"
+        [value]="suppliers"
+        [paginator]="true"
+        [rows]="10"
+        [globalFilterFields]="[
+          'client_code',
+          'name',
+          'nic_or_passport_no',
+          'address',
+          'contact_no',
+          'email'
+        ]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [responsive]="false"
+        [autoLayout]="true"
+        styleClass="p-datatable-sm p-datatable-striped"
+        [rowHover]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [lazy]="true"
+        (onLazyLoad)="getAllSuppliers($event)"
+        [totalRecords]="no_of_suppliers"
+        [sortOrder]="-1"
+      >
+        <ng-template pTemplate="header" let-columns>
+          <tr class="bg-[#ff820d] text-white text-sm">
+            <th
+              *ngFor="let col of columns"
+              [pSortableColumn]="col.field"
+              [pSortableColumnDisabled]="col.sortable"
+              [style.width]="col.width"
+              class="px-3 py-2 text-center font-medium"
             >
-              <fieldset>
-                <div class="row">
-                  <div class="col-sm-12">
-                    <h2>Add Service Type</h2>
+              {{ col.header }}
+              <p-sortIcon
+                *ngIf="!col.sortable"
+                [field]="col.field"
+                ariaLabel="Activate to sort"
+                ariaLabelDesc="Activate to sort in descending order"
+                ariaLabelAsc="Activate to sort in ascending order"
+                styleClass="ml-2"
+              ></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
 
-                    <div class="form-group row mt-3">
-                      <label class="col-sm-3 col-form-label text-right"
-                        >Service Name <span class="text-danger">*</span></label
-                      >
-                      <div class="col-sm-9">
-                        <input
-                          class="form-control"
-                          type="text"
-                          formControlName="service_name"
-                          [formControl]="
-                            addBrandValForm.controls['service_name']
-                          "
-                        />
-                        <span
-                          class="text-danger"
-                          *ngIf="
-                            addBrandValForm.controls['service_name'].hasError(
-                              'required'
-                            ) &&
-                            (addBrandValForm.controls['service_name'].dirty ||
-                              addBrandValForm.controls['service_name'].touched)
-                          "
-                          >This field is required</span
-                        >
-                      </div>
-                    </div>
-                  </div>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr class="hover:bg-orange-50 transition">
+            <td
+              *ngFor="let col of columns"
+              class="px-3 py-2 text-sm text-center"
+              [ngSwitch]="col.field"
+            >
+              <div *ngSwitchCase="'code'">
+                <a
+                  class="text-[#ff820d] font-medium hover:underline"
+                  routerLink="/client/detail/{{ rowData.id }}"
+                >
+                  {{ rowData[col.field] }}
+                </a>
+              </div>
 
-                  <div class="col-sm-12">
-                    <div class="form-group row mt-3">
-                      <label class="col-sm-3 col-form-label text-right"
-                        >Service Type <span class="text-danger">*</span></label
-                      >
-                      <div class="col-sm-9">
-                        <select
-                          class="form-control"
-                          formControlName="service_type"
-                          [formControl]="
-                            addBrandValForm.controls['service_type']
-                          "
-                        >
-                          <option value="MAIN">MAIN</option>
-                          <option value="OTHER">OTHER</option>
-                        </select>
-                        <span
-                          class="text-danger"
-                          *ngIf="
-                            addBrandValForm.controls['service_type'].hasError(
-                              'required'
-                            ) &&
-                            (addBrandValForm.controls['service_type'].dirty ||
-                              addBrandValForm.controls['service_type'].touched)
-                          "
-                          >This field is required</span
-                        >
-                      </div>
-                    </div>
-                  </div>
+              <div *ngSwitchCase="'name'">
+                <a
+                  class="text-[#ff820d] font-medium hover:underline"
+                  routerLink="/client/detail/{{ rowData.id }}"
+                >
+                  {{ rowData[col.field] }}
+                </a>
+              </div>
 
-                  <div class="col-sm-12">
-                    <div class="form-group row mt-3">
-                      <label class="col-sm-3 col-form-label text-right"
-                        >Service For <span class="text-danger">*</span></label
-                      >
-                      <div class="col-sm-9">
-                        <select
-                          class="form-control"
-                          formControlName="service_for"
-                          [formControl]="
-                            addBrandValForm.controls['service_for']
-                          "
-                        >
-                          <option value="INDIVIDUAL">INDIVIDUAL</option>
-                          <option value="COMPANY">COMPANY</option>
-                          <option value="BOTH">BOTH</option>
-                        </select>
-                        <span
-                          class="text-danger"
-                          *ngIf="
-                            addBrandValForm.controls['service_for'].hasError(
-                              'required'
-                            ) &&
-                            (addBrandValForm.controls['service_for'].dirty ||
-                              addBrandValForm.controls['service_for'].touched)
-                          "
-                          >This field is required</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
+              <div *ngSwitchCase="'contact_person'">
+                {{ rowData[col.field] }}
+              </div>
 
-              <div class="card-footer text-center">
-                <button class="btn btn-oval btn-primary" type="submit">
-                  Submit
+              <div *ngSwitchCase="'phone'">
+                {{ rowData[col.field] }}
+              </div>
+
+              <div *ngSwitchCase="'status'">
+                <span
+                  *ngIf="rowData[col.field] == 0"
+                  class="badge badge-primary"
+                >
+                  Pending
+                </span>
+                <span
+                  *ngIf="rowData[col.field] == 2"
+                  class="badge badge-success"
+                >
+                  Active
+                </span>
+
+                <span
+                  *ngIf="rowData[col.field] == -2"
+                  class="badge badge-danger"
+                >
+                  Disabled
+                </span>
+              </div>
+
+              <div *ngSwitchCase="'email'">
+                {{ rowData[col.field] }}
+              </div>
+
+              <div *ngSwitchCase="'actions'">
+                <button
+                  class="btn btn-outline-warning"
+                  routerLink="/client/detail/{{ rowData.id }}"
+                >
+                  View
                 </button>
               </div>
-            </form>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="col-md-7">
-        <p-table
-          [value]="service_types"
-          [paginator]="true"
-          [rows]="5"
-          [showCurrentPageReport]="true"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [responsive]="false"
-          [autoLayout]="true"
-          styleClass="p-datatable-sm p-datatable-striped ui-table-v2"
-          [rowHover]="true"
-          [rowsPerPageOptions]="[5, 15, 25]"
-        >
-          <ng-template pTemplate="header">
-            <tr>
-              <th class="text-center" [pSortableColumn]="'id'">
-                ID<p-sortIcon [field]="'id'"></p-sortIcon>
-              </th>
-              <th class="text-center" [pSortableColumn]="'service_name'">
-                Service Name<p-sortIcon [field]="'service_name'"></p-sortIcon>
-              </th>
-              <th class="text-center" [pSortableColumn]="'service_type'">
-                Service Type<p-sortIcon [field]="'service_type'"></p-sortIcon>
-              </th>
-              <th class="text-center" [pSortableColumn]="'service_for'">
-                Service For<p-sortIcon [field]="'service_for'"></p-sortIcon>
-              </th>
-              <th class="text-center" [pSortableColumn]="'status'">
-                Status<p-sortIcon [field]="'status'"></p-sortIcon>
-              </th>
-
-              <th class="text-center" width="20%" [pSortableColumn]="'actions'">
-                Actions
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-item>
-            <tr>
-              <td class="text-center">{{ item.id }}</td>
-              <td>{{ item.service_name }}</td>
-              <td class="text-center">{{ item.service_type }}</td>
-              <td class="text-center">{{ item.service_for }}</td>
-              <td class="text-center">
-                <span *ngIf="item.status == 1" class="badge badge-success"
-                  >Active</span
-                >
-                <span *ngIf="item.status == 0" class="badge badge-danger"
-                  >Disabled</span
-                >
-              </td>
-
-              <td class="text-center d-flex">
-                <button
-                  (click)="openEditModal(item, editModal)"
-                  class="btn btn-warning btn-sm btn-oval mr-1"
-                >
-                  <i class="fas fa-edit"></i>
-                </button>
-
-                <button
-                  (click)="updateStatus(item, 1)"
-                  *ngIf="item.status == 0"
-                  class="btn btn-oval btn-sm btn-outline-success"
-                >
-                  Enable
-                </button>
-                <button
-                  (click)="updateStatus(item, 0)"
-                  *ngIf="item.status == 1"
-                  class="btn btn-oval btn-sm btn-outline-danger"
-                >
-                  Disable
-                </button>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div> -->
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </section>
 
-<app-add-supplier></app-add-supplier>
+<app-add-supplier (parentFun)="getAllSuppliers()"> </app-add-supplier>
