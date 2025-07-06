@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div *ngIf="LoadUI" class="min-h-screen pt-5 bg-gray-50">
+  <div *ngIf="LoadUI" class="min-h-screen mt-10 bg-gray-50">
     <div class="mt-4">
       <p-table
         #dt1
@@ -58,8 +58,25 @@
         [lazy]="true"
         (onLazyLoad)="getAllSuppliers($event)"
         [totalRecords]="no_of_suppliers"
-        [sortOrder]="-1"
+        [sortOrder]="1"
       >
+        <ng-template #caption>
+          <div class="flex">
+            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon>
+                <i class="pi pi-search"></i>
+              </p-inputicon>
+              <input
+                pInputText
+                type="text"
+                (input)="
+                  dt1.filterGlobal($any($event.target).value, 'contains')
+                "
+                placeholder="Search keyword"
+              />
+            </p-iconfield>
+          </div>
+        </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr class="bg-[#ff820d] text-white text-sm">
             <th
@@ -92,7 +109,7 @@
               <div *ngSwitchCase="'code'">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/client/detail/{{ rowData.id }}"
+                  routerLink="/settings/supplier-details/{{ rowData.id }}"
                 >
                   {{ rowData[col.field] }}
                 </a>
@@ -101,7 +118,7 @@
               <div *ngSwitchCase="'name'">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/client/detail/{{ rowData.id }}"
+                  routerLink="/settings/supplier-details/{{ rowData.id }}"
                 >
                   {{ rowData[col.field] }}
                 </a>
@@ -129,11 +146,15 @@
                   Active
                 </span>
 
+                <span *ngIf="rowData[col.field] == -2" class="badge badge-info">
+                  Inactive
+                </span>
+
                 <span
-                  *ngIf="rowData[col.field] == -2"
+                  *ngIf="rowData[col.field] == -4"
                   class="badge badge-danger"
                 >
-                  Disabled
+                  Suspended
                 </span>
               </div>
 
@@ -144,7 +165,7 @@
               <div *ngSwitchCase="'actions'">
                 <button
                   class="btn btn-outline-warning"
-                  routerLink="/client/detail/{{ rowData.id }}"
+                  routerLink="/settings/supplier-details/{{ rowData.id }}"
                 >
                   View
                 </button>

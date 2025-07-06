@@ -43,4 +43,26 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  getSupplier(id: number) {
+    let APIurl = this.BaseAPIurl + "supplier/" + id;
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "supplier/update-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

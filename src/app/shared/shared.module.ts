@@ -23,6 +23,11 @@ import { AddSupplierComponent } from "./modals/add-supplier/add-supplier.compone
 import { ModalModule } from "ngx-bootstrap/modal";
 import { TableModule } from "primeng/table";
 
+import { IconFieldModule } from "primeng/iconfield";
+import { InputIconModule } from "primeng/inputicon";
+import { InputTextModule } from "primeng/inputtext";
+import { EditorModule } from "primeng/editor";
+
 @NgModule({
   imports: [
     BlockUIModule.forRoot(),
@@ -39,6 +44,10 @@ import { TableModule } from "primeng/table";
     ModalModule.forRoot(),
     TabsModule,
     TableModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    EditorModule,
   ],
   providers: [],
   declarations: [
@@ -68,6 +77,10 @@ import { TableModule } from "primeng/table";
     AddSupplierComponent,
     ModalModule,
     TableModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    EditorModule,
   ],
 })
 
