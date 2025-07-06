@@ -4,20 +4,23 @@ import { SettiingsMenuComponent } from "./settiings-menu/settiings-menu.componen
 import { RouterModule, Routes } from "@angular/router";
 import { StockConfigComponent } from "./stock-config/stock-config.component";
 import { SharedModule } from "../../shared/shared.module";
-import { SupplierConfigComponent } from "./supplier-config/supplier-config.component";
+import { SupplierDetailComponent } from "./supplier-detail/supplier-detail.component";
+import { SupplierSummaryComponent } from "./supplier-summary/supplier-summary.component";
 
 const routes: Routes = [
   // Client paths
   { path: "settings-menu", component: SettiingsMenuComponent },
   { path: "stock-config", component: StockConfigComponent },
-  { path: "supplier-config", component: SupplierConfigComponent },
+  { path: "supplier-summary", component: SupplierSummaryComponent },
+  { path: "supplier-details/:id", component: SupplierDetailComponent },
 ];
 
 @NgModule({
   declarations: [
     SettiingsMenuComponent,
     StockConfigComponent,
-    SupplierConfigComponent,
+    SupplierSummaryComponent,
+    SupplierDetailComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],

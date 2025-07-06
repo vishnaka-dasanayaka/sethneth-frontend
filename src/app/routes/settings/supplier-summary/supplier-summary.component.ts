@@ -5,12 +5,12 @@ import { SettingsService } from "../../../core/_services/settings.service";
 import { TableLazyLoadEvent } from "primeng/table";
 
 @Component({
-  selector: "app-supplier-config",
+  selector: "app-supplier-summary",
   standalone: false,
-  templateUrl: "./supplier-config.component.html",
-  styleUrl: "./supplier-config.component.css",
+  templateUrl: "./supplier-summary.component.html",
+  styleUrl: "./supplier-summary.component.css",
 })
-export class SupplierConfigComponent {
+export class SupplierSummaryComponent {
   sysuser: any;
   LoadUI: boolean = false;
 
