@@ -1,12 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
+
 @Component({
-  selector: "app-stock-config",
+  selector: "app-stock-settings",
   standalone: false,
-  templateUrl: "./stock-config.component.html",
-  styleUrl: "./stock-config.component.css",
+  templateUrl: "./stock-settings.component.html",
+  styleUrl: "./stock-settings.component.css",
 })
-export class StockConfigComponent {
+export class StockSettingsComponent implements OnInit {
   uniqueid: any;
   LoadUI: boolean = false;
   sysuser: any;

@@ -27,6 +27,8 @@ import { IconFieldModule } from "primeng/iconfield";
 import { InputIconModule } from "primeng/inputicon";
 import { InputTextModule } from "primeng/inputtext";
 import { EditorModule } from "primeng/editor";
+import { AddPurchaseOrderComponent } from "./modals/add-purchase-order/add-purchase-order.component";
+import { SelectModule } from "primeng/select";
 
 @NgModule({
   imports: [
@@ -48,6 +50,7 @@ import { EditorModule } from "primeng/editor";
     InputIconModule,
     InputTextModule,
     EditorModule,
+    SelectModule,
   ],
   providers: [],
   declarations: [
@@ -57,6 +60,7 @@ import { EditorModule } from "primeng/editor";
     LoginPopupComponent,
     LoaderComponent,
     AddSupplierComponent,
+    AddPurchaseOrderComponent,
   ],
   exports: [
     BlockUIModule,
@@ -81,6 +85,8 @@ import { EditorModule } from "primeng/editor";
     InputIconModule,
     InputTextModule,
     EditorModule,
+    AddPurchaseOrderComponent,
+    SelectModule,
   ],
 })
 
