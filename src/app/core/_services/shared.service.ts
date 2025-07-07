@@ -4,10 +4,8 @@ import { Observable, Subject } from "rxjs";
   providedIn: "root",
 })
 export class SharedService {
-  // client
-
+  // Supplier
   private add_supplier = new Subject<void>();
-
   private edit_supplier = new Subject<any>();
   private supplier_data: any = undefined;
 
@@ -22,6 +20,33 @@ export class SharedService {
   }
   getSupplierData(): any {
     return this.supplier_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Purchase Order
+
+  private add_purchase_order = new Subject<void>();
+  private edit_purchase_order = new Subject<any>();
+  private purchase_order_data: any = undefined;
+
+  setPurchaseOrderData(data: any) {
+    this.purchase_order_data = data;
+  }
+  openAddPurchaseOrderModal() {
+    this.add_purchase_order.next();
+  }
+  getAddPurchaseOrderClickEvent(): Observable<any> {
+    return this.add_purchase_order.asObservable();
+  }
+  getPurchaseOrderData(): any {
+    return this.purchase_order_data;
   }
 
   // openEditClientModal() {

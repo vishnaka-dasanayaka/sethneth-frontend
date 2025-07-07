@@ -6,21 +6,19 @@ import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
 
 @Component({
-  selector: "app-supplier-detail",
+  selector: "app-purchase-order-detail",
   standalone: false,
-  templateUrl: "./supplier-detail.component.html",
-  styleUrl: "./supplier-detail.component.css",
+  templateUrl: "./purchase-order-detail.component.html",
+  styleUrl: "./purchase-order-detail.component.css",
 })
-export class SupplierDetailComponent implements OnInit {
+export class PurchaseOrderDetailComponent {
   uniqueid: any;
   sysuser: any;
   LoadUI: boolean = false;
 
   private sub: any;
   id!: number;
-  supplier: any;
-
-  purchase_orders: any[] = [];
+  purchase_order: any;
 
   note: any;
 
@@ -50,27 +48,10 @@ export class SupplierDetailComponent implements OnInit {
   }
 
   getData(id: number) {
-    this.settingsService.getSupplier(id).subscribe(
-      (data) => {
-        if (data.status) {
-          this.supplier = data.supplier;
-          this.LoadUI = true;
-        } else {
-          this.toastr.warning(data.err, "ERROR !!", {
-            positionClass: "toast-top-right",
-            closeButton: true,
-          });
-          this.generateUniqueKey();
-        }
-      },
-      (error) => {
-        alert("API ERROR [ERRCODE:001]");
-      }
-    );
-
-    this.settingsService.getPOsPerSupplier({ id: id }).subscribe((data) => {
+    this.settingsService.getPurchaseOrder({ id: id }).subscribe((data) => {
       if (data.status) {
-        this.purchase_orders = data.purchase_orders;
+        this.purchase_order = data.purchase_order;
+        this.LoadUI = true;
       }
     });
   }
@@ -78,18 +59,18 @@ export class SupplierDetailComponent implements OnInit {
   updateStatus(value: number) {
     statusString = "";
     if (value == 2) {
-      var statusString = "Active";
+      var statusString = "Approved";
+    }
+    if (value == 0) {
+      var statusString = "Pending";
     }
     if (value == -2) {
-      var statusString = "Inactive";
-    }
-    if (value == -4) {
-      var statusString = "Suspended";
+      var statusString = "Rejected";
     }
     swal
       .fire({
         title:
-          "Please confirm that you want to mark this supplier as " +
+          "Please confirm that you want to mark this purchase order as " +
           statusString,
         icon: "question",
         showCancelButton: true,
@@ -110,11 +91,11 @@ export class SupplierDetailComponent implements OnInit {
             id: this.id,
             uniquekey: this.uniqueid,
           };
-          this.settingsService.updateStatus(obj).subscribe(
+          this.settingsService.updatePOStatus(obj).subscribe(
             (data) => {
               if (data.status) {
                 this.toastr.success(
-                  "Supplier status has been updated successfully.",
+                  "Purchase Order status has been updated successfully.",
                   "Success",
                   {
                     positionClass: "toast-top-right",

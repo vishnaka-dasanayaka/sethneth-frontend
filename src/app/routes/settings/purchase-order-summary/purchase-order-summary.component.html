@@ -6,17 +6,24 @@
       class="text-blue-500 cursor-pointer"
       >Settings</span
     >
-    > Supplier Settings
+    >
+    <span
+      [routerLink]="['/settings/stock-settings']"
+      routerLinkActive="router-link-active"
+      class="text-blue-500 cursor-pointer"
+      >Stock Settings</span
+    >
+    > Purchase Order Summary
   </h6>
   <div class="flex items-end justify-between">
     <div>
-      <h1 class="text-xl font-semibold">Supplier Summary</h1>
+      <h1 class="text-xl font-semibold">Purchase Order Summary</h1>
       <h5 class="text-xs font-thin">
-        Add and manage supplier contacts and details for inventory operations
+        Add and manage orders placed by the purchase_orders
       </h5>
     </div>
     <button (click)="openAddModal()" class="add_btn">
-      <i class="fa-solid fa-plus mr-2"></i>Add Supplier
+      <i class="fa-solid fa-plus mr-2"></i>Add Purchase Order
     </button>
   </div>
 
@@ -37,7 +44,7 @@
       <p-table
         #dt1
         [columns]="cols"
-        [value]="suppliers"
+        [value]="purchase_orders"
         [paginator]="true"
         [rows]="10"
         [globalFilterFields]="[
@@ -56,8 +63,8 @@
         [rowHover]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
         [lazy]="true"
-        (onLazyLoad)="getAllSuppliers($event)"
-        [totalRecords]="no_of_suppliers"
+        (onLazyLoad)="getAllPurchaseOrders($event)"
+        [totalRecords]="no_of_purchase_orders"
         [sortOrder]="1"
       >
         <ng-template #caption>
@@ -109,30 +116,30 @@
               <div *ngSwitchCase="'code'">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/settings/supplier-details/{{ rowData.id }}"
+                  routerLink="/settings/purchase-order-details/{{ rowData.id }}"
                 >
                   {{ rowData[col.field] }}
                 </a>
               </div>
 
-              <div *ngSwitchCase="'name'">
+              <div *ngSwitchCase="'supplier'">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
                   routerLink="/settings/supplier-details/{{ rowData.id }}"
                 >
-                  {{ rowData[col.field] }}
+                  {{ rowData?.supplier_name }}
                 </a>
               </div>
 
-              <div *ngSwitchCase="'contact_person'">
-                {{ rowData[col.field] }}
+              <div *ngSwitchCase="'date'">
+                {{ rowData[col.field] | date : "mediumDate" }}
               </div>
 
-              <div *ngSwitchCase="'phone'">
-                {{ rowData[col.field] }}
+              <div class="text-end" *ngSwitchCase="'amount'">
+                {{ rowData[col.field] | number : "1.2-2" }} LKR
               </div>
 
-              <div *ngSwitchCase="'status'">
+              <div class="text-center" *ngSwitchCase="'status'">
                 <span
                   *ngIf="rowData[col.field] == 0"
                   class="badge badge-primary"
@@ -143,18 +150,14 @@
                   *ngIf="rowData[col.field] == 2"
                   class="badge badge-success"
                 >
-                  Active
-                </span>
-
-                <span *ngIf="rowData[col.field] == -2" class="badge badge-info">
-                  Inactive
+                  Approved
                 </span>
 
                 <span
-                  *ngIf="rowData[col.field] == -4"
+                  *ngIf="rowData[col.field] == -2"
                   class="badge badge-danger"
                 >
-                  Suspended
+                  Rejected
                 </span>
               </div>
 
@@ -165,7 +168,7 @@
               <div *ngSwitchCase="'actions'">
                 <button
                   class="btn btn-outline-warning"
-                  routerLink="/settings/supplier-details/{{ rowData.id }}"
+                  routerLink="/settings/purchase-order-details/{{ rowData.id }}"
                 >
                   View
                 </button>
@@ -178,4 +181,5 @@
   </div>
 </section>
 
-<app-add-supplier (parentFun)="getAllSuppliers()"> </app-add-supplier>
+<app-add-purchase-order (parentFun)="getAllPurchaseOrders()">
+</app-add-purchase-order>
