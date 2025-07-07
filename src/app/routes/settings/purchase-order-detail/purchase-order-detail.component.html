@@ -8,42 +8,49 @@
     >
     >
     <span
-      [routerLink]="['/settings/supplier-summary']"
+      [routerLink]="['/settings/stock-settings']"
       routerLinkActive="router-link-active"
       class="text-blue-500 cursor-pointer"
-      >Supplier Configurations</span
+      >Stock Settings</span
     >
-    > {{ supplier?.name }}
+    >
+    <span
+      [routerLink]="['/settings/purchase-order-summary']"
+      routerLinkActive="router-link-active"
+      class="text-blue-500 cursor-pointer"
+      >Purchase Order Summary</span
+    >
+    > {{ purchase_order?.code }}
   </h6>
   <div class="flex items-end justify-between">
     <div>
-      <h1 class="text-xl font-semibold">Supplier Details</h1>
-      <h5 class="text-xs font-thin">{{ supplier?.name }}</h5>
+      <h1 class="text-xl font-semibold">Purchase Order Details</h1>
+      <h5 class="text-xs font-thin">{{ purchase_order?.code }}</h5>
     </div>
     <div>
       <button
-        [disabled]="supplier?.status == 2"
+        [disabled]="purchase_order?.status == 2"
         class="mr-2 btn-lg btn-success"
-        [ngClass]="{ 'btn-disable': supplier?.status == 2 }"
+        [ngClass]="{ 'btn-disable': purchase_order?.status == 2 }"
         (click)="updateStatus(2)"
       >
-        <i class="fa-solid fa-circle-check mr-2"></i>Mark as Active
+        <i class="fa-solid fa-circle-check mr-2"></i>Mark as Approved
       </button>
       <button
-        [disabled]="supplier?.status == -2"
-        [ngClass]="{ 'btn-disable': supplier?.status == -2 }"
-        class="mr-2 btn-lg btn-info"
+        [disabled]="purchase_order?.status == 0"
+        [ngClass]="{ 'btn-disable': purchase_order?.status == 0 }"
+        class="mr-2 btn-lg btn-primary"
+        (click)="updateStatus(0)"
+      >
+        <i class="fa-solid fa-circle-check mr-2"></i>Mark as Pending
+      </button>
+      <button
+        [disabled]="purchase_order?.status == -2"
+        class="mr-2 btn-lg btn-danger"
+        [ngClass]="{ 'btn-disable': purchase_order?.status == -2 }"
         (click)="updateStatus(-2)"
       >
-        <i class="fa-solid fa-circle-check mr-2"></i>Mark as Inactive
-      </button>
-      <button
-        [disabled]="supplier?.status == -4"
-        class="mr-2 btn-lg btn-danger"
-        [ngClass]="{ 'btn-disable': supplier?.status == -4 }"
-        (click)="updateStatus(-4)"
-      >
-        <i class="fa-solid fa-circle-check mr-2"></i>Suspend Supplier
+        <i class="fa-solid fa-circle-check mr-2"></i>Mark as Rejected
       </button>
     </div>
   </div>
@@ -60,7 +67,7 @@
     </div>
   </div>
 
-  <!-- supplier-detail.component.html -->
+  <!-- purchase_order-detail.component.html -->
   <div
     *ngIf="LoadUI"
     class="w-full mx-auto p-6 bg-white mt-5 rounded-lg shadow-md"
@@ -68,27 +75,29 @@
     <!-- Supplier Information Section -->
     <div class="mb-8">
       <h3 class="text-xl font-semibold text-gray-700 mb-4">
-        Supplier Information
+        Purchase Order Information
       </h3>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div class="space-y-4">
           <div>
-            <p class="text-sm text-gray-500">Company Name</p>
-            <p class="font-medium">{{ supplier?.name }}</p>
+            <p class="text-sm text-gray-500">Code</p>
+            <p class="font-medium">{{ purchase_order?.code }}</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500">Contact Person</p>
-            <p class="font-medium">{{ supplier?.contact_person }}</p>
+            <p class="text-sm text-gray-500">Supplier</p>
+            <p class="font-medium">{{ purchase_order?.supplier?.name }}</p>
           </div>
           <div>
-            <p class="text-sm text-gray-500">Contact Number</p>
-            <p class="font-medium">{{ supplier?.phone }}</p>
+            <p class="text-sm text-gray-500">Amount</p>
+            <p class="font-medium">
+              LKR {{ purchase_order?.amount | number : "1.2-2" }}
+            </p>
           </div>
 
-          <div>
-            <p class="text-sm text-gray-500">Email</p>
-            <p class="font-medium">{{ supplier?.email }}</p>
+          <div *ngIf="purchase_order?.description">
+            <p class="text-sm text-gray-500">Description</p>
+            <p class="font-medium">{{ purchase_order?.description }}</p>
           </div>
         </div>
 
@@ -96,42 +105,41 @@
           <div>
             <p class="text-sm text-gray-500">Status</p>
             <p
-              *ngIf="supplier?.status == 2"
+              *ngIf="purchase_order?.status == 2"
               class="badge badge-success w-16 mt-1 text-center"
             >
               Active
             </p>
             <p
-              *ngIf="supplier?.status == -2"
+              *ngIf="purchase_order?.status == -2"
               class="badge badge-info w-16 mt-1 text-center"
             >
               Inactive
             </p>
             <p
-              *ngIf="supplier?.status == 0"
+              *ngIf="purchase_order?.status == 0"
               class="badge badge-primary w-16 mt-1 text-center"
             >
               Pending
             </p>
             <p
-              *ngIf="supplier?.status == -4"
+              *ngIf="purchase_order?.status == -4"
               class="badge badge-danger w-24 mt-1 text-center"
             >
               Suspended
             </p>
           </div>
           <div>
-            <p class="text-sm text-gray-500">Created On</p>
+            <p class="text-sm text-gray-500">Received Date</p>
             <p class="font-medium">
-              {{ supplier?.created_on | date : "mediumDate" }}
+              {{ purchase_order?.date | date : "mediumDate" }}
             </p>
           </div>
-
           <div>
             <p class="text-sm text-gray-500">Created By</p>
             <p class="font-medium">
-              {{ supplier?.created_by?.firstname }}
-              {{ supplier?.created_by?.lastname }}
+              {{ purchase_order?.created_by?.firstname }}
+              {{ purchase_order?.created_by?.lastname }}
             </p>
           </div>
         </div>
@@ -147,48 +155,15 @@
       <div class="card">
         <p-tabs value="0">
           <p-tablist>
-            <p-tab value="0">Purchase Orders</p-tab>
+            <p-tab value="0">Stocks</p-tab>
             <p-tab value="1">Notes</p-tab>
           </p-tablist>
           <p-tabpanels>
             <p-tabpanel value="0">
-              <div
-                class="flex items-center mb-3 justify-between bg-gray-100 p-3 h-20 rounded-lg"
-                *ngFor="let item of purchase_orders"
-              >
-                <div class="flex flex-col h-full items-start justify-around">
-                  <h6>{{ item.code }}</h6>
-                  <p>
-                    LKR {{ item?.amount
-                    }}<span *ngIf="item?.description">
-                      - {{ item?.description }}</span
-                    >
-                  </p>
-                </div>
-                <div class="flex flex-col h-full items-end justify-around">
-                  <p
-                    class="badge badge-primary text-center"
-                    style="padding-inline: 12px !important"
-                    *ngIf="item?.status == 0"
-                  >
-                    Pending
-                  </p>
-                  <p
-                    class="badge badge-success text-center"
-                    style="padding-inline: 12px !important"
-                    *ngIf="item?.status == 2"
-                  >
-                    Approved
-                  </p>
-                  <p
-                    class="badge badge-danger text-center"
-                    style="padding-inline: 12px !important"
-                    *ngIf="item?.status == -2"
-                  >
-                    Rejected
-                  </p>
-                  <p>{{ item?.date | date : "mediumDate" }}</p>
-                </div>
+              <div>
+                <button class="add_btn">
+                  <i class="fa-solid fa-plus mr-2"></i>Add Stock
+                </button>
               </div>
             </p-tabpanel>
             <p-tabpanel value="1">
@@ -207,7 +182,7 @@
                   </h6>
                   <p class="text-sm text-gray-600 mt-1">
                     Harsha Renuka •
-                    {{ supplier?.created_on | date : "mediumDate" }}
+                    {{ purchase_order?.created_on | date : "mediumDate" }}
                   </p>
                 </div>
                 <div>
@@ -227,7 +202,7 @@
                   </h6>
                   <p class="text-sm text-gray-600 mt-1">
                     Hashan Thennakoon •
-                    {{ supplier?.created_on | date : "mediumDate" }}
+                    {{ purchase_order?.created_on | date : "mediumDate" }}
                   </p>
                 </div>
                 <div>

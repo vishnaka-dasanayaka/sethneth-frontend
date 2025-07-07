@@ -2,25 +2,37 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SettiingsMenuComponent } from "./settiings-menu/settiings-menu.component";
 import { RouterModule, Routes } from "@angular/router";
-import { StockConfigComponent } from "./stock-config/stock-config.component";
 import { SharedModule } from "../../shared/shared.module";
 import { SupplierDetailComponent } from "./supplier-detail/supplier-detail.component";
 import { SupplierSummaryComponent } from "./supplier-summary/supplier-summary.component";
+import { StockSettingsComponent } from "./stock-settings/stock-settings.component";
+import { PurchaseOrderSummaryComponent } from "./purchase-order-summary/purchase-order-summary.component";
+import { PurchaseOrderDetailComponent } from "./purchase-order-detail/purchase-order-detail.component";
+import { StockConfigComponent } from "./stock-config/stock-config.component";
 
 const routes: Routes = [
   // Client paths
   { path: "settings-menu", component: SettiingsMenuComponent },
+  { path: "stock-settings", component: StockSettingsComponent },
   { path: "stock-config", component: StockConfigComponent },
   { path: "supplier-summary", component: SupplierSummaryComponent },
   { path: "supplier-details/:id", component: SupplierDetailComponent },
+  { path: "purchase-order-summary", component: PurchaseOrderSummaryComponent },
+  {
+    path: "purchase-order-details/:id",
+    component: PurchaseOrderDetailComponent,
+  },
 ];
 
 @NgModule({
   declarations: [
     SettiingsMenuComponent,
-    StockConfigComponent,
+    StockSettingsComponent,
     SupplierSummaryComponent,
     SupplierDetailComponent,
+    PurchaseOrderSummaryComponent,
+    PurchaseOrderDetailComponent,
+    StockConfigComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],

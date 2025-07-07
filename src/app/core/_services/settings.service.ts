@@ -23,7 +23,7 @@ export class SettingsService {
   // supplier configs
 
   createSupplier(obj: any) {
-    let APIurl = this.BaseAPIurl + "supplier";
+    let APIurl = this.BaseAPIurl + "supplier/create-supplier";
 
     return this.http.post<any>(APIurl, obj).pipe(
       map((response) => {
@@ -34,7 +34,7 @@ export class SettingsService {
   }
 
   getAllSuppliers(obj: any) {
-    let APIurl = this.BaseAPIurl + "supplier/all";
+    let APIurl = this.BaseAPIurl + "supplier/get-all-paged-suppliers";
 
     return this.http.post<any>(APIurl, obj).pipe(
       map((response) => {
@@ -57,6 +57,73 @@ export class SettingsService {
 
   updateStatus(obj: any) {
     let APIurl = this.BaseAPIurl + "supplier/update-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getActiveSuppliers() {
+    let APIurl = this.BaseAPIurl + "supplier/get-active-suppliers";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getPOsPerSupplier(obj: any) {
+    let APIurl = this.BaseAPIurl + "supplier/get-purchase-orders-per-supplier";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  // stock configs
+  createPurchaseOrder(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/create-purchase-order";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllPurchaseOrders(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-all-paged-purchase-orders";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getPurchaseOrder(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-purchase-order";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updatePOStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/update-po-status";
 
     return this.http.patch<any>(APIurl, obj).pipe(
       map((response) => {

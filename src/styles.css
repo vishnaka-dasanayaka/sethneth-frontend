@@ -282,3 +282,24 @@ body {
   min-width: 200px !important;
   max-width: 300px !important;
 }
+
+/* Add this to your global styles or component styles */
+p-datepicker .p-datepicker {
+  width: 100%;
+}
+
+p-datepicker .p-inputtext {
+  width: 100%;
+}
+
+.btn-primary {
+  color: var(--color-blue-100);
+  background-color: var(--color-blue-700);
+  border: var(--color-blue-700) 1px solid;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-blue-100);
+  color: var(--color-blue-700);
+  border: var(--color-blue-700) 1px solid;
+}

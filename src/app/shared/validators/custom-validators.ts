@@ -14,4 +14,11 @@ export class CustomValidators {
     if (!value) return null;
     return emailRegex.test(value) ? null : { invalidEmailFormat: true };
   }
+
+  static strictDecimal(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    const decimalRegex = /^\d+(\.\d{1,2})?$/;
+    if (!value) return null;
+    return decimalRegex.test(value) ? null : { invalidDecimalFormat: true };
+  }
 }

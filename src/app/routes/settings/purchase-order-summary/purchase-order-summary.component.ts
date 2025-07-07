@@ -5,19 +5,19 @@ import { SettingsService } from "../../../core/_services/settings.service";
 import { TableLazyLoadEvent } from "primeng/table";
 
 @Component({
-  selector: "app-supplier-summary",
+  selector: "app-purchase-order-summary",
   standalone: false,
-  templateUrl: "./supplier-summary.component.html",
-  styleUrl: "./supplier-summary.component.css",
+  templateUrl: "./purchase-order-summary.component.html",
+  styleUrl: "./purchase-order-summary.component.css",
 })
-export class SupplierSummaryComponent {
+export class PurchaseOrderSummaryComponent {
   sysuser: any;
   LoadUI: boolean = false;
 
   event1: any;
   cols: any[] = [];
-  suppliers: any[] = [];
-  no_of_suppliers: number = 0;
+  purchase_orders: any[] = [];
+  no_of_purchase_orders: number = 0;
 
   constructor(
     private authservice: AuthenticationService,
@@ -28,10 +28,9 @@ export class SupplierSummaryComponent {
   ngOnInit(): void {
     this.cols = [
       { field: "code", header: "Code" },
-      { field: "name", header: "Supplier" },
-      { field: "contact_person", header: "Contact Person" },
-      { field: "phone", header: "Phone" },
-      { field: "email", header: "Email" },
+      { field: "supplier", header: "Supplier" },
+      { field: "date", header: "Date" },
+      { field: "amount", header: "Amount" },
       { field: "status", header: "Status" },
       { field: "actions", header: "Actions", sortable: true, width: "200px" },
     ];
@@ -43,11 +42,11 @@ export class SupplierSummaryComponent {
   }
 
   openAddModal() {
-    this.sharedService.setSupplierData({ navigate: true });
-    this.sharedService.openAddSupplierModal();
+    this.sharedService.setPurchaseOrderData({ navigate: true });
+    this.sharedService.openAddPurchaseOrderModal();
   }
 
-  getAllSuppliers(event?: TableLazyLoadEvent) {
+  getAllPurchaseOrders(event?: TableLazyLoadEvent) {
     const finalEvent = event ?? this.event1;
     this.event1 = finalEvent;
 
@@ -59,9 +58,9 @@ export class SupplierSummaryComponent {
       event: finalEvent,
     };
 
-    this.settingsService.getAllSuppliers(obj).subscribe((data) => {
-      this.suppliers = data.suppliers;
-      this.no_of_suppliers = data.no_of_suppliers;
+    this.settingsService.getAllPurchaseOrders(obj).subscribe((data) => {
+      this.purchase_orders = data.purchase_orders;
+      this.no_of_purchase_orders = data.no_of_purchase_orders;
     });
   }
 }
