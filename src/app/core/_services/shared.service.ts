@@ -56,4 +56,58 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Stock Category
+
+  private add_category = new Subject<void>();
+  private edit_category = new Subject<any>();
+  private category_data: any = undefined;
+
+  setCategoryData(data: any) {
+    this.category_data = data;
+  }
+  openAddCategoryModal() {
+    this.add_category.next();
+  }
+  getAddCategoryClickEvent(): Observable<any> {
+    return this.add_category.asObservable();
+  }
+  getCategoryData(): any {
+    return this.category_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Brand
+
+  private add_brand = new Subject<void>();
+  private edit_brand = new Subject<any>();
+  private brand_data: any = undefined;
+
+  setBrandData(data: any) {
+    this.brand_data = data;
+  }
+  openAddBrandModal() {
+    this.add_brand.next();
+  }
+  getAddBrandClickEvent(): Observable<any> {
+    return this.add_brand.asObservable();
+  }
+  getBrandyData(): any {
+    return this.brand_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }
