@@ -245,6 +245,16 @@ body {
   color: white;
 }
 
+.btn-outline-success {
+  border: 1px var(--color-green-700) solid;
+  color: var(--color-green-700);
+}
+
+.btn-outline-success:hover {
+  background-color: var(--color-green-700);
+  color: white;
+}
+
 .btn-info {
   color: var(--color-yellow-100);
   background-color: var(--color-yellow-800);

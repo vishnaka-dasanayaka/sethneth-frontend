@@ -23,14 +23,13 @@ import Preset from "./preset";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"; // this is needed!
 import { JwtInterceptor } from "./core/_helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./core/_helpers/error.interceptor";
-import { AddSupplierComponent } from "./modals/add-supplier/add-supplier.component";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
-  declarations: [AppComponent, AddSupplierComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     RoutesModule,
