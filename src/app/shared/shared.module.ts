@@ -29,6 +29,9 @@ import { InputTextModule } from "primeng/inputtext";
 import { EditorModule } from "primeng/editor";
 import { AddPurchaseOrderComponent } from "./modals/add-purchase-order/add-purchase-order.component";
 import { SelectModule } from "primeng/select";
+import { AddCategoryComponent } from "./modals/add-category/add-category.component";
+import { AddBrandComponent } from "./modals/add-brand/add-brand.component";
+import { MultiSelectModule } from "primeng/multiselect";
 
 @NgModule({
   imports: [
@@ -51,6 +54,7 @@ import { SelectModule } from "primeng/select";
     InputTextModule,
     EditorModule,
     SelectModule,
+    MultiSelectModule,
   ],
   providers: [],
   declarations: [
@@ -61,6 +65,8 @@ import { SelectModule } from "primeng/select";
     LoaderComponent,
     AddSupplierComponent,
     AddPurchaseOrderComponent,
+    AddCategoryComponent,
+    AddBrandComponent,
   ],
   exports: [
     BlockUIModule,
@@ -87,6 +93,9 @@ import { SelectModule } from "primeng/select";
     EditorModule,
     AddPurchaseOrderComponent,
     SelectModule,
+    AddCategoryComponent,
+    AddBrandComponent,
+    MultiSelectModule,
   ],
 })
 

@@ -132,4 +132,74 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  // Stock Category
+
+  createCategory(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/create-category";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllCategories(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-all-paged-categories";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateCategorystatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/update-category-status";
+
+    console.log(obj);
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  createBrand(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/create-brand";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getActiveCategories() {
+    let APIurl = this.BaseAPIurl + "stock/get-active-categories";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllBrands(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-all-paged-brands";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }
