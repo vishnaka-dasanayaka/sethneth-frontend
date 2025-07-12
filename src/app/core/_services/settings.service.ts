@@ -202,4 +202,92 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  getActiveBrands() {
+    let APIurl = this.BaseAPIurl + "stock/get-active-brands";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  createModel(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/create-model";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  createStock(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/create-stock";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllModels(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-all-paged-models";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllStocks(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-all-paged-stocks";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getActiveBrandsPerCategory(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-active-brands-per-category";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getActiveModelsPerBrand(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-active-models-per-brand";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getActivePurchaseOrdersPerSupplier(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-active-po-per-supplier";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

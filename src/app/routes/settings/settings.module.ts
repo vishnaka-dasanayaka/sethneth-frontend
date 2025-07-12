@@ -11,6 +11,8 @@ import { PurchaseOrderDetailComponent } from "./purchase-order-detail/purchase-o
 import { StockConfigComponent } from "./stock-config/stock-config.component";
 import { StockCategoriesComponent } from "./stock-categories/stock-categories.component";
 import { BrandsComponent } from "./brands/brands.component";
+import { ModelsComponent } from "./models/models.component";
+import { StockSummaryComponent } from "./stock-summary/stock-summary.component";
 
 const routes: Routes = [
   // Client paths
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: "purchase-order-summary", component: PurchaseOrderSummaryComponent },
   { path: "stock-categories", component: StockCategoriesComponent },
   { path: "brands", component: BrandsComponent },
+  { path: "models", component: ModelsComponent },
+  { path: "stock-summary", component: StockSummaryComponent },
   {
     path: "purchase-order-details/:id",
     component: PurchaseOrderDetailComponent,
@@ -39,6 +43,8 @@ const routes: Routes = [
     StockConfigComponent,
     StockCategoriesComponent,
     BrandsComponent,
+    ModelsComponent,
+    StockSummaryComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],
