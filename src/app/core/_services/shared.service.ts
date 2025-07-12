@@ -110,4 +110,58 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Brand
+
+  private add_model = new Subject<void>();
+  private edit_model = new Subject<any>();
+  private model_data: any = undefined;
+
+  setModelData(data: any) {
+    this.model_data = data;
+  }
+  openAddModelModal() {
+    this.add_model.next();
+  }
+  getAddModelClickEvent(): Observable<any> {
+    return this.add_model.asObservable();
+  }
+  getModelyData(): any {
+    return this.model_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Stock
+
+  private add_stock = new Subject<void>();
+  private edit_stock = new Subject<any>();
+  private stock_data: any = undefined;
+
+  setStockData(data: any) {
+    this.stock_data = data;
+  }
+  openAddStockModal() {
+    this.add_stock.next();
+  }
+  getAddStockClickEvent(): Observable<any> {
+    return this.add_stock.asObservable();
+  }
+  getStockData(): any {
+    return this.stock_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }
