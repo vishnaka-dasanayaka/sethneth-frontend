@@ -32,6 +32,8 @@ import { SelectModule } from "primeng/select";
 import { AddCategoryComponent } from "./modals/add-category/add-category.component";
 import { AddBrandComponent } from "./modals/add-brand/add-brand.component";
 import { MultiSelectModule } from "primeng/multiselect";
+import { AddModelComponent } from "./modals/add-model/add-model.component";
+import { AddStockComponent } from "./modals/add-stock/add-stock.component";
 
 @NgModule({
   imports: [
@@ -67,6 +69,8 @@ import { MultiSelectModule } from "primeng/multiselect";
     AddPurchaseOrderComponent,
     AddCategoryComponent,
     AddBrandComponent,
+    AddModelComponent,
+    AddStockComponent,
   ],
   exports: [
     BlockUIModule,
@@ -96,6 +100,8 @@ import { MultiSelectModule } from "primeng/multiselect";
     AddCategoryComponent,
     AddBrandComponent,
     MultiSelectModule,
+    AddModelComponent,
+    AddStockComponent,
   ],
 })
 

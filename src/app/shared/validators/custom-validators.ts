@@ -21,4 +21,11 @@ export class CustomValidators {
     if (!value) return null;
     return decimalRegex.test(value) ? null : { invalidDecimalFormat: true };
   }
+
+  static noDecimal(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    const integerRegex = /^\d+$/;
+    if (!value) return null;
+    return integerRegex.test(value) ? null : { decimalNotAllowed: true };
+  }
 }
