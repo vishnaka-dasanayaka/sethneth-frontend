@@ -90,6 +90,11 @@
             <p class="text-sm text-gray-500">Email</p>
             <p class="font-medium">{{ supplier?.email }}</p>
           </div>
+
+          <div *ngIf="supplier?.address">
+            <p class="text-sm text-gray-500">Address</p>
+            <p class="font-medium">{{ supplier?.address }}</p>
+          </div>
         </div>
 
         <div class="space-y-4">
@@ -152,6 +157,16 @@
           </p-tablist>
           <p-tabpanels>
             <p-tabpanel value="0">
+              <div
+                class="flex items-center mb-3 justify-between bg-gray-100 p-3 h-20 rounded-lg"
+                *ngIf="purchase_orders.length == 0"
+              >
+                <div
+                  class="flex flex-col h-full items-start justify-around text-yellow-600"
+                >
+                  <h3>No Purchase Orders associated with this supplier</h3>
+                </div>
+              </div>
               <div
                 class="flex items-center mb-3 justify-between bg-gray-100 p-3 h-20 rounded-lg"
                 *ngFor="let item of purchase_orders"
