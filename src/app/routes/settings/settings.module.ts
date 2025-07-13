@@ -13,6 +13,7 @@ import { StockCategoriesComponent } from "./stock-categories/stock-categories.co
 import { BrandsComponent } from "./brands/brands.component";
 import { ModelsComponent } from "./models/models.component";
 import { StockSummaryComponent } from "./stock-summary/stock-summary.component";
+import { StockDetailComponent } from "./stock-detail/stock-detail.component";
 
 const routes: Routes = [
   // Client paths
@@ -30,6 +31,7 @@ const routes: Routes = [
     path: "purchase-order-details/:id",
     component: PurchaseOrderDetailComponent,
   },
+  { path: "stock-details/:id", component: StockDetailComponent },
 ];
 
 @NgModule({
@@ -45,6 +47,7 @@ const routes: Routes = [
     BrandsComponent,
     ModelsComponent,
     StockSummaryComponent,
+    StockDetailComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],

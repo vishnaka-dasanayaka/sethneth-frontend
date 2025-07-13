@@ -36,6 +36,7 @@ export class AddSupplierComponent {
         [Validators.required, Validators.email, CustomValidators.strictEmail],
       ],
       phone: ["", [Validators.required, CustomValidators.phoneFormat]],
+      address: [null],
     });
 
     this.clickEventSubscription = this.sharedService
