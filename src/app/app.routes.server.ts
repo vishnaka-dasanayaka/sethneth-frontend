@@ -19,6 +19,15 @@ export const serverRoutes: ServerRoute[] = [
       return ids.map((id) => ({ id }));
     },
   },
+
+  {
+    path: "settings/stock-details/:id",
+    renderMode: RenderMode.Prerender,
+    async getPrerenderParams() {
+      const ids = routesIDs;
+      return ids.map((id) => ({ id }));
+    },
+  },
   // no need
   {
     path: "tickets/new-tickets/:id",

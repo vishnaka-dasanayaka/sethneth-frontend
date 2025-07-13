@@ -290,4 +290,26 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  getStock(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-stock";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateStockStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/update-stock-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

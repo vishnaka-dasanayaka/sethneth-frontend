@@ -114,7 +114,7 @@
               <div *ngSwitchCase="'code'">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/settings/purchase-order-details/{{ rowData.id }}"
+                  routerLink="/settings/stock-details/{{ rowData.id }}"
                 >
                   {{ rowData[col.field] }}
                 </a>
@@ -166,7 +166,7 @@
               <div *ngSwitchCase="'actions'">
                 <button
                   class="btn btn-outline-warning"
-                  routerLink="/settings/purchase-order-details/{{ rowData.id }}"
+                  routerLink="/settings/stock-details/{{ rowData.id }}"
                 >
                   View
                 </button>
