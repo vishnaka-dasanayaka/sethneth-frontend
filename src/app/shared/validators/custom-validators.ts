@@ -28,4 +28,12 @@ export class CustomValidators {
     if (!value) return null;
     return integerRegex.test(value) ? null : { decimalNotAllowed: true };
   }
+
+  static nicValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const nicRegex = /^(\d{9}[vV]|\d{12})$/;
+    return nicRegex.test(value) ? null : { invalidNIC: true };
+  }
 }

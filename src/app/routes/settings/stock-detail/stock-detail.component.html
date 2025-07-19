@@ -137,21 +137,15 @@
             </p>
             <p
               *ngIf="stock?.status == -2"
-              class="badge badge-info w-16 mt-1 text-center"
+              class="badge badge-danger w-16 mt-1 text-center"
             >
-              Inactive
+              Rejected
             </p>
             <p
               *ngIf="stock?.status == 0"
               class="badge badge-primary w-16 mt-1 text-center"
             >
               Pending
-            </p>
-            <p
-              *ngIf="stock?.status == -4"
-              class="badge badge-danger w-24 mt-1 text-center"
-            >
-              Suspended
             </p>
           </div>
         </div>

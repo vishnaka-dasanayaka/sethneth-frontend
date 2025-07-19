@@ -2,12 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { SelectItem } from "primeng/api";
 import { filter } from "rxjs";
-
-interface MenuItem {
-  label: string;
-  value: number;
-  path: string;
-}
+import { AuthenticationService } from "../../core/_services/authentication.service";
 
 @Component({
   selector: "app-sidebar",
@@ -16,16 +11,20 @@ interface MenuItem {
   styleUrl: "./sidebar.component.css",
 })
 export class SidebarComponent implements OnInit {
-  currentMenu: number = 1;
-  role: string = "";
-  menuItems: MenuItem[] = [];
+  sysuser: any;
+
   currentPath: string = "";
   isSidebarOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authservice: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
-    this.getRole();
+    this.authservice.validateUser().subscribe((sysuser) => {
+      this.sysuser = sysuser;
+    });
 
     this.currentPath = this.router.url;
     this.router.events
@@ -35,24 +34,8 @@ export class SidebarComponent implements OnInit {
       });
   }
 
-  getRole() {
-    this.role = "ADMIN"; // localStorage.getItem("role") || "";
-    this.setMenuItems();
-  }
-
   onClickMenu(path: string, value: number) {
-    this.currentMenu = value;
     this.isSidebarOpen = false;
     this.router.navigate([path]);
-  }
-
-  setMenuItems() {
-    this.menuItems = [
-      { label: "Dashboard", value: 4, path: "/home" },
-      // { label: "Patients", value: 6, path: "/event/new-events" },
-      // { label: "Invoices", value: 6, path: "/event/new-events" },
-      // { label: "Payments", value: 6, path: "/event/new-events" },
-      { label: "Settings", value: 7, path: "/settings/settings-menu" },
-    ];
   }
 }

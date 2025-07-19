@@ -16,6 +16,7 @@ import { MyTicketsComponent } from "./tickets/my-tickets/my-tickets.component";
 import { resetPasswordComponent } from "./reset-password/reset-password.component";
 import { OrgernizersModule } from "./orgernizers/orgernizers.module";
 import { SettingsModule } from "./settings/settings.module";
+import { PatientsModule } from "./patients/patients.module";
 
 export const routes: Routes = [
   {
@@ -29,6 +30,14 @@ export const routes: Routes = [
         loadChildren: () =>
           import("./settings/settings.module").then((m) => SettingsModule),
       },
+
+      {
+        path: "patients",
+        loadChildren: () =>
+          import("./patients/patients.module").then((m) => PatientsModule),
+      },
+
+      // NO NEED
 
       {
         path: "tickets",

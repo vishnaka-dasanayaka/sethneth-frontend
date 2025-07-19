@@ -44,18 +44,16 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getEvents();
-    this.getLocations();
+    // this.getEvents();
+    // this.getLocations();
   }
 
   getEvents(filters?: any) {
-
     filters = filters || {};
     filters.status = "ACTIVE";
     filters.size = 12;
     filters.searchQuery = this.serchText;
     filters.page = this.page;
-
 
     this.eventService.getEvents(filters, this.authorized).subscribe((data) => {
       if (data) {

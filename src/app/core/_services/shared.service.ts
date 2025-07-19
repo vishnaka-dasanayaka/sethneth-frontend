@@ -164,4 +164,31 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Patients
+
+  private add_patient = new Subject<void>();
+  private edit_patient = new Subject<any>();
+  private patient_data: any = undefined;
+
+  setPatientData(data: any) {
+    this.patient_data = data;
+  }
+  openAddPatientModal() {
+    this.add_patient.next();
+  }
+  getAddPatientClickEvent(): Observable<any> {
+    return this.add_patient.asObservable();
+  }
+  getPatientData(): any {
+    return this.patient_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }
