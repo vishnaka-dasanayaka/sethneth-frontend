@@ -1,28 +1,20 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { SelectItem } from "primeng/api";
 import { Subscription } from "rxjs";
-import { SharedService } from "../../../core/_services/shared.service";
-import { ToastrService } from "ngx-toastr";
-import { CustomValidators } from "../../validators/custom-validators";
 import swal from "sweetalert2";
-import { PatientsService } from "../../../core/_services/patients.service";
+import { SharedService } from "../../../core/_services/shared.service";
+import { SettingsService } from "../../../core/_services/settings.service";
+import { ToastrService } from "ngx-toastr";
+import { SelectItem } from "primeng/api";
 
 @Component({
-  selector: "app-add-patient",
+  selector: "app-add-lense",
   standalone: false,
-  templateUrl: "./add-patient.component.html",
-  styleUrl: "./add-patient.component.css",
+  templateUrl: "./add-lense.component.html",
+  styleUrl: "./add-lense.component.css",
 })
-export class AddPatientComponent {
+export class AddLenseComponent {
   @Output() parentFun: EventEmitter<any> = new EventEmitter();
-
-  gender_list: SelectItem[] = [
-    { label: "Please select a gender", value: null, disabled: true },
-    { label: "Male", value: "Male" },
-    { label: "Female", value: "Female" },
-    { label: "Other", value: "Other" },
-  ];
 
   valForm: FormGroup;
   uniqueid: string = "";
@@ -30,31 +22,25 @@ export class AddPatientComponent {
 
   clickEventSubscription: Subscription;
 
+  brands: SelectItem[] = [];
+
   constructor(
     private sharedService: SharedService,
     private fb: FormBuilder,
-    private patientService: PatientsService,
+    private settingsService: SettingsService,
     private toastr: ToastrService
   ) {
     this.valForm = this.fb.group({
-      name: [null, Validators.required],
-      phone: ["", [CustomValidators.phoneFormat]],
-      gender: [null],
-      dob: [null],
-      nic: [null, [CustomValidators.nicValidator]],
-      address: [null],
-      description: [null],
+      lense: ["", Validators.required],
     });
 
     this.clickEventSubscription = this.sharedService
-      .getAddPatientClickEvent()
+      .getAddLenseClickEvent()
       .subscribe(() => {
         this.openModal();
         this.generateUniqueKey();
       });
   }
-
-  ngOnInit(): void {}
 
   openModal() {
     this.showModal = true;
@@ -65,16 +51,17 @@ export class AddPatientComponent {
     this.valForm.reset();
   }
 
+  ngOnInit(): void {}
+
   submitForm(value: any) {
     for (let c in this.valForm.controls) {
       this.valForm.controls[c].markAsTouched();
     }
 
     if (this.valForm.valid) {
-      value = this.sharedService.sanitizeFormValues(value);
       value.uniquekey = this.uniqueid;
 
-      this.patientService.createPatient(value).subscribe(
+      this.settingsService.createLense(value).subscribe(
         (data) => {
           if (data.status) {
             this.parentFun.emit();
@@ -82,7 +69,7 @@ export class AddPatientComponent {
             this.valForm.reset();
             swal.fire({
               title: "Success!",
-              text: "Patient has been created successfully.",
+              text: "Lense has been created successfully.",
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });

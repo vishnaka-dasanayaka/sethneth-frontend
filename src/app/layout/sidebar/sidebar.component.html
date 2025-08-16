@@ -102,11 +102,11 @@
         <div
           class="flex items-center py-2 px-3 rounded-lg cursor-pointer transition-all duration-200 mb-1"
           [ngClass]="{
-            'bg-[#ff820d] text-white': currentPath === '/orders',
+            'bg-[#ff820d] text-white': currentPath === '/orders/order-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/orders'
+              currentPath !== '/orders/order-summary'
           }"
-          (click)="onClickMenu('/orders', 4)"
+          (click)="onClickMenu('/orders/order-summary', 4)"
         >
           <i class="fa-solid fa-cart-shopping w-5 mr-3"></i>
           <span class="text-sm font-medium">Orders</span>
@@ -114,11 +114,12 @@
         <div
           class="flex items-center py-2 px-3 rounded-lg cursor-pointer transition-all duration-200 mb-1"
           [ngClass]="{
-            'bg-[#ff820d] text-white': currentPath === '/invoices',
+            'bg-[#ff820d] text-white':
+              currentPath === '/invoices/invoice-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/invoices'
+              currentPath !== '/invoices/invoice-summary'
           }"
-          (click)="onClickMenu('/invoices', 4)"
+          (click)="onClickMenu('/invoices/invoice-summary', 4)"
         >
           <i class="fa-solid fa-file-invoice-dollar w-5 mr-3"></i>
           <span class="text-sm font-medium">Invoices</span>

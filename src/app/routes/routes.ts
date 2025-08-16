@@ -17,6 +17,8 @@ import { resetPasswordComponent } from "./reset-password/reset-password.componen
 import { OrgernizersModule } from "./orgernizers/orgernizers.module";
 import { SettingsModule } from "./settings/settings.module";
 import { PatientsModule } from "./patients/patients.module";
+import { OrdersModule } from "./orders/orders.module";
+import { InvoicesModule } from "./invoices/invoices.module";
 
 export const routes: Routes = [
   {
@@ -35,6 +37,18 @@ export const routes: Routes = [
         path: "patients",
         loadChildren: () =>
           import("./patients/patients.module").then((m) => PatientsModule),
+      },
+
+      {
+        path: "orders",
+        loadChildren: () =>
+          import("./orders/orders.module").then((m) => OrdersModule),
+      },
+
+      {
+        path: "invoices",
+        loadChildren: () =>
+          import("./invoices/invoices.module").then((m) => InvoicesModule),
       },
 
       // NO NEED
