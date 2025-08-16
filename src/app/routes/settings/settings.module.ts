@@ -14,6 +14,7 @@ import { BrandsComponent } from "./brands/brands.component";
 import { ModelsComponent } from "./models/models.component";
 import { StockSummaryComponent } from "./stock-summary/stock-summary.component";
 import { StockDetailComponent } from "./stock-detail/stock-detail.component";
+import { LensesComponent } from "./lenses/lenses.component";
 
 const routes: Routes = [
   // Client paths
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: "stock-categories", component: StockCategoriesComponent },
   { path: "brands", component: BrandsComponent },
   { path: "models", component: ModelsComponent },
+  { path: "lenses", component: LensesComponent },
   { path: "stock-summary", component: StockSummaryComponent },
   {
     path: "purchase-order-details/:id",
@@ -48,6 +50,7 @@ const routes: Routes = [
     ModelsComponent,
     StockSummaryComponent,
     StockDetailComponent,
+    LensesComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],

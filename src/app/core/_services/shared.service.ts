@@ -4,6 +4,25 @@ import { Observable, Subject } from "rxjs";
   providedIn: "root",
 })
 export class SharedService {
+  sanitizeFormValues(values: any): any {
+    const cleanedValues: any = {};
+
+    for (const key in values) {
+      if (Object.prototype.hasOwnProperty.call(values, key)) {
+        const value = values[key];
+
+        if (typeof value === "string") {
+          const trimmed = value.trim();
+          cleanedValues[key] = trimmed === "" ? null : trimmed;
+        } else {
+          cleanedValues[key] = value;
+        }
+      }
+    }
+
+    return cleanedValues;
+  }
+
   // Supplier
   private add_supplier = new Subject<void>();
   private edit_supplier = new Subject<any>();
@@ -182,6 +201,59 @@ export class SharedService {
   }
   getPatientData(): any {
     return this.patient_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Brand
+
+  private add_lense = new Subject<void>();
+  private edit_lense = new Subject<any>();
+  private lense_data: any = undefined;
+
+  setLenselData(data: any) {
+    this.lense_data = data;
+  }
+  openAddLenseModal() {
+    this.add_lense.next();
+  }
+  getAddLenseClickEvent(): Observable<any> {
+    return this.add_lense.asObservable();
+  }
+  getLenseyData(): any {
+    return this.lense_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Order
+  private add_order = new Subject<void>();
+  private edit_order = new Subject<any>();
+  private order_data: any = undefined;
+
+  setOrderData(data: any) {
+    this.order_data = data;
+  }
+  openAddOrderModal() {
+    this.add_order.next();
+  }
+  getAddOrderClickEvent(): Observable<any> {
+    return this.add_order.asObservable();
+  }
+  getOrderData(): any {
+    return this.order_data;
   }
 
   // openEditClientModal() {

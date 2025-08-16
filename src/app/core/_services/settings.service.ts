@@ -160,7 +160,16 @@ export class SettingsService {
   updateCategorystatus(obj: any) {
     let APIurl = this.BaseAPIurl + "stock/update-category-status";
 
-    console.log(obj);
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateLensestatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/update-lense-status";
 
     return this.http.patch<any>(APIurl, obj).pipe(
       map((response) => {
@@ -225,6 +234,28 @@ export class SettingsService {
     );
   }
 
+  getAllActiveModelsWithStock() {
+    let APIurl = this.BaseAPIurl + "stock/get-all-active-models-with-stock";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllActiveLenses() {
+    let APIurl = this.BaseAPIurl + "stock/get-all-active-lenses";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   createStock(obj: any) {
     let APIurl = this.BaseAPIurl + "stock/create-stock";
 
@@ -238,6 +269,17 @@ export class SettingsService {
 
   getAllModels(obj: any) {
     let APIurl = this.BaseAPIurl + "stock/get-all-paged-models";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllLenses(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/get-all-paged-lenses";
 
     return this.http.post<any>(APIurl, obj).pipe(
       map((response) => {
@@ -306,6 +348,17 @@ export class SettingsService {
     let APIurl = this.BaseAPIurl + "stock/update-stock-status";
 
     return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  createLense(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/create-lense";
+
+    return this.http.post<any>(APIurl, obj).pipe(
       map((response) => {
         return response;
       }),

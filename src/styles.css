@@ -137,6 +137,14 @@ body {
   background-color: var(--color-red-100);
   color: var(--color-red-700);
 }
+.badge-orange {
+  background-color: var(--color-orange-100);
+  color: var(--color-orange-500);
+}
+.badge-teal {
+  background-color: var(--color-teal-100);
+  color: var(--color-teal-700);
+}
 .badge-info {
   background-color: var(--color-yellow-100);
   color: var(--color-yellow-800) /* oklch(47.6% 0.114 61.907) */;
@@ -222,6 +230,30 @@ body {
   background-color: var(--color-green-100);
   color: var(--color-green-700);
   border: var(--color-green-700) 1px solid;
+}
+
+.btn-orange {
+  color: var(--color-orange-100);
+  background-color: var(--color-orange-500);
+  border: var(--color-orange-500) 1px solid;
+}
+
+.btn-orange:hover {
+  background-color: var(--color-orange-100);
+  color: var(--color-orange-500);
+  border: var(--color-orange-500) 1px solid;
+}
+
+.btn-teal {
+  color: var(--color-teal-100);
+  background-color: var(--color-teal-700);
+  border: var(--color-teal-700) 1px solid;
+}
+
+.btn-teal:hover {
+  background-color: var(--color-teal-100);
+  color: var(--color-teal-700);
+  border: var(--color-teal-700) 1px solid;
 }
 .btn-danger {
   color: var(--color-red-100);

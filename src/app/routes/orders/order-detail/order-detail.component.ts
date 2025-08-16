@@ -1,34 +1,36 @@
-import { Component, numberAttribute, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
-import { PatientsService } from "../../../core/_services/patients.service";
-import moment from "moment";
+import { OrderService } from "../../../core/_services/order.service";
 
 @Component({
-  selector: "app-patient-detail",
+  selector: "app-order-detail",
   standalone: false,
-  templateUrl: "./patient-detail.component.html",
-  styleUrl: "./patient-detail.component.css",
+  templateUrl: "./order-detail.component.html",
+  styleUrl: "./order-detail.component.css",
 })
-export class PatientDetailComponent {
+export class OrderDetailComponent {
   uniqueid: any;
   sysuser: any;
   LoadUI: boolean = false;
 
   private sub: any;
   id!: number;
-  patient: any;
-  age: number = 0;
+  order: any;
+  lense_list: any[] = [];
+  logs: any[] = [];
+
+  loading: boolean = false;
 
   note: any;
 
   constructor(
     private authservice: AuthenticationService,
-    private patientService: PatientsService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,7 @@ export class PatientDetailComponent {
     this.sub = this.route.params.subscribe((params) => {
       this.id = +params["id"];
       this.getData(this.id);
+      this.getWorkFlowLog(this.id);
     });
   }
 
@@ -50,34 +53,62 @@ export class PatientDetailComponent {
   }
 
   getData(id: number) {
-    this.patientService.getPatient({ id: id }).subscribe((data) => {
+    this.orderService.getOrder({ id: id }).subscribe((data) => {
       if (data.status) {
-        this.patient = data.patient;
+        this.order = data.order;
         this.LoadUI = true;
-        if (this.patient.dob) {
-          const birthDate = moment(this.patient.dob);
-          this.age = moment().diff(birthDate, "years");
-        }
+      }
+    });
+
+    this.orderService.getLenseList({ id: id }).subscribe((data) => {
+      if (data.status) {
+        this.lense_list = [];
+        this.lense_list = data.lense_list;
       }
     });
   }
 
+  getWorkFlowLog(id: number) {
+    this.orderService.getWorkFlowLog({ id: id }).subscribe((data) => {
+      if (data.status) {
+        this.logs = [];
+        this.logs = data.logs;
+      }
+    });
+  }
+
+  getStatusLabel(status: string): string {
+    const statusMap: { [key: string]: string } = {
+      "-2": "Cancell",
+      "0": "Pending",
+      "2": "Sent to Workshop",
+      "4": "Received from Workshop",
+      "10": "Delivered",
+    };
+    return statusMap[status] || status;
+  }
+
   updateStatus(value: number) {
     statusString = "";
-    if (value == 2) {
-      var statusString = "Approved";
+    if (value == -2) {
+      var statusString = "Cancelled";
     }
     if (value == 0) {
       var statusString = "Pending";
     }
-    if (value == -2) {
-      var statusString = "Rejected";
+    if (value == 2) {
+      var statusString = "Sent to the workshop";
+    }
+    if (value == 4) {
+      var statusString = "Received from workshop";
+    }
+    if (value == 10) {
+      var statusString = "Delivered";
     }
     swal
       .fire({
         title:
-          "Please confirm that you want to mark this patient as " +
-          statusString,
+          "Please confirm that you want to mark this order as " + statusString,
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#28a745", // ✅ Green button
@@ -97,11 +128,11 @@ export class PatientDetailComponent {
             id: this.id,
             uniquekey: this.uniqueid,
           };
-          this.patientService.updatePatientStatus(obj).subscribe(
+          this.orderService.updateOrderStatus(obj).subscribe(
             (data) => {
               if (data.status) {
                 this.toastr.success(
-                  "Patient status has been updated successfully.",
+                  "Order status has been updated successfully.",
                   "Success",
                   {
                     positionClass: "toast-top-right",
@@ -114,6 +145,7 @@ export class PatientDetailComponent {
 
                 this.generateUniqueKey();
                 this.getData(this.id);
+                this.getWorkFlowLog(this.id);
               } else {
                 this.toastr.warning(data.err, "ERROR !!", {
                   positionClass: "toast-top-right",
@@ -128,5 +160,27 @@ export class PatientDetailComponent {
           );
         }
       });
+  }
+
+  generateInvoice() {
+    this.loading = true;
+    this.orderService.generateInvoice({ id: this.id }).subscribe((data) => {
+      if (data.status) {
+        this.toastr.success(
+          "Invoice has been generated successfully.",
+          "Success",
+          {
+            positionClass: "toast-top-right",
+            closeButton: true,
+            timeOut: 3000,
+            progressBar: true,
+            toastClass: "toast toast-sm", // <-- add your small class here
+          }
+        );
+
+        this.getData(this.id);
+        this.loading = false;
+      }
+    });
   }
 }
