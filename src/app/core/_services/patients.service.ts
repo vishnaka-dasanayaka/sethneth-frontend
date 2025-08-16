@@ -63,4 +63,14 @@ export class PatientsService {
       catchError(this.handleError)
     );
   }
+
+  getAllActivePatients() {
+    let APIurl = this.BaseAPIurl + "get-all-active-patients";
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

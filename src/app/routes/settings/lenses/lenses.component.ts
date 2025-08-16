@@ -1,83 +1,85 @@
-import { Component, numberAttribute, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
-import { ActivatedRoute } from "@angular/router";
+import { SharedService } from "../../../core/_services/shared.service";
+import { SettingsService } from "../../../core/_services/settings.service";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
-import { PatientsService } from "../../../core/_services/patients.service";
-import moment from "moment";
+import { TableLazyLoadEvent } from "primeng/table";
 
 @Component({
-  selector: "app-patient-detail",
+  selector: "app-lenses",
   standalone: false,
-  templateUrl: "./patient-detail.component.html",
-  styleUrl: "./patient-detail.component.css",
+  templateUrl: "./lenses.component.html",
+  styleUrl: "./lenses.component.css",
 })
-export class PatientDetailComponent {
-  uniqueid: any;
+export class LensesComponent {
   sysuser: any;
   LoadUI: boolean = false;
+  uniqueid: any;
 
-  private sub: any;
-  id!: number;
-  patient: any;
-  age: number = 0;
-
-  note: any;
+  event1: any;
+  cols: any[] = [];
+  lenses: any[] = [];
+  no_of_lenses: number = 0;
 
   constructor(
     private authservice: AuthenticationService,
-    private patientService: PatientsService,
-    private route: ActivatedRoute,
+    private sharedService: SharedService,
+    private settingsService: SettingsService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.generateUniqueKey();
+    this.cols = [
+      { field: "name", header: "Model" },
+      { field: "status", header: "Status" },
+      { field: "actions", header: "Actions", sortable: true, width: "400px" },
+    ];
+
     this.authservice.validateUser().subscribe((sysuser) => {
       this.sysuser = sysuser;
+      this.LoadUI = true;
     });
 
-    this.sub = this.route.params.subscribe((params) => {
-      this.id = +params["id"];
-      this.getData(this.id);
+    this.generateUniqueKey();
+  }
+
+  openAddModal() {
+    this.sharedService.setLenselData({ navigate: true });
+    this.sharedService.openAddLenseModal();
+  }
+
+  getAllLenses(event?: TableLazyLoadEvent) {
+    const finalEvent = event ?? this.event1;
+    this.event1 = finalEvent;
+
+    this.event1 = event;
+
+    var obj = {
+      offset: finalEvent.first,
+      rows: finalEvent.rows,
+      event: finalEvent,
+    };
+
+    this.settingsService.getAllLenses(obj).subscribe((data) => {
+      this.lenses = data.lenses;
+      this.no_of_lenses = data.no_of_lenses;
     });
   }
 
-  generateUniqueKey() {
-    const timestamp = new Date().valueOf();
-    const random = Math.random().toString(36).substring(2);
-    this.uniqueid = `${timestamp}${random}`;
-  }
-
-  getData(id: number) {
-    this.patientService.getPatient({ id: id }).subscribe((data) => {
-      if (data.status) {
-        this.patient = data.patient;
-        this.LoadUI = true;
-        if (this.patient.dob) {
-          const birthDate = moment(this.patient.dob);
-          this.age = moment().diff(birthDate, "years");
-        }
-      }
-    });
-  }
-
-  updateStatus(value: number) {
+  updateStatus(value: number, id: number) {
     statusString = "";
-    if (value == 2) {
-      var statusString = "Approved";
+    if (value == 1) {
+      var statusString = "enable";
     }
     if (value == 0) {
-      var statusString = "Pending";
+      var statusString = "disable";
     }
-    if (value == -2) {
-      var statusString = "Rejected";
-    }
+
     swal
       .fire({
         title:
-          "Please confirm that you want to mark this patient as " +
-          statusString,
+          "Please confirm that you want to " + statusString + " the lense.",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#28a745", // ✅ Green button
@@ -94,14 +96,14 @@ export class PatientDetailComponent {
         if (result.isConfirmed) {
           var obj = {
             status: value,
-            id: this.id,
+            id: id,
             uniquekey: this.uniqueid,
           };
-          this.patientService.updatePatientStatus(obj).subscribe(
+          this.settingsService.updateLensestatus(obj).subscribe(
             (data) => {
               if (data.status) {
                 this.toastr.success(
-                  "Patient status has been updated successfully.",
+                  "Lense status has been updated successfully.",
                   "Success",
                   {
                     positionClass: "toast-top-right",
@@ -113,7 +115,7 @@ export class PatientDetailComponent {
                 );
 
                 this.generateUniqueKey();
-                this.getData(this.id);
+                this.getAllLenses(this.event1);
               } else {
                 this.toastr.warning(data.err, "ERROR !!", {
                   positionClass: "toast-top-right",
@@ -128,5 +130,11 @@ export class PatientDetailComponent {
           );
         }
       });
+  }
+
+  generateUniqueKey() {
+    const timestamp = new Date().valueOf();
+    const random = Math.random().toString(36).substring(2);
+    this.uniqueid = `${timestamp}${random}`;
   }
 }
