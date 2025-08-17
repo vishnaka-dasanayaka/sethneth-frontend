@@ -263,4 +263,30 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Invoice Item
+  private add_invoice_item = new Subject<void>();
+  private edit_invoice_item = new Subject<any>();
+  private invoice_item_data: any = undefined;
+
+  setInvoiceItemData(data: any) {
+    this.invoice_item_data = data;
+  }
+  openAddInvoiceItemModal() {
+    this.add_invoice_item.next();
+  }
+  getAddInvoiceItemClickEvent(): Observable<any> {
+    return this.add_invoice_item.asObservable();
+  }
+  getInvoiceItemData(): any {
+    return this.invoice_item_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }

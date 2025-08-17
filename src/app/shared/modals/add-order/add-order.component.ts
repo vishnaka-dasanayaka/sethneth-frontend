@@ -48,7 +48,8 @@ export class AddOrderComponent {
       lense: [null, Validators.required],
       lense_price: [null, Validators.required],
       price: [{ value: 0, disabled: true }, Validators.required],
-      discount: [0, Validators.required],
+      frame_discount: [0, Validators.required],
+      lense_discount: [0, Validators.required],
       discounted_price: [{ value: 0, disabled: true }, Validators.required],
     });
 
@@ -178,8 +179,6 @@ export class AddOrderComponent {
       value.model = value.model.id;
       value.date = moment(value.date).format("YYYY-MM-DD");
 
-      console.log(value);
-
       this.orderService.createOrder(value).subscribe(
         (data) => {
           if (data.status) {
@@ -229,19 +228,26 @@ export class AddOrderComponent {
   updatePrice() {
     var lense_price = this.valForm.get("lense_price")?.value;
     var model = this.valForm.get("model")?.value;
+
+    var frame_discount = this.valForm.get("frame_discount")?.value;
+    var lense_discount = this.valForm.get("lense_discount")?.value;
+
     this.valForm.patchValue({ price: lense_price + model.selling_price });
     this.valForm.patchValue({
-      discounted_price: lense_price + model.selling_price,
+      discounted_price:
+        lense_price + model.selling_price - frame_discount - lense_discount,
     });
   }
 
   updateDiscountedPrice() {
     var lense_price = this.valForm.get("lense_price")?.value;
     var model = this.valForm.get("model")?.value;
-    var discount = this.valForm.get("discount")?.value;
+    var frame_discount = this.valForm.get("frame_discount")?.value;
+    var lense_discount = this.valForm.get("lense_discount")?.value;
 
     this.valForm.patchValue({
-      discounted_price: lense_price + model.selling_price - discount,
+      discounted_price:
+        lense_price + model.selling_price - frame_discount - lense_discount,
     });
   }
 }
