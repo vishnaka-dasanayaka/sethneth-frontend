@@ -64,6 +64,17 @@ export class InvoiceService {
     );
   }
 
+  getInvPerPatient(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-inv-per-patient";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   // updatePatientStatus(obj: any) {
   //   let APIurl = this.BaseAPIurl + "update-patient-status";
 

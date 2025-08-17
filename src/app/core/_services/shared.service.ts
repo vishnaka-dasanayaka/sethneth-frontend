@@ -289,4 +289,30 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Order
+  private add_payment = new Subject<void>();
+  private edit_payment = new Subject<any>();
+  private payment_data: any = undefined;
+
+  setPaymentData(data: any) {
+    this.payment_data = data;
+  }
+  openAdPaymentrModal() {
+    this.add_payment.next();
+  }
+  getAddPaymentClickEvent(): Observable<any> {
+    return this.add_payment.asObservable();
+  }
+  getPaymentData(): any {
+    return this.payment_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }
