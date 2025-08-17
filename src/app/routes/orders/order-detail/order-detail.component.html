@@ -163,31 +163,33 @@
         <div class="space-y-4">
           <div>
             <p class="text-sm text-gray-500">Frame Price</p>
-            <p class="font-medium">
+            <p class="font-medium text-teal-600">
               LKR {{ order?.stock_id?.selling_price | number : "0.2" }}
             </p>
           </div>
           <div>
+            <p class="text-sm text-gray-500">Frame Discount</p>
+            <p class="font-medium text-teal-600">
+              LKR {{ order?.frame_discount | number : "0.2" }}
+            </p>
+          </div>
+          <div>
             <p class="text-sm text-gray-500">Lense Price</p>
-            <p class="font-medium">
+            <p class="font-medium text-cyan-500">
               LKR {{ order?.lense_price | number : "0.2" }}
             </p>
           </div>
           <div>
-            <p class="text-sm text-gray-500">Total Price</p>
-            <p class="font-medium">LKR {{ order?.price | number : "0.2" }}</p>
-          </div>
-          <div>
-            <p class="text-sm text-gray-500">Discount</p>
-            <p class="font-medium">
-              LKR {{ order?.discount | number : "0.2" }}
+            <p class="text-sm text-gray-500">Lense Discount</p>
+            <p class="font-medium text-cyan-500">
+              LKR {{ order?.lense_discount | number : "0.2" }}
             </p>
           </div>
         </div>
         <div class="space-y-4">
           <div>
             <p class="text-sm text-gray-500">Final Price</p>
-            <p class="font-medium">
+            <p class="font-medium text-[#ff820d]">
               LKR {{ order?.discounted_price | number : "0.2" }}
             </p>
           </div>
@@ -233,12 +235,12 @@
           </div>
         </div>
       </div>
-      <div *ngIf="order?.description">
+      <!-- <div *ngIf="order?.description">
         <p class="text-sm text-gray-500">Description</p>
         <p class="font-medium">
           {{ order?.description }}
         </p>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -452,7 +454,7 @@
   </div> -->
 
   <div
-    *ngIf="LoadUI"
+    *ngIf="LoadUI && logs.length > 0"
     class="w-full mx-auto p-6 bg-white mt-5 rounded-lg shadow-md"
   >
     <h3 class="text-xl font-semibold text-gray-700 mb-6">Work Flow</h3>
