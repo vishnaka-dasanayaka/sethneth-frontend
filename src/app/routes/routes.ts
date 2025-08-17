@@ -19,6 +19,7 @@ import { SettingsModule } from "./settings/settings.module";
 import { PatientsModule } from "./patients/patients.module";
 import { OrdersModule } from "./orders/orders.module";
 import { InvoicesModule } from "./invoices/invoices.module";
+import { PaymentsModule } from "./payments/payments.module";
 
 export const routes: Routes = [
   {
@@ -49,6 +50,12 @@ export const routes: Routes = [
         path: "invoices",
         loadChildren: () =>
           import("./invoices/invoices.module").then((m) => InvoicesModule),
+      },
+
+      {
+        path: "payments",
+        loadChildren: () =>
+          import("./payments/payments.module").then((m) => PaymentsModule),
       },
 
       // NO NEED
