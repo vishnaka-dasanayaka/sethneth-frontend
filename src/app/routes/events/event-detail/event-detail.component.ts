@@ -177,7 +177,7 @@ export class EventDetailComponent implements OnInit {
       custom_1: "Any extra data you need",
     };
 
-    this.paymentService.payNow(paymentData, data.hash);
+    //this.paymentService.payNow(paymentData, data.hash);
   }
 
   onLoginStatus(status: boolean) {

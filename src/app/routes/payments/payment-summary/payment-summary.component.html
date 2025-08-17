@@ -1,13 +1,13 @@
 <section class="">
-  <h6 class="text-xs mb-2">Invoices > Invoice Summary</h6>
+  <h6 class="text-xs mb-2">Payments > Payment Summary</h6>
   <div class="flex items-end justify-between">
     <div>
-      <h1 class="text-xl font-semibold">Invoice Summary</h1>
-      <h5 class="text-xs font-thin">List of Invoices appear here</h5>
+      <h1 class="text-xl font-semibold">Payment Summary</h1>
+      <h5 class="text-xs font-thin">List of Payments appear here</h5>
     </div>
-    <!-- <button (click)="openAddModal()" class="add_btn">
-      <i class="fa-solid fa-plus mr-2"></i>Add Invoice
-    </button> -->
+    <button (click)="openAddModal()" class="add_btn">
+      <i class="fa-solid fa-plus mr-2"></i>Add Payment
+    </button>
   </div>
 
   <div *ngIf="!LoadUI" class="card">
@@ -27,7 +27,7 @@
       <p-table
         #dt1
         [columns]="cols"
-        [value]="invoices"
+        [value]="payments"
         [paginator]="true"
         [rows]="10"
         [globalFilterFields]="[
@@ -46,8 +46,8 @@
         [rowHover]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
         [lazy]="true"
-        (onLazyLoad)="getAllInvoices($event)"
-        [totalRecords]="no_of_invoices"
+        (onLazyLoad)="getAllPayments($event)"
+        [totalRecords]="no_of_payments"
         [sortOrder]="1"
       >
         <ng-template #caption>
@@ -99,7 +99,7 @@
               <div *ngSwitchCase="'code'">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/invoices/invoice-details/{{ rowData.id }}"
+                  routerLink="/payments/payment-details/{{ rowData.id }}"
                 >
                   {{ rowData[col.field] }}
                 </a>
@@ -115,7 +115,7 @@
               </div>
 
               <div class="text-start" *ngSwitchCase="'date'">
-                {{ rowData?.created_on | date : "mediumDate" }}
+                {{ rowData?.received_on | date : "mediumDate" }}
               </div>
 
               <div class="text-left" *ngSwitchCase="'status'">
@@ -140,14 +140,14 @@
                 </span>
               </div>
 
-              <div *ngSwitchCase="'price'">
-                LKR {{ rowData?.grandtotal | number : "0.2" }}
+              <div *ngSwitchCase="'amount'">
+                LKR {{ rowData?.amount | number : "0.2" }}
               </div>
 
               <div *ngSwitchCase="'actions'">
                 <button
                   class="btn btn-outline-warning"
-                  routerLink="/invoices/invoice-details/{{ rowData.id }}"
+                  routerLink="/payments/payment-details/{{ rowData.id }}"
                 >
                   View
                 </button>
@@ -160,4 +160,4 @@
   </div>
 </section>
 
-<app-add-order (parentFun)="getAllInvoices()"> </app-add-order>
+<app-add-payment (parentFun)="getAllPayments()"> </app-add-payment>
