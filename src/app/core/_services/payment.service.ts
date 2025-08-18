@@ -42,16 +42,16 @@ export class PaymentService {
     );
   }
 
-  // getPatient(obj: any) {
-  //   let APIurl = this.BaseAPIurl + "get-patient";
+  getPayment(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-payment";
 
-  //   return this.http.post<any>(APIurl, obj).pipe(
-  //     map((response) => {
-  //       return response;
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-  // }
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 
   // updatePatientStatus(obj: any) {
   //   let APIurl = this.BaseAPIurl + "update-patient-status";

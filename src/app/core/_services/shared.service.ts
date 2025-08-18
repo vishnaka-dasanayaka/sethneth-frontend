@@ -315,4 +315,30 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Prescription
+  private add_prescription = new Subject<void>();
+  private edit_prescription = new Subject<any>();
+  private prescription_data: any = undefined;
+
+  setPrescriptionData(data: any) {
+    this.prescription_data = data;
+  }
+  openAddPrescriptionrModal() {
+    this.add_prescription.next();
+  }
+  getAddPrescriptionClickEvent(): Observable<any> {
+    return this.add_prescription.asObservable();
+  }
+  getPrescriptionData(): any {
+    return this.prescription_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }

@@ -39,6 +39,7 @@ import { AddLenseComponent } from "./modals/add-lense/add-lense.component";
 import { AddOrderComponent } from "./modals/add-order/add-order.component";
 import { AddInoviceItemComponent } from "./modals/add-inovice-item/add-inovice-item.component";
 import { AddPaymentComponent } from "./modals/add-payment/add-payment.component";
+import { AddPrescriptionComponent } from "./modals/add-prescription/add-prescription.component";
 
 @NgModule({
   imports: [
@@ -81,6 +82,7 @@ import { AddPaymentComponent } from "./modals/add-payment/add-payment.component"
     AddOrderComponent,
     AddInoviceItemComponent,
     AddPaymentComponent,
+    AddPrescriptionComponent,
   ],
   exports: [
     BlockUIModule,
@@ -117,6 +119,7 @@ import { AddPaymentComponent } from "./modals/add-payment/add-payment.component"
     AddOrderComponent,
     AddInoviceItemComponent,
     AddPaymentComponent,
+    AddPrescriptionComponent,
   ],
 })
 
