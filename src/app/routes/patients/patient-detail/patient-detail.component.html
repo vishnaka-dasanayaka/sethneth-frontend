@@ -189,13 +189,14 @@
       <div class="card">
         <p-tabs value="0">
           <p-tablist>
-            <p-tab value="0">Notes</p-tab>
-            <p-tab value="1">Orders</p-tab>
-            <p-tab value="2">Invoices</p-tab>
-            <p-tab value="3">Payments</p-tab>
+            <p-tab value="1">Notes</p-tab>
+            <p-tab value="0">Prescriptions</p-tab>
+            <p-tab value="2">Orders</p-tab>
+            <p-tab value="3">Invoices</p-tab>
+            <p-tab value="4">Payments</p-tab>
           </p-tablist>
           <p-tabpanels>
-            <p-tabpanel value="0">
+            <p-tabpanel value="1">
               <div class="card">
                 <p-editor [(ngModel)]="note" [style]="{ height: '200px' }" />
                 <button class="add_btn flex my-3">Add Note</button>
@@ -241,9 +242,104 @@
                 </div>
               </div>
             </p-tabpanel>
+            <p-tabpanel value="0">
+              <div class="flex items-end justify-end">
+                <button (click)="openAddModal()" class="add_btn">
+                  <i class="fa-solid fa-plus mr-2"></i>Add Prescription
+                </button>
+              </div>
+              <div class="card">
+                <div class="mt-4">
+                  <p-table
+                    #dt1
+                    [columns]="cols"
+                    [value]="prescriptions"
+                    [paginator]="false"
+                    [showCurrentPageReport]="false"
+                    [responsive]="false"
+                    [autoLayout]="true"
+                    styleClass="p-datatable-sm p-datatable-striped"
+                    [rowHover]="true"
+                  >
+                    <ng-template pTemplate="header" let-columns>
+                      <tr class="bg-[#ff820d] text-white text-sm">
+                        <th
+                          *ngFor="let col of columns"
+                          [pSortableColumn]="col.field"
+                          [pSortableColumnDisabled]="col.sortable"
+                          [style.width]="col.width"
+                          class="px-3 py-2 text-center font-medium"
+                        >
+                          {{ col.header }}
+                          <p-sortIcon
+                            *ngIf="!col.sortable"
+                            [field]="col.field"
+                            ariaLabel="Activate to sort"
+                            ariaLabelDesc="Activate to sort in descending order"
+                            ariaLabelAsc="Activate to sort in ascending order"
+                            styleClass="ml-2"
+                          ></p-sortIcon>
+                        </th>
+                      </tr>
+                    </ng-template>
+
+                    <ng-template
+                      pTemplate="body"
+                      let-rowData
+                      let-columns="columns"
+                    >
+                      <tr class="hover:bg-orange-50 transition">
+                        <td
+                          *ngFor="let col of columns"
+                          class="px-3 py-2 text-sm text-center"
+                          [ngSwitch]="col.field"
+                        >
+                          <div *ngSwitchCase="'item'">
+                            {{ rowData?.description }}
+                          </div>
+
+                          <div *ngSwitchCase="'desc'">
+                            {{ rowData?.item_type }}
+                          </div>
+
+                          <div class="text-start" *ngSwitchCase="'qty'">
+                            {{ rowData?.total_quantity }}
+                          </div>
+
+                          <div *ngSwitchCase="'unit_price'" class="text-right">
+                            LKR {{ rowData?.unit_price | number : "0.2" }}
+                          </div>
+
+                          <div *ngSwitchCase="'discount'" class="text-right">
+                            LKR {{ rowData?.discount | number : "0.2" }}
+                          </div>
+
+                          <div *ngSwitchCase="'total'" class="text-right">
+                            LKR {{ rowData?.discounted_price | number : "0.2" }}
+                          </div>
+
+                          <div *ngSwitchCase="'actions'">
+                            <!-- <button
+                              class="btn btn-outline-warning"
+                              routerLink="/invoices/invoice-details/{{
+                                rowData.id
+                              }}"
+                            >
+                              View
+                            </button> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </p-tabpanel>
           </p-tabpanels>
         </p-tabs>
       </div>
     </div>
   </div>
 </section>
+
+<app-add-prescription (parentFun)="getData(id)"> </app-add-prescription>

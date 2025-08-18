@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
 import { PatientsService } from "../../../core/_services/patients.service";
 import moment from "moment";
+import { SharedService } from "../../../core/_services/shared.service";
 
 @Component({
   selector: "app-patient-detail",
@@ -24,12 +25,26 @@ export class PatientDetailComponent {
 
   note: any;
 
+  cols: any[] = [];
+  prescriptions: any[] = [];
+
   constructor(
     private authservice: AuthenticationService,
     private patientService: PatientsService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private sharedService: SharedService
+  ) {
+    this.cols = [
+      { field: "item", header: "Item", sortable: true },
+      { field: "desc", header: "Description", sortable: true },
+      { field: "qty", header: "QTY", sortable: true },
+      { field: "unit_price", header: "Unit Price", sortable: true },
+      { field: "discount", header: "Discount", sortable: true },
+      { field: "total", header: "Total", sortable: true },
+      { field: "actions", header: "Actions", sortable: true },
+    ];
+  }
 
   ngOnInit(): void {
     this.generateUniqueKey();
@@ -128,5 +143,13 @@ export class PatientDetailComponent {
           );
         }
       });
+  }
+
+  openAddModal() {
+    this.sharedService.setPrescriptionData({
+      navigate: true,
+      patient_id: this.id,
+    });
+    this.sharedService.openAddPrescriptionrModal();
   }
 }

@@ -7,12 +7,12 @@ import { SettingsService } from "../../../core/_services/settings.service";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
-  selector: "app-add-lense",
+  selector: "app-add-prescription",
   standalone: false,
-  templateUrl: "./add-lense.component.html",
-  styleUrl: "./add-lense.component.css",
+  templateUrl: "./add-prescription.component.html",
+  styleUrl: "./add-prescription.component.css",
 })
-export class AddLenseComponent {
+export class AddPrescriptionComponent {
   @Output() parentFun: EventEmitter<any> = new EventEmitter();
 
   valForm: FormGroup;
@@ -28,11 +28,52 @@ export class AddLenseComponent {
     private toastr: ToastrService
   ) {
     this.valForm = this.fb.group({
-      lense: ["", Validators.required],
+      var1: [null],
+      var2: [null],
+      val1: [null],
+      val2: [null],
+      var_ph1: [null],
+      var_ph2: [null],
+      val_ph1: [null],
+      val_ph2: [null],
+      reti_r1: [null],
+      reti_r2: [null],
+      reti_r3: [null],
+      reti_l1: [null],
+      reti_l2: [null],
+      reti_l3: [null],
+      hbrx: [null],
+      r_va1: [null],
+      r_va2: [null],
+      r_sph: [null],
+      r_cyl: [null],
+      r_axis: [null],
+      l_va1: [null],
+      l_va2: [null],
+      l_sph: [null],
+      l_cyl: [null],
+      l_axis: [null],
+      r_sum: [null],
+      l_sum: [null],
+      sub_r_va1: [null],
+      sub_r_va2: [null],
+      sub_r_sph: [null],
+      sub_r_cyl: [null],
+      sub_r_axis: [null],
+      sub_l_va1: [null],
+      sub_l_va2: [null],
+      sub_l_sph: [null],
+      sub_l_cyl: [null],
+      sub_l_axis: [null],
+      sub_r_sum: [null],
+      sub_l_sum: [null],
+      notes: [null],
+      rv_date: [null],
+      signed_by: [null],
     });
 
     this.clickEventSubscription = this.sharedService
-      .getAddLenseClickEvent()
+      .getAddPrescriptionClickEvent()
       .subscribe(() => {
         this.openModal();
         this.generateUniqueKey();
@@ -57,6 +98,12 @@ export class AddLenseComponent {
 
     if (this.valForm.valid) {
       value.uniquekey = this.uniqueid;
+      value = this.sharedService.sanitizeFormValues(value);
+      value.patient_id = this.sharedService.getPrescriptionData().patient_id;
+
+      console.log(value);
+
+      return;
 
       this.settingsService.createLense(value).subscribe(
         (data) => {
