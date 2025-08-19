@@ -7,7 +7,7 @@
   <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl mx-auto z-50">
     <!-- Modal Header -->
     <div class="flex justify-between items-center px-6 py-4 border-b">
-      <h4 class="text-xl font-semibold text-gray-800">Add Model</h4>
+      <h4 class="text-xl font-semibold text-gray-800">Add Invoice</h4>
       <button
         type="button"
         class="text-gray-500 hover:text-red-600 text-xl"
@@ -27,50 +27,20 @@
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
           <div>
             <label class="block text-sm font-medium mb-1 text-gray-700"
-              >Model Name
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
-            ></label>
-            <input
-              type="text"
-              formControlName="model"
-              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
-            />
-            <span
-              class="text-red-500 text-xs"
-              *ngIf="
-                valForm.controls['model'].hasError('required') &&
-                (valForm.controls['model'].dirty ||
-                  valForm.controls['model'].touched)
-              "
-              >This field is required</span
-            >
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1 text-gray-700"
-              >Brand
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
-            ></label>
-
+              >Patient
+              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i>
+            </label>
             <p-select
-              [options]="brands"
-              formControlName="brand"
+              [options]="patients"
+              formControlName="patient"
               [checkmark]="true"
               optionLabel="label"
               optionValue="value"
               [showClear]="true"
-              placeholder="Select a Brand"
+              placeholder="Select a patient"
               class="w-full"
               [filter]="true"
             />
-            <span
-              class="text-red-500 text-xs"
-              *ngIf="
-                valForm.controls['brand'].hasError('required') &&
-                (valForm.controls['brand'].dirty ||
-                  valForm.controls['brand'].touched)
-              "
-              >This field is required</span
-            >
           </div>
         </div>
 

@@ -328,10 +328,10 @@
                           </div>
 
                           <div *ngSwitchCase="'actions'">
-                            <!-- routerLink="/invoices/invoice-details/{{
-                                rowData.id
-                              }}" -->
-                            <button class="btn btn-outline-warning">
+                            <button
+                              (click)="openViewModal(rowData)"
+                              class="btn btn-outline-warning"
+                            >
                               View
                             </button>
                           </div>
@@ -350,3 +350,4 @@
 </section>
 
 <app-add-prescription (parentFun)="getPrescriptions()"> </app-add-prescription>
+<app-view-prescription> </app-view-prescription>

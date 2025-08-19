@@ -319,6 +319,7 @@ export class SharedService {
   // Prescription
   private add_prescription = new Subject<void>();
   private edit_prescription = new Subject<any>();
+  private view_prescription = new Subject<void>();
   private prescription_data: any = undefined;
 
   setPrescriptionData(data: any) {
@@ -332,6 +333,38 @@ export class SharedService {
   }
   getPrescriptionData(): any {
     return this.prescription_data;
+  }
+  openViewPrescriptionrModal() {
+    this.view_prescription.next();
+  }
+  getViewPrescriptionClickEvent(): Observable<any> {
+    return this.view_prescription.asObservable();
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Invoice
+  private add_invoice = new Subject<void>();
+  private edit_invoice = new Subject<any>();
+  private invoice_data: any = undefined;
+
+  setInvoiceData(data: any) {
+    this.invoice_data = data;
+  }
+  openAddInvoiceModal() {
+    this.add_invoice.next();
+  }
+  getAddInvoiceClickEvent(): Observable<any> {
+    return this.add_invoice.asObservable();
+  }
+  getInvoiceData(): any {
+    return this.invoice_data;
   }
 
   // openEditClientModal() {
