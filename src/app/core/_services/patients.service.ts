@@ -95,4 +95,15 @@ export class PatientsService {
       catchError(this.handleError)
     );
   }
+
+  getPrescription(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-prescription";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

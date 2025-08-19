@@ -164,4 +164,14 @@ export class PatientDetailComponent {
     });
     this.sharedService.openAddPrescriptionrModal();
   }
+
+  openViewModal(data: any) {
+    this.sharedService.setPrescriptionData({
+      navigate: true,
+      pres_id: data.id,
+      view_type: "view_only",
+      data: data,
+    });
+    this.sharedService.openViewPrescriptionrModal();
+  }
 }

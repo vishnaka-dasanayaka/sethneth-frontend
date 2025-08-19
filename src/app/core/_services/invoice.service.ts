@@ -75,6 +75,17 @@ export class InvoiceService {
     );
   }
 
+  createInvoice(obj: any) {
+    let APIurl = this.BaseAPIurl + "create-invoice";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   // updatePatientStatus(obj: any) {
   //   let APIurl = this.BaseAPIurl + "update-patient-status";
 

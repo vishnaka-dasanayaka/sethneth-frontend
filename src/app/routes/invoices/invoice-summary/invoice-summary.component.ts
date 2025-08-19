@@ -42,8 +42,8 @@ export class InvoiceSummaryComponent {
   }
 
   openAddModal() {
-    this.sharedService.setOrderData({ navigate: true });
-    this.sharedService.openAddOrderModal();
+    this.sharedService.setInvoiceData({ navigate: true });
+    this.sharedService.openAddInvoiceModal();
   }
 
   getAllInvoices(event?: TableLazyLoadEvent) {
