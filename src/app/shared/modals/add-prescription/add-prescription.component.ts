@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import swal from "sweetalert2";
 import { SharedService } from "../../../core/_services/shared.service";
-import { SettingsService } from "../../../core/_services/settings.service";
 import { ToastrService } from "ngx-toastr";
+import moment from "moment";
+import { PatientsService } from "../../../core/_services/patients.service";
 
 @Component({
   selector: "app-add-prescription",
@@ -24,8 +25,8 @@ export class AddPrescriptionComponent {
   constructor(
     private sharedService: SharedService,
     private fb: FormBuilder,
-    private settingsService: SettingsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private patientService: PatientsService
   ) {
     this.valForm = this.fb.group({
       var1: [null],
@@ -101,11 +102,15 @@ export class AddPrescriptionComponent {
       value = this.sharedService.sanitizeFormValues(value);
       value.patient_id = this.sharedService.getPrescriptionData().patient_id;
 
-      console.log(value);
+      if (value.hbrx) {
+        value.hbrx = moment(value.hbrx).format("YYYY-MM-DD");
+      }
 
-      return;
+      if (value.rv_date) {
+        value.rv_date = moment(value.rv_date).format("YYYY-MM-DD");
+      }
 
-      this.settingsService.createLense(value).subscribe(
+      this.patientService.createPrescription(value).subscribe(
         (data) => {
           if (data.status) {
             this.parentFun.emit();
@@ -113,7 +118,7 @@ export class AddPrescriptionComponent {
             this.valForm.reset();
             swal.fire({
               title: "Success!",
-              text: "Lense has been created successfully.",
+              text: "Prescription has been created successfully.",
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
