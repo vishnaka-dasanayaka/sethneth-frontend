@@ -36,12 +36,12 @@ export class PatientDetailComponent {
     private sharedService: SharedService
   ) {
     this.cols = [
-      { field: "item", header: "Item", sortable: true },
-      { field: "desc", header: "Description", sortable: true },
-      { field: "qty", header: "QTY", sortable: true },
-      { field: "unit_price", header: "Unit Price", sortable: true },
-      { field: "discount", header: "Discount", sortable: true },
-      { field: "total", header: "Total", sortable: true },
+      { field: "pres", header: "Prescription No", sortable: true },
+      { field: "status", header: "Status", sortable: true },
+      { field: "notes", header: "Special Notes", sortable: true },
+      { field: "sign", header: "Signed By", sortable: true },
+      { field: "created_on", header: "Created On", sortable: true },
+      { field: "created_by", header: "Created By", sortable: true },
       { field: "actions", header: "Actions", sortable: true },
     ];
   }
@@ -56,6 +56,18 @@ export class PatientDetailComponent {
       this.id = +params["id"];
       this.getData(this.id);
     });
+
+    this.getPrescriptions();
+  }
+
+  getPrescriptions() {
+    this.patientService
+      .getPrescriptionPerPatient({ patient_id: this.id })
+      .subscribe((data) => {
+        if (data.status) {
+          this.prescriptions = data.prescription_list;
+        }
+      });
   }
 
   generateUniqueKey() {

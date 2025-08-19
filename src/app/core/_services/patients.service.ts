@@ -73,4 +73,26 @@ export class PatientsService {
       catchError(this.handleError)
     );
   }
+
+  createPrescription(obj: any) {
+    let APIurl = this.BaseAPIurl + "create-prescription";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getPrescriptionPerPatient(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-prescriptions-per-patient";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

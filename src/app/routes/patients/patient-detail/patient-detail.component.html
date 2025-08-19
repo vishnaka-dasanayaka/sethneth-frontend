@@ -189,14 +189,14 @@
       <div class="card">
         <p-tabs value="0">
           <p-tablist>
-            <p-tab value="1">Notes</p-tab>
-            <p-tab value="0">Prescriptions</p-tab>
+            <p-tab value="0">Notes</p-tab>
+            <p-tab value="1">Prescriptions</p-tab>
             <p-tab value="2">Orders</p-tab>
             <p-tab value="3">Invoices</p-tab>
             <p-tab value="4">Payments</p-tab>
           </p-tablist>
           <p-tabpanels>
-            <p-tabpanel value="1">
+            <p-tabpanel value="0">
               <div class="card">
                 <p-editor [(ngModel)]="note" [style]="{ height: '200px' }" />
                 <button class="add_btn flex my-3">Add Note</button>
@@ -242,7 +242,7 @@
                 </div>
               </div>
             </p-tabpanel>
-            <p-tabpanel value="0">
+            <p-tabpanel value="1">
               <div class="flex items-end justify-end">
                 <button (click)="openAddModal()" class="add_btn">
                   <i class="fa-solid fa-plus mr-2"></i>Add Prescription
@@ -290,43 +290,50 @@
                     >
                       <tr class="hover:bg-orange-50 transition">
                         <td
-                          *ngFor="let col of columns"
+                          *ngFor="let col of columns; let i = index"
                           class="px-3 py-2 text-sm text-center"
                           [ngSwitch]="col.field"
                         >
-                          <div *ngSwitchCase="'item'">
-                            {{ rowData?.description }}
+                          <div *ngSwitchCase="'pres'">
+                            {{ i + 1 }}
                           </div>
 
-                          <div *ngSwitchCase="'desc'">
-                            {{ rowData?.item_type }}
+                          <div *ngSwitchCase="'status'">
+                            <span
+                              *ngIf="rowData[col.field] == 0"
+                              class="badge badge-danger"
+                            >
+                              Disabled
+                            </span>
+                            <span
+                              *ngIf="rowData[col.field] == 1"
+                              class="badge badge-success"
+                            >
+                              Active
+                            </span>
                           </div>
 
-                          <div class="text-start" *ngSwitchCase="'qty'">
-                            {{ rowData?.total_quantity }}
+                          <div class="text-start" *ngSwitchCase="'notes'">
+                            {{ rowData?.data?.notes }}
                           </div>
-
-                          <div *ngSwitchCase="'unit_price'" class="text-right">
-                            LKR {{ rowData?.unit_price | number : "0.2" }}
+                          <div class="text-start" *ngSwitchCase="'sign'">
+                            {{ rowData?.data?.signed_by }}
                           </div>
-
-                          <div *ngSwitchCase="'discount'" class="text-right">
-                            LKR {{ rowData?.discount | number : "0.2" }}
+                          <div class="text-start" *ngSwitchCase="'created_on'">
+                            {{ rowData?.created_on | date : "mediumDate" }}
                           </div>
-
-                          <div *ngSwitchCase="'total'" class="text-right">
-                            LKR {{ rowData?.discounted_price | number : "0.2" }}
+                          <div class="text-start" *ngSwitchCase="'created_by'">
+                            {{ rowData?.created_by?.firstname }}
+                            {{ rowData?.created_by?.lastname }}
                           </div>
 
                           <div *ngSwitchCase="'actions'">
-                            <!-- <button
-                              class="btn btn-outline-warning"
-                              routerLink="/invoices/invoice-details/{{
+                            <!-- routerLink="/invoices/invoice-details/{{
                                 rowData.id
-                              }}"
-                            >
+                              }}" -->
+                            <button class="btn btn-outline-warning">
                               View
-                            </button> -->
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -342,4 +349,4 @@
   </div>
 </section>
 
-<app-add-prescription (parentFun)="getData(id)"> </app-add-prescription>
+<app-add-prescription (parentFun)="getPrescriptions()"> </app-add-prescription>
