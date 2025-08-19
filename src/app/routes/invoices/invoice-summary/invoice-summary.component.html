@@ -5,9 +5,9 @@
       <h1 class="text-xl font-semibold">Invoice Summary</h1>
       <h5 class="text-xs font-thin">List of Invoices appear here</h5>
     </div>
-    <!-- <button (click)="openAddModal()" class="add_btn">
+    <button (click)="openAddModal()" class="add_btn">
       <i class="fa-solid fa-plus mr-2"></i>Add Invoice
-    </button> -->
+    </button>
   </div>
 
   <div *ngIf="!LoadUI" class="card">
@@ -160,4 +160,4 @@
   </div>
 </section>
 
-<app-add-order (parentFun)="getAllInvoices()"> </app-add-order>
+<app-add-inovice (parentFun)="getAllInvoices()"> </app-add-inovice>

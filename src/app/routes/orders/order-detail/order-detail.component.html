@@ -25,14 +25,19 @@
       <button
         [disabled]="order?.status == -2"
         class="mr-2 btn-lg btn-danger"
-        [ngClass]="{ 'btn-disable': order?.status == -2 }"
+        [ngClass]="{
+          'btn-disable': order?.status == -2 || order?.status == 10
+        }"
         (click)="updateStatus(-2)"
       >
         <i class="fa-solid fa-circle-xmark text-danger mr-2"></i> Cancel
       </button>
       <button
         [disabled]="order?.status == 0"
-        [ngClass]="{ 'btn-disable': order?.status == 0 }"
+        [ngClass]="{
+          'btn-disable':
+            order?.status == 0 || order?.status == -2 || order?.status == 10
+        }"
         class="mr-2 btn-lg btn-primary"
         (click)="updateStatus(0)"
       >
@@ -42,7 +47,10 @@
       <button
         [disabled]="order?.status == 2"
         class="mr-2 btn-lg btn-orange"
-        [ngClass]="{ 'btn-disable': order?.status == 2 }"
+        [ngClass]="{
+          'btn-disable':
+            order?.status == 2 || order?.status == -2 || order?.status == 10
+        }"
         (click)="updateStatus(2)"
       >
         <i class="fa-solid fa-truck-arrow-right text-warning mr-2"></i> Sent to
@@ -51,7 +59,10 @@
       <button
         [disabled]="order?.status == 4"
         class="mr-2 btn-lg btn-teal"
-        [ngClass]="{ 'btn-disable': order?.status == 4 }"
+        [ngClass]="{
+          'btn-disable':
+            order?.status == 4 || order?.status == -2 || order?.status == 10
+        }"
         (click)="updateStatus(4)"
       >
         <i class="fa-solid fa-truck-loading mr-2"></i> Received from W/S
@@ -59,7 +70,9 @@
       <button
         [disabled]="order?.status == 10"
         class="mr-2 btn-lg btn-success"
-        [ngClass]="{ 'btn-disable': order?.status == 10 }"
+        [ngClass]="{
+          'btn-disable': order?.status == 10 || order?.status == -2
+        }"
         (click)="updateStatus(10)"
       >
         <i class="fa-solid fa-circle-check mr-2"></i>Delivered
@@ -139,10 +152,10 @@
           <div>
             <p class="text-sm text-gray-500">Status</p>
             <p
-              *ngIf="order?.status == 2"
+              *ngIf="order?.status == 10"
               class="badge badge-success w-16 mt-1 text-center"
             >
-              Active
+              Delivered
             </p>
 
             <p
@@ -152,10 +165,22 @@
               Pending
             </p>
             <p
+              *ngIf="order?.status == 2"
+              class="badge badge-orange w-24 mt-1 text-center"
+            >
+              Sent to W/S
+            </p>
+            <p
+              *ngIf="order?.status == 4"
+              class="badge badge-teal w-32 mt-1 text-center"
+            >
+              Received from W/S
+            </p>
+            <p
               *ngIf="order?.status == -2"
               class="badge badge-danger w-24 mt-1 text-center"
             >
-              Rejected
+              Cancelled
             </p>
           </div>
         </div>
