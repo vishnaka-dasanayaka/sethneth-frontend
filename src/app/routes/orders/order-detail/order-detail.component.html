@@ -26,7 +26,7 @@
         [disabled]="order?.status == -2"
         class="mr-2 btn-lg btn-danger"
         [ngClass]="{
-          'btn-disable': order?.status == -2 || order?.status == 10
+          'btn-disable': order?.status == -2
         }"
         (click)="updateStatus(-2)"
       >
@@ -35,8 +35,7 @@
       <button
         [disabled]="order?.status == 0"
         [ngClass]="{
-          'btn-disable':
-            order?.status == 0 || order?.status == -2 || order?.status == 10
+          'btn-disable': order?.status == 0
         }"
         class="mr-2 btn-lg btn-primary"
         (click)="updateStatus(0)"
@@ -46,24 +45,32 @@
       </button>
       <button
         [disabled]="order?.status == 2"
-        class="mr-2 btn-lg btn-orange"
+        class="mr-2 btn-lg btn-cyan"
         [ngClass]="{
-          'btn-disable':
-            order?.status == 2 || order?.status == -2 || order?.status == 10
+          'btn-disable': order?.status == 2
         }"
         (click)="updateStatus(2)"
+      >
+        <i class="fa-solid fa-circle-check"></i> Confirm
+      </button>
+      <button
+        [disabled]="order?.status == 4"
+        class="mr-2 btn-lg btn-orange"
+        [ngClass]="{
+          'btn-disable': order?.status == 4
+        }"
+        (click)="updateStatus(4)"
       >
         <i class="fa-solid fa-truck-arrow-right text-warning mr-2"></i> Sent to
         W/S
       </button>
       <button
-        [disabled]="order?.status == 4"
+        [disabled]="order?.status == 6"
         class="mr-2 btn-lg btn-teal"
         [ngClass]="{
-          'btn-disable':
-            order?.status == 4 || order?.status == -2 || order?.status == 10
+          'btn-disable': order?.status == 6
         }"
-        (click)="updateStatus(4)"
+        (click)="updateStatus(6)"
       >
         <i class="fa-solid fa-truck-loading mr-2"></i> Received from W/S
       </button>
@@ -71,7 +78,7 @@
         [disabled]="order?.status == 10"
         class="mr-2 btn-lg btn-success"
         [ngClass]="{
-          'btn-disable': order?.status == 10 || order?.status == -2
+          'btn-disable': order?.status == 10
         }"
         (click)="updateStatus(10)"
       >
@@ -166,12 +173,18 @@
             </p>
             <p
               *ngIf="order?.status == 2"
+              class="badge badge-cyan w-24 mt-1 text-center"
+            >
+              Confirmed
+            </p>
+            <p
+              *ngIf="order?.status == 4"
               class="badge badge-orange w-24 mt-1 text-center"
             >
               Sent to W/S
             </p>
             <p
-              *ngIf="order?.status == 4"
+              *ngIf="order?.status == 6"
               class="badge badge-teal w-32 mt-1 text-center"
             >
               Received from W/S
@@ -237,7 +250,7 @@
           <div>
             <p class="text-sm text-gray-500">Invoice</p>
             <p class="font-medium">
-              <span *ngIf="order?.invoice_id">
+              <span class="flex items-center" *ngIf="order?.invoice_id">
                 <a
                   class="text-[#ff820d] font-medium hover:underline"
                   routerLink="/invoices/invoice-details/{{
@@ -246,6 +259,15 @@
                 >
                   {{ order?.invoice_id?.code }}
                 </a>
+
+                <button
+                  class="btn ml-3 btn-warning"
+                  type="button"
+                  (click)="generateInvoice()"
+                  *ngIf="order?.status != -2 && order?.status != 0"
+                >
+                  Generate New Invoice
+                </button>
               </span>
               <span *ngIf="order?.invoice_id == null">
                 <button
@@ -497,8 +519,9 @@
               [ngClass]="{
                 'bg-red-700': item.to_status === '-2',
                 'bg-blue-700': item.to_status === '0',
-                'bg-orange-500': item.to_status === '2',
-                'bg-teal-700': item.to_status === '4',
+                'bg-cyan-500': item.to_status === '2',
+                'bg-orange-500': item.to_status === '4',
+                'bg-teal-700': item.to_status === '6',
                 'bg-green-700': item.to_status === '10'
               }"
             ></div>
@@ -509,8 +532,9 @@
               [ngClass]="{
                 'border-red-200 bg-red-50': item.to_status === '-2',
                 'border-blue-200 bg-blue-50': item.to_status === '0',
-                'border-orange-200 bg-orange-50': item.to_status === '2',
-                'border-teal-200 bg-teal-50': item.to_status === '4',
+                'border-cyan-200 bg-cyan-50': item.to_status === '2',
+                'border-orange-200 bg-orange-50': item.to_status === '4',
+                'border-teal-200 bg-teal-50': item.to_status === '6',
                 'border-green-200 bg-green-50': item.to_status === '10'
               }"
             >
@@ -520,8 +544,9 @@
                   [ngClass]="{
                     'text-red-700': item.to_status === '-2',
                     'text-blue-700': item.to_status === '0',
-                    'text-orange-700': item.to_status === '2',
-                    'text-teal-700': item.to_status === '4',
+                    'text-cyan-700': item.to_status === '2',
+                    'text-orange-700': item.to_status === '4',
+                    'text-teal-700': item.to_status === '6',
                     'text-green-700': item.to_status === '10'
                   }"
                 >

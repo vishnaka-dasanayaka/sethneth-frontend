@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { OrderService } from "../../../core/_services/order.service";
 import swal from "sweetalert2";
 import { InvoiceService } from "../../../core/_services/invoice.service";
 import { SharedService } from "../../../core/_services/shared.service";
@@ -32,7 +31,6 @@ export class InvoiceDetailComponent {
     private authservice: AuthenticationService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private orderService: OrderService,
     private invoiceService: InvoiceService,
     private sharedService: SharedService
   ) {
@@ -81,7 +79,6 @@ export class InvoiceDetailComponent {
   }
 
   updateStatus(value: number) {
-    return;
     statusString = "";
     if (value == -2) {
       var statusString = "Cancelled";
@@ -90,18 +87,13 @@ export class InvoiceDetailComponent {
       var statusString = "Pending";
     }
     if (value == 2) {
-      var statusString = "Sent to the workshop";
-    }
-    if (value == 4) {
-      var statusString = "Received from workshop";
-    }
-    if (value == 10) {
-      var statusString = "Delivered";
+      var statusString = "Approved";
     }
     swal
       .fire({
         title:
-          "Please confirm that you want to mark this inv as " + statusString,
+          "Please confirm that you want to mark this invoice as " +
+          statusString,
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#28a745", // ✅ Green button
@@ -121,7 +113,7 @@ export class InvoiceDetailComponent {
             id: this.id,
             uniquekey: this.uniqueid,
           };
-          this.orderService.updateOrderStatus(obj).subscribe(
+          this.invoiceService.updateInvStatus(obj).subscribe(
             (data) => {
               if (data.status) {
                 this.toastr.success(
@@ -157,5 +149,64 @@ export class InvoiceDetailComponent {
   openAddModal() {
     this.sharedService.setInvoiceItemData({ navigate: true, inv_id: this.id });
     this.sharedService.openAddInvoiceItemModal();
+  }
+
+  printInvoice() {
+    console.log(this.inv_items);
+
+    const printContents = document.getElementById("print-invoice");
+    if (!printContents) {
+      console.error("Print section not found");
+      return;
+    }
+
+    const popupWin = window.open("", "_blank", "width=800,height=600");
+    if (!popupWin) {
+      alert("Popup blocked. Please allow popups for this site.");
+      return;
+    }
+
+    popupWin.document.open();
+    popupWin.document.write(`
+    <html>
+      <head>
+        <title>Invoice</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+        <link
+          href="https://fonts.googleapis.com/css2?family=National+Park:wght@200..800&display=swap"
+          rel="stylesheet"
+        />
+        <style>
+          @page {
+            size: A5 portrait;
+            margin: 1cm;
+          }
+          body {
+            font-family: "National Park", sans-serif;
+            font-optical-sizing: auto;            
+            padding: 20px;
+            width:559px;
+            margin:auto;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+          }
+          th, td {
+            border: 1px solid #ccc;
+            padding: 6px;
+          }
+          th {
+            background-color: #f3f4f6;
+          }
+        </style>
+      </head>
+      <body onload="window.print(); window.close();">
+        ${printContents.innerHTML}
+      </body>
+    </html>
+  `);
+    popupWin.document.close();
   }
 }

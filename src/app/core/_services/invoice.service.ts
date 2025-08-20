@@ -86,16 +86,16 @@ export class InvoiceService {
     );
   }
 
-  // updatePatientStatus(obj: any) {
-  //   let APIurl = this.BaseAPIurl + "update-patient-status";
+  updateInvStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "update-invoice-status";
 
-  //   return this.http.patch<any>(APIurl, obj).pipe(
-  //     map((response) => {
-  //       return response;
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-  // }
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 
   // getAllActiveBranches() {
   //   let APIurl = this.BaseAPIurl + "get-all-active-branches";

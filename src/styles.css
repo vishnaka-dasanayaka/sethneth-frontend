@@ -3,6 +3,42 @@
 @import "tailwindcss";
 @plugin "tailwindcss-primeui";
 
+/* PRINT INVOICE IN B5 */
+
+/* @media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #print-invoice,
+  #print-invoice * {
+    visibility: visible;
+  }
+
+  #print-invoice {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 1cm;
+    font-family: sans-serif;
+  }
+
+  @page {
+    size: A5 portrait;
+    margin: 1cm;
+  }
+}
+
+.a5-invoice {
+  width: 14.8cm;
+  min-height: 21cm;
+  padding: 1cm;
+  background: white;
+} */
+
+/* PRINT INVOICE IN B5 */
+
 .dark_btn {
   color: white;
   background-color: #001960;
@@ -145,6 +181,10 @@ body {
   background-color: var(--color-teal-100);
   color: var(--color-teal-700);
 }
+.badge-cyan {
+  background-color: var(--color-cyan-100);
+  color: var(--color-cyan-700);
+}
 .badge-info {
   background-color: var(--color-yellow-100);
   color: var(--color-yellow-800) /* oklch(47.6% 0.114 61.907) */;
@@ -254,6 +294,18 @@ body {
   background-color: var(--color-teal-100);
   color: var(--color-teal-700);
   border: var(--color-teal-700) 1px solid;
+}
+
+.btn-cyan {
+  color: var(--color-cyan-100);
+  background-color: var(--color-cyan-700);
+  border: var(--color-cyan-700) 1px solid;
+}
+
+.btn-cyan:hover {
+  background-color: var(--color-cyan-100);
+  color: var(--color-cyan-700);
+  border: var(--color-cyan-700) 1px solid;
 }
 .btn-danger {
   color: var(--color-red-100);

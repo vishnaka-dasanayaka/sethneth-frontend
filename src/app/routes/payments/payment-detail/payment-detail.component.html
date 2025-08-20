@@ -31,8 +31,10 @@
         <i class="fa-solid fa-circle-xmark text-danger mr-2"></i> Cancel
       </button>
       <button
-        [disabled]="payment?.status == 0"
-        [ngClass]="{ 'btn-disable': payment?.status == 0 }"
+        [disabled]="payment?.status == 0 || payment?.status == -2"
+        [ngClass]="{
+          'btn-disable': payment?.status == 0 || payment?.status == -2
+        }"
         class="mr-2 btn-lg btn-primary"
         (click)="updateStatus(0)"
       >
@@ -40,9 +42,11 @@
         Pending
       </button>
       <button
-        [disabled]="payment?.status == 2"
+        [disabled]="payment?.status == 2 || payment?.status == -2"
         class="mr-2 btn-lg btn-success"
-        [ngClass]="{ 'btn-disable': payment?.status == 2 }"
+        [ngClass]="{
+          'btn-disable': payment?.status == 2 || payment?.status == -2
+        }"
         (click)="updateStatus(2)"
       >
         <i class="fa-solid fa-circle-check mr-2"></i>Approved
@@ -104,7 +108,7 @@
               *ngIf="payment?.status == -2"
               class="badge badge-danger w-24 mt-1 text-center"
             >
-              Rejected
+              Cancelled
             </p>
           </div>
         </div>
@@ -236,20 +240,20 @@
 
                           <div class="text-left" *ngSwitchCase="'status'">
                             <span
-                              *ngIf="rowData[col.field] == 0"
+                              *ngIf="rowData.invoice_id[col.field] == 0"
                               class="badge badge-primary"
                             >
                               Pending
                             </span>
                             <span
-                              *ngIf="rowData[col.field] == 2"
+                              *ngIf="rowData.invoice_id[col.field] == 2"
                               class="badge badge-success"
                             >
                               Approved
                             </span>
 
                             <span
-                              *ngIf="rowData[col.field] == -2"
+                              *ngIf="rowData.invoice_id[col.field] == -2"
                               class="badge badge-danger"
                             >
                               Cancelled
@@ -264,7 +268,7 @@
                             <button
                               class="btn btn-outline-warning"
                               routerLink="/invoices/invoice-details/{{
-                                rowData.id
+                                rowData.invoice_id?.id
                               }}"
                             >
                               View

@@ -31,8 +31,8 @@
         <i class="fa-solid fa-circle-xmark text-danger mr-2"></i> Cancel
       </button>
       <button
-        [disabled]="inv?.status == 0"
-        [ngClass]="{ 'btn-disable': inv?.status == 0 }"
+        [disabled]="inv?.status == 0 || inv?.status == -2"
+        [ngClass]="{ 'btn-disable': inv?.status == 0 || inv?.status == -2 }"
         class="mr-2 btn-lg btn-primary"
         (click)="updateStatus(0)"
       >
@@ -40,9 +40,9 @@
         Pending
       </button>
       <button
-        [disabled]="inv?.status == 2"
+        [disabled]="inv?.status == 2 || inv?.status == -2"
         class="mr-2 btn-lg btn-success"
-        [ngClass]="{ 'btn-disable': inv?.status == 2 }"
+        [ngClass]="{ 'btn-disable': inv?.status == 2 || inv?.status == -2 }"
         (click)="updateStatus(2)"
       >
         <i class="fa-solid fa-circle-check mr-2"></i>Approved
@@ -83,6 +83,14 @@
             <p class="text-sm text-gray-500">Patient</p>
             <p class="font-medium">{{ inv?.patient_id?.name }}</p>
           </div>
+          <div>
+            <button
+              class="btn btn-outline-warning mt-3"
+              (click)="printInvoice()"
+            >
+              <i class="fa-solid fa-print"></i> Print Invoice
+            </button>
+          </div>
         </div>
 
         <div class="space-y-4">
@@ -105,7 +113,7 @@
               *ngIf="inv?.status == -2"
               class="badge badge-danger w-24 mt-1 text-center"
             >
-              Rejected
+              Cancelled
             </p>
           </div>
         </div>
@@ -131,13 +139,6 @@
           </div>
         </div>
         <div class="space-y-4">
-          <div>
-            <p class="text-sm text-gray-500">Final Price</p>
-            <p class="font-medium">
-              LKR {{ inv?.discounted_price | number : "0.2" }}
-            </p>
-          </div>
-
           <div>
             <p class="text-sm text-gray-500">Created By</p>
             <p class="font-medium">
@@ -488,3 +489,274 @@
 </section>
 
 <app-add-inovice-item (parentFun)="getData(id)"> </app-add-inovice-item>
+
+<!-- PRINT TEMPLATE -->
+<div
+  id="print-invoice"
+  class="hidden print:block bg-white p-6 w-[14.8cm] min-h-[21cm] mx-auto relative"
+>
+  <div class="flex items-start justify-start">
+    <div class="w-24">
+      <img src="/logo.jpeg" alt="Logo" />
+    </div>
+
+    <div class="ml-2">
+      <h3 class="text-lg font-bold">SETH NETH OPTICS (PVT) LTD</h3>
+      <h4 class="text-sm">NO.42, MATALE ROAD, GALEWELA</h4>
+      <h4 class="text-xs">REG. NO. : PV 00323458</h4>
+      <div class="flex mt-3 w-full justify-between items-center">
+        <h4 class="text-xs">HOTLINE : 070 447 8888</h4>
+        <h4 class="ml-10 text-xs">LANDLINE : 0662223837</h4>
+      </div>
+    </div>
+  </div>
+  <div class="text-xs mt-5 space-y-1 grid grid-cols-5">
+    <div class="grid grid-cols-3 col-span-3">
+      <div class="flex flex-col">
+        <p class="font-semibold">Invoice Code:</p>
+        <p class="font-semibold">Name:</p>
+        <p class="font-semibold">Date:</p>
+        <p class="font-semibold">Phone:</p>
+        <p class="font-semibold">Address:</p>
+      </div>
+      <div class="col-span-2">
+        <p>{{ inv?.code }}</p>
+        <p>{{ inv?.patient_id?.name }}</p>
+        <p>{{ inv?.created_on | date : "mediumDate" }}</p>
+        <p>
+          {{ inv?.patient_id?.phone }}
+          <span
+            *ngIf="
+              inv?.patient_id?.phone == '' || inv?.patient_id?.phone == null
+            "
+            >[NOT PROVIDED]</span
+          >
+        </p>
+        <p>
+          {{ inv?.patient_id?.address }}
+          <span
+            *ngIf="
+              inv?.patient_id?.address == '' || inv?.patient_id?.address == null
+            "
+            >[NOT PROVIDED]</span
+          >
+        </p>
+      </div>
+    </div>
+    <div class="grid grid-cols-6 col-span-2">
+      <div class="flex flex-col col-span-2">
+        <p class="font-semibold">Status:</p>
+        <p class="font-semibold">Created By:</p>
+        <p class="font-semibold">Issued By:</p>
+      </div>
+      <div class="col-span-4">
+        <p *ngIf="inv?.status == 2">Active</p>
+
+        <p *ngIf="inv?.status == 0">Pending</p>
+        <p *ngIf="inv?.status == -2">Rejected</p>
+        <p>{{ inv?.created_by?.firstname }} {{ inv?.created_by?.lastname }}</p>
+        <p>{{ sysuser?.firstname }} {{ sysuser?.lastname }}</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="mt-4 font-semibold text-md">Invoice Items</h3>
+  <table class="w-full text-xs mt-2 border border-collapse">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border px-2 py-1 text-right">Qty</th>
+        <th class="border px-2 py-1 text-left">Item</th>
+        <th class="border px-2 py-1 text-right">Price (LKR)</th>
+        <th class="border px-2 py-1 text-right">Discount (LKR)</th>
+        <th class="border px-2 py-1 text-right">Total (LKR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of inv_items">
+        <tr *ngIf="item?.item_type == 'ORDER' && item?.order_id?.stock_id">
+          <td class="border px-2 py-1 text-center">
+            {{ item.total_quantity }}
+          </td>
+          <td class="border px-2 py-1">
+            {{ item?.order_id?.stock_id?.category.name }} >
+            {{ item?.order_id?.stock_id?.brand.name }} >
+            {{ item?.order_id?.stock_id?.model.name }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            KR
+            {{ item?.order_id?.frame_price | number : "0.2" }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{ item?.order_id?.frame_discount | number : "0.2" }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{
+              item?.order_id?.frame_price - item?.order_id?.frame_discount
+                | number : "0.2"
+            }}
+          </td>
+        </tr>
+        <tr
+          *ngIf="item?.item_type == 'ORDER' && item?.order_lenses?.length > 0"
+        >
+          <td class="border px-2 py-1 text-center">
+            {{ item.total_quantity }}
+          </td>
+          <td class="border px-2 py-1">
+            <span *ngFor="let data of item?.order_lenses; let last = last">
+              {{ data?.lense_id?.name }}<span *ngIf="!last"> <br /> </span>
+            </span>
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{ item?.order_id?.lense_price | number : "0.2" }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{ item?.order_id?.lense_discount | number : "0.2" }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{
+              item?.order_id?.lense_price - item?.order_id?.lense_discount
+                | number : "0.2"
+            }}
+          </td>
+        </tr>
+
+        <tr *ngIf="item?.item_type != 'ORDER'">
+          <td class="border px-2 py-1 text-center">
+            {{ item.total_quantity }}
+          </td>
+          <td class="border px-2 py-1">
+            {{ item?.description }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{ item?.unit_price | number : "0.2" }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{ item?.discount | number : "0.2" }}
+          </td>
+          <td class="border px-2 py-1 text-right">
+            {{ item.discounted_price | number : "0.2" }}
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <div class="float-right mt-4 w-72 space-y-1 text-sm text-right">
+    <div class="grid grid-cols-2">
+      <h1>Gross Total</h1>
+      <p class="font-medium text-right">
+        LKR {{ inv?.grosstotal | number : "0.2" }}
+      </p>
+    </div>
+    <div class="grid grid-cols-2">
+      <h1>Discount</h1>
+      <p class="font-medium text-right">
+        - LKR {{ inv?.discount | number : "0.2" }}
+      </p>
+    </div>
+    <div class="grid grid-cols-2">
+      <h1 class="text-lg">Grand Total</h1>
+      <p class="text-lg text-right">
+        LKR {{ inv?.grandtotal | number : "0.2" }}
+      </p>
+    </div>
+    <div class="grid grid-cols-2">
+      <h1>Paid Amount</h1>
+      <p class="font-medium text-right text-green-500">
+        LKR {{ inv?.paidamount | number : "0.2" }}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2">
+      <h1>Open Balance</h1>
+      <p class="font-medium text-right text-red-500">
+        LKR {{ inv?.openbalance | number : "0.2" }}
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="flex justify-between w-full items-center pb-3 absolute left-0 px-3 bottom-0"
+  >
+    <div class="flex flex-col justify-center items-center">
+      <p>..............................</p>
+      <p class="font-medium text-xs">Customer Signature</p>
+    </div>
+    <div class="font-medium text-sm">Thankyou for your Business</div>
+    <div class="flex flex-col justify-center items-center">
+      <p>..............................</p>
+      <p class="font-medium text-xs">Checked By</p>
+    </div>
+  </div>
+</div>
+
+<!-- <div
+  id="print-invoice"
+  class="print:block bg-white p-6 w-[14.8cm] min-h-[21cm] mx-auto"
+>
+  <h2 class="text-center text-lg font-bold mb-2">INVOICE</h2>
+  <div class="text-sm space-y-1">
+    <p><strong>Invoice Code:</strong> {{ inv?.code }}</p>
+    <p><strong>Patient Name:</strong> {{ inv?.patient_id?.name }}</p>
+    <p>
+      <strong>Status:</strong>
+      <span *ngIf="inv?.status == 2">Approved</span>
+      <span *ngIf="inv?.status == 0">Pending</span>
+      <span *ngIf="inv?.status == -2">Rejected</span>
+    </p>
+    <p><strong>Date:</strong> {{ inv?.created_on | date : "mediumDate" }}</p>
+    <p>
+      <strong>Created By:</strong> {{ inv?.created_by.firstname }}
+      {{ inv?.created_by.lastname }}
+    </p>
+  </div>
+
+  <h3 class="mt-4 font-semibold text-md">Invoice Items</h3>
+  <table class="w-full text-xs mt-2 border border-collapse">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border px-2 py-1 text-left">Item</th>
+        <th class="border px-2 py-1 text-right">Qty</th>
+        <th class="border px-2 py-1 text-right">Price</th>
+        <th class="border px-2 py-1 text-right">Discount</th>
+        <th class="border px-2 py-1 text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of inv_items">
+        <td class="border px-2 py-1">
+          {{ item.description || item.order_id?.stock_id?.model?.name }}
+        </td>
+        <td class="border px-2 py-1 text-right">{{ item.total_quantity }}</td>
+        <td class="border px-2 py-1 text-right">
+          LKR
+          {{ item.unit_price || item.order_id?.frame_price | number : "0.2" }}
+        </td>
+        <td class="border px-2 py-1 text-right">
+          LKR
+          {{ item.discount || item.order_id?.frame_discount | number : "0.2" }}
+        </td>
+        <td class="border px-2 py-1 text-right">
+          LKR {{ item.discounted_price | number : "0.2" }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mt-4 space-y-1 text-sm text-right">
+    <p>
+      <strong>Gross Total:</strong> LKR {{ inv?.grosstotal | number : "0.2" }}
+    </p>
+    <p><strong>Discount:</strong> - LKR {{ inv?.discount | number : "0.2" }}</p>
+    <p>
+      <strong>Grand Total:</strong> LKR {{ inv?.grandtotal | number : "0.2" }}
+    </p>
+    <p>
+      <strong>Paid Amount:</strong> LKR {{ inv?.paidamount | number : "0.2" }}
+    </p>
+    <p>
+      <strong>Open Balance:</strong> LKR {{ inv?.openbalance | number : "0.2" }}
+    </p>
+  </div>
+</div> -->
