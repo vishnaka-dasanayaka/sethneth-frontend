@@ -2,9 +2,7 @@ import { Component } from "@angular/core";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
-import { OrderService } from "../../../core/_services/order.service";
 import swal from "sweetalert2";
-import { InvoiceService } from "../../../core/_services/invoice.service";
 import { PaymentService } from "../../../core/_services/payment.service";
 
 @Component({
@@ -32,8 +30,6 @@ export class PaymentDetailComponent {
     private authservice: AuthenticationService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private orderService: OrderService,
-    private invoiceService: InvoiceService,
     private paymentService: PaymentService
   ) {
     this.cols = [
@@ -75,7 +71,6 @@ export class PaymentDetailComponent {
   }
 
   updateStatus(value: number) {
-    return;
     statusString = "";
     if (value == -2) {
       var statusString = "Cancelled";
@@ -84,13 +79,7 @@ export class PaymentDetailComponent {
       var statusString = "Pending";
     }
     if (value == 2) {
-      var statusString = "Sent to the workshop";
-    }
-    if (value == 4) {
-      var statusString = "Received from workshop";
-    }
-    if (value == 10) {
-      var statusString = "Delivered";
+      var statusString = "Approved";
     }
     swal
       .fire({
@@ -116,11 +105,11 @@ export class PaymentDetailComponent {
             id: this.id,
             uniquekey: this.uniqueid,
           };
-          this.orderService.updateOrderStatus(obj).subscribe(
+          this.paymentService.updatePaymentStatus(obj).subscribe(
             (data) => {
               if (data.status) {
                 this.toastr.success(
-                  "Order status has been updated successfully.",
+                  "Payment status has been updated successfully.",
                   "Success",
                   {
                     positionClass: "toast-top-right",

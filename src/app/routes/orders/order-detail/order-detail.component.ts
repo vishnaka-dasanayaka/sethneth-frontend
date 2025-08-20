@@ -81,8 +81,9 @@ export class OrderDetailComponent {
     const statusMap: { [key: string]: string } = {
       "-2": "Cancell",
       "0": "Pending",
-      "2": "Sent to Workshop",
-      "4": "Received from Workshop",
+      "2": "Confirmed",
+      "4": "Sent to Workshop",
+      "6": "Received from Workshop",
       "10": "Delivered",
     };
     return statusMap[status] || status;
@@ -97,9 +98,12 @@ export class OrderDetailComponent {
       var statusString = "Pending";
     }
     if (value == 2) {
-      var statusString = "Sent to the workshop";
+      var statusString = "Confirmed";
     }
     if (value == 4) {
+      var statusString = "Sent to the workshop";
+    }
+    if (value == 6) {
       var statusString = "Received from workshop";
     }
     if (value == 10) {
@@ -163,6 +167,16 @@ export class OrderDetailComponent {
   }
 
   generateInvoice() {
+    if (this.order.status == -2 || this.order.status == 0) {
+      swal.fire({
+        title: "Warning!",
+        text: "Order Should be confirmed first",
+        icon: "warning",
+        confirmButtonColor: "#ff820d",
+      });
+      return;
+    }
+
     this.loading = true;
     this.orderService.generateInvoice({ id: this.id }).subscribe((data) => {
       if (data.status) {

@@ -142,8 +142,11 @@
                 >
                   Cancelled
                 </span>
+                <span *ngIf="rowData[col.field] == 2" class="badge badge-cyan">
+                  Confirmed
+                </span>
                 <span
-                  *ngIf="rowData[col.field] == 2"
+                  *ngIf="rowData[col.field] == 4"
                   class="badge badge-orange"
                 >
                   Sent to W/S
