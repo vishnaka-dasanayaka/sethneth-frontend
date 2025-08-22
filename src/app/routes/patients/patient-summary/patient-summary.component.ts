@@ -46,6 +46,11 @@ export class PatientSummaryComponent {
     this.sharedService.openAddPatientModal();
   }
 
+  openEditModal(data: any) {
+    this.sharedService.setPatientData(data);
+    this.sharedService.openEditPatientModal();
+  }
+
   getAllPatients(event?: TableLazyLoadEvent) {
     const finalEvent = event ?? this.event1;
     this.event1 = finalEvent;

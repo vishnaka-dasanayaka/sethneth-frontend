@@ -7,6 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import { CustomValidators } from "../../validators/custom-validators";
 import swal from "sweetalert2";
 import { PatientsService } from "../../../core/_services/patients.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-patient",
@@ -34,7 +35,8 @@ export class AddPatientComponent {
     private sharedService: SharedService,
     private fb: FormBuilder,
     private patientService: PatientsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.valForm = this.fb.group({
       name: [null, Validators.required],
@@ -86,6 +88,9 @@ export class AddPatientComponent {
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
+            this.router.navigate([
+              "/patients/patient-details/" + data.patient.id,
+            ]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {
               positionClass: "toast-top-right",

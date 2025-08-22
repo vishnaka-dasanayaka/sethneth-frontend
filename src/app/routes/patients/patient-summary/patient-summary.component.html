@@ -161,6 +161,12 @@
                 >
                   View
                 </button>
+                <button
+                  class="btn btn-outline-gray ml-3"
+                  (click)="openEditModal(rowData)"
+                >
+                  Edit
+                </button>
               </div>
             </td>
           </tr>
@@ -171,3 +177,4 @@
 </section>
 
 <app-add-patient (parentFun)="getAllPatients()"> </app-add-patient>
+<app-edit-patient (parentFun)="getAllPatients()"> </app-edit-patient>

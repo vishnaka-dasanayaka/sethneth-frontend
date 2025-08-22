@@ -7,6 +7,7 @@ import { SettingsService } from "../../../core/_services/settings.service";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
 import { SelectItem } from "primeng/api";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-stock",
@@ -33,7 +34,8 @@ export class AddStockComponent {
     private sharedService: SharedService,
     private fb: FormBuilder,
     private settingsService: SettingsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.valForm = this.fb.group({
       date: [this.getTodayDate(), Validators.required],
@@ -241,6 +243,8 @@ export class AddStockComponent {
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
+
+            this.router.navigate(["/settings/stock-details/" + data.stock.id]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {
               positionClass: "toast-top-right",

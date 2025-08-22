@@ -25,6 +25,15 @@ export class PatientDetailComponent {
 
   note: any;
 
+  order_cols: any[] = [];
+  orders: any[] = [];
+
+  invoice_cols: any[] = [];
+  invoices: any[] = [];
+
+  payment_cols: any[] = [];
+  payments: any[] = [];
+
   cols: any[] = [];
   prescriptions: any[] = [];
 
@@ -43,6 +52,31 @@ export class PatientDetailComponent {
       { field: "created_on", header: "Created On", sortable: true },
       { field: "created_by", header: "Created By", sortable: true },
       { field: "actions", header: "Actions", sortable: true },
+    ];
+
+    this.order_cols = [
+      { field: "code", header: "Code", sortable: true },
+      { field: "date", header: "Date", sortable: true },
+      { field: "model", header: "Frame", sortable: true },
+      { field: "status", header: "Status", sortable: true },
+      { field: "price", header: "Price", sortable: true },
+      { field: "actions", header: "Actions", sortable: true, width: "200px" },
+    ];
+
+    this.invoice_cols = [
+      { field: "code", header: "Code" },
+      { field: "date", header: "Date" },
+      { field: "status", header: "Status" },
+      { field: "price", header: "Price" },
+      { field: "actions", header: "Actions", sortable: true, width: "200px" },
+    ];
+
+    this.payment_cols = [
+      { field: "code", header: "Code" },
+      { field: "amount", header: "Amount" },
+      { field: "date", header: "Date" },
+      { field: "status", header: "Status" },
+      { field: "actions", header: "Actions", sortable: true, width: "200px" },
     ];
   }
 
@@ -80,6 +114,9 @@ export class PatientDetailComponent {
     this.patientService.getPatient({ id: id }).subscribe((data) => {
       if (data.status) {
         this.patient = data.patient;
+        this.orders = data.orders;
+        this.invoices = data.invoices;
+        this.payments = data.payments;
         this.LoadUI = true;
         if (this.patient.dob) {
           const birthDate = moment(this.patient.dob);
@@ -163,6 +200,11 @@ export class PatientDetailComponent {
       patient_id: this.id,
     });
     this.sharedService.openAddPrescriptionrModal();
+  }
+
+  openPatientEditModal() {
+    this.sharedService.setPatientData(this.patient);
+    this.sharedService.openEditPatientModal();
   }
 
   openViewModal(data: any) {
