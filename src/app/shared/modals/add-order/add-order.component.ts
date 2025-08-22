@@ -10,6 +10,7 @@ import { PatientsService } from "../../../core/_services/patients.service";
 import { BranchesService } from "../../../core/_services/branches.service";
 import moment from "moment";
 import { OrderService } from "../../../core/_services/order.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-order",
@@ -38,7 +39,8 @@ export class AddOrderComponent {
     private toastr: ToastrService,
     private patientService: PatientsService,
     private branchService: BranchesService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) {
     this.valForm = this.fb.group({
       patient: [null, Validators.required],
@@ -191,6 +193,7 @@ export class AddOrderComponent {
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
+            this.router.navigate(["/orders/order-details/" + data.order.id]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {
               positionClass: "toast-top-right",

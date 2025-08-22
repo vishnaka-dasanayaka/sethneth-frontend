@@ -10,6 +10,7 @@ import { PatientsService } from "../../../core/_services/patients.service";
 import { InvoiceService } from "../../../core/_services/invoice.service";
 import { PaymentService } from "../../../core/_services/payment.service";
 import moment from "moment";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-payment",
@@ -36,7 +37,8 @@ export class AddPaymentComponent {
     private patientService: PatientsService,
     private toastr: ToastrService,
     private invoiceService: InvoiceService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private router: Router
   ) {
     this.valForm = this.fb.group({
       patient: [null, Validators.required],
@@ -175,6 +177,9 @@ export class AddPaymentComponent {
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
+            this.router.navigate([
+              "/payments/payment-details/" + data.payment_id,
+            ]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {
               positionClass: "toast-top-right",

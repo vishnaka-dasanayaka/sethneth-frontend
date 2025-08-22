@@ -187,7 +187,7 @@ export class SharedService {
   // Patients
 
   private add_patient = new Subject<void>();
-  private edit_patient = new Subject<any>();
+  private edit_patient = new Subject<void>();
   private patient_data: any = undefined;
 
   setPatientData(data: any) {
@@ -203,13 +203,13 @@ export class SharedService {
     return this.patient_data;
   }
 
-  // openEditClientModal() {
-  //   this.edit_supplier.next();
-  // }
+  openEditPatientModal() {
+    this.edit_patient.next();
+  }
 
-  // getEditClientClickEvent(): Observable<any> {
-  //   return this.edit_supplier.asObservable();
-  // }
+  getEditPatientClickEvent(): Observable<any> {
+    return this.edit_patient.asObservable();
+  }
 
   // Brand
 
