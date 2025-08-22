@@ -240,7 +240,7 @@ export class SharedService {
 
   // Order
   private add_order = new Subject<void>();
-  private edit_order = new Subject<any>();
+  private edit_order = new Subject<void>();
   private order_data: any = undefined;
 
   setOrderData(data: any) {
@@ -256,13 +256,13 @@ export class SharedService {
     return this.order_data;
   }
 
-  // openEditClientModal() {
-  //   this.edit_supplier.next();
-  // }
+  openEditOrderModal() {
+    this.edit_order.next();
+  }
 
-  // getEditClientClickEvent(): Observable<any> {
-  //   return this.edit_supplier.asObservable();
-  // }
+  getEditOrderClickEvent(): Observable<any> {
+    return this.edit_order.asObservable();
+  }
 
   // Invoice Item
   private add_invoice_item = new Subject<void>();
@@ -351,7 +351,7 @@ export class SharedService {
 
   // Invoice
   private add_invoice = new Subject<void>();
-  private edit_invoice = new Subject<any>();
+  private edit_invoice = new Subject<void>();
   private invoice_data: any = undefined;
 
   setInvoiceData(data: any) {
@@ -367,11 +367,11 @@ export class SharedService {
     return this.invoice_data;
   }
 
-  // openEditClientModal() {
-  //   this.edit_supplier.next();
-  // }
+  openEditInvoiceModal() {
+    this.edit_invoice.next();
+  }
 
-  // getEditClientClickEvent(): Observable<any> {
-  //   return this.edit_supplier.asObservable();
-  // }
+  getEditInvoiceClickEvent(): Observable<any> {
+    return this.edit_invoice.asObservable();
+  }
 }

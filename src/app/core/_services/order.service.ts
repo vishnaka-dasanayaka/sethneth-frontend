@@ -97,6 +97,17 @@ export class OrderService {
     );
   }
 
+  updateOrder(obj: any) {
+    let APIurl = this.BaseAPIurl + "edit-order";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   // getAllActiveBranches() {
   //   let APIurl = this.BaseAPIurl + "get-all-active-branches";
   //   return this.http.get<any>(APIurl).pipe(

@@ -151,6 +151,12 @@
                 >
                   View
                 </button>
+                <button
+                  class="btn btn-outline-gray ml-3"
+                  (click)="openEditModal(rowData)"
+                >
+                  Edit
+                </button>
               </div>
             </td>
           </tr>
@@ -161,3 +167,4 @@
 </section>
 
 <app-add-inovice (parentFun)="getAllInvoices()"> </app-add-inovice>
+<app-edit-invoice (parentFun)="getAllInvoices()"> </app-edit-invoice>
