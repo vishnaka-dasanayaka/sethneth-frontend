@@ -33,7 +33,7 @@ export class StockSummaryComponent {
       { field: "model", header: "Model" },
       { field: "supplier", header: "Supplier" },
       { field: "no_of_units", header: "Initial Stock" },
-      { field: "no_of_units", header: "Available Stock" },
+      { field: "available_no_of_units", header: "Available Stock" },
       { field: "status", header: "Status" },
       { field: "actions", header: "Actions", sortable: true, width: "200px" },
     ];

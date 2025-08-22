@@ -240,6 +240,16 @@ body {
   cursor: pointer;
 }
 
+.btn-outline-gray {
+  border: 1px var(--color-gray-500) solid;
+  color: var(--color-gray-500);
+}
+
+.btn-outline-gray:hover {
+  background-color: var(--color-gray-500);
+  color: white;
+}
+
 .btn-outline-warning {
   border: 1px orange solid;
   color: #ff820d;
@@ -259,6 +269,16 @@ body {
   color: #ff820d;
   background-color: white;
   border: #ff820d 1px solid;
+}
+
+.btn-gray {
+  color: black;
+  background-color: var(--color-gray-200);
+}
+
+.btn-gray:hover {
+  color: black;
+  background-color: var(--color-gray-300);
 }
 .btn-success {
   color: var(--color-green-100);

@@ -1,24 +1,30 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { SharedService } from "../../../core/_services/shared.service";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Subscription } from "rxjs";
-import { CustomValidators } from "../../validators/custom-validators";
-import { SettingsService } from "../../../core/_services/settings.service";
-import { ToastrService } from "ngx-toastr";
-import swal from "sweetalert2";
 import { SelectItem } from "primeng/api";
+import { Subscription } from "rxjs";
+import { SharedService } from "../../../core/_services/shared.service";
+import { ToastrService } from "ngx-toastr";
+import { CustomValidators } from "../../validators/custom-validators";
+import swal from "sweetalert2";
+import { PatientsService } from "../../../core/_services/patients.service";
 import { Router } from "@angular/router";
+import moment from "moment";
 
 @Component({
-  selector: "app-add-purchase-order",
+  selector: "app-edit-patient",
   standalone: false,
-  templateUrl: "./add-purchase-order.component.html",
-  styleUrl: "./add-purchase-order.component.css",
+  templateUrl: "./edit-patient.component.html",
+  styleUrl: "./edit-patient.component.css",
 })
-export class AddPurchaseOrderComponent implements OnInit {
+export class EditPatientComponent {
   @Output() parentFun: EventEmitter<any> = new EventEmitter();
 
-  suppliers: SelectItem[] = [];
+  gender_list: SelectItem[] = [
+    { label: "Please select a gender", value: null, disabled: true },
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+    { label: "Other", value: "Other" },
+  ];
 
   valForm: FormGroup;
   uniqueid: string = "";
@@ -29,59 +35,38 @@ export class AddPurchaseOrderComponent implements OnInit {
   constructor(
     private sharedService: SharedService,
     private fb: FormBuilder,
-    private settingsService: SettingsService,
+    private patientService: PatientsService,
     private toastr: ToastrService,
     private router: Router
   ) {
     this.valForm = this.fb.group({
-      supplier: [null, Validators.required],
-      date: ["", Validators.required],
-      amount: [null, [Validators.required, CustomValidators.strictDecimal]],
+      id: [null, Validators.required],
+      name: [null, Validators.required],
+      phone: ["", [CustomValidators.phoneFormat]],
+      gender: [null],
+      dob: [null],
+      nic: [null, [CustomValidators.nicValidator]],
+      address: [null],
       description: [null],
     });
 
     this.clickEventSubscription = this.sharedService
-      .getAddPurchaseOrderClickEvent()
+      .getEditPatientClickEvent()
       .subscribe(() => {
         this.openModal();
         this.generateUniqueKey();
       });
   }
 
-  ngOnInit(): void {
-    this.getDropdowns();
-  }
-
-  getDropdowns() {
-    this.settingsService.getActiveSuppliers().subscribe(
-      (data) => {
-        if (data.status) {
-          this.suppliers = [];
-
-          this.suppliers.push({
-            label: "Please Select a supplier",
-            value: null,
-            disabled: true,
-          });
-
-          for (var item of data.suppliers) {
-            this.suppliers.push({ label: item.name, value: item.id });
-          }
-        } else {
-          this.toastr.warning(data.err, "ERROR !!", {
-            positionClass: "toast-top-right",
-            closeButton: true,
-          });
-          this.generateUniqueKey();
-        }
-      },
-      (error) => {
-        alert("API ERROR [ERRCODE:001]");
-      }
-    );
-  }
+  ngOnInit(): void {}
 
   openModal() {
+    var data = this.sharedService.getPatientData();
+    this.valForm.patchValue(data);
+
+    if (data.dob) {
+      this.valForm.patchValue({ dob: new Date(data.dob) });
+    }
     this.showModal = true;
   }
 
@@ -96,9 +81,10 @@ export class AddPurchaseOrderComponent implements OnInit {
     }
 
     if (this.valForm.valid) {
+      value = this.sharedService.sanitizeFormValues(value);
       value.uniquekey = this.uniqueid;
 
-      this.settingsService.createPurchaseOrder(value).subscribe(
+      this.patientService.updatePatient(value).subscribe(
         (data) => {
           if (data.status) {
             this.parentFun.emit();
@@ -106,12 +92,12 @@ export class AddPurchaseOrderComponent implements OnInit {
             this.valForm.reset();
             swal.fire({
               title: "Success!",
-              text: "Purchase Order has been created successfully.",
+              text: "Patient has been updated successfully.",
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
             this.router.navigate([
-              "/settings/purchase-order-details/" + data.purchase_order.id,
+              "/patients/patient-details/" + data.patient.id,
             ]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {

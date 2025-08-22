@@ -26,12 +26,34 @@ export class OrderDetailComponent {
 
   note: any;
 
+  invoice_cols: any[] = [];
+  invoices: any[] = [];
+
+  payment_cols: any[] = [];
+  payments: any[] = [];
+
   constructor(
     private authservice: AuthenticationService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private orderService: OrderService
-  ) {}
+  ) {
+    this.invoice_cols = [
+      { field: "code", header: "Code" },
+      { field: "date", header: "Date" },
+      { field: "status", header: "Status" },
+      { field: "price", header: "Price" },
+      { field: "actions", header: "Actions", sortable: true, width: "200px" },
+    ];
+
+    this.payment_cols = [
+      { field: "code", header: "Code" },
+      { field: "amount", header: "Amount" },
+      { field: "date", header: "Date" },
+      { field: "status", header: "Status" },
+      { field: "actions", header: "Actions", sortable: true, width: "200px" },
+    ];
+  }
 
   ngOnInit(): void {
     this.generateUniqueKey();
@@ -56,6 +78,8 @@ export class OrderDetailComponent {
     this.orderService.getOrder({ id: id }).subscribe((data) => {
       if (data.status) {
         this.order = data.order;
+        this.invoices = data.invoices;
+        //this.payments = data.payments;
         this.LoadUI = true;
       }
     });

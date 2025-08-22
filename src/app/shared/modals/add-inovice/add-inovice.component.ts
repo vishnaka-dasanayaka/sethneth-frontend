@@ -7,6 +7,7 @@ import swal from "sweetalert2";
 import { SelectItem } from "primeng/api";
 import { PatientsService } from "../../../core/_services/patients.service";
 import { InvoiceService } from "../../../core/_services/invoice.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-inovice",
@@ -30,7 +31,8 @@ export class AddInoviceComponent {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private patientService: PatientsService,
-    private invoiceservice: InvoiceService
+    private invoiceservice: InvoiceService,
+    private router: Router
   ) {
     this.valForm = this.fb.group({
       patient: [null, Validators.required],
@@ -77,6 +79,8 @@ export class AddInoviceComponent {
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
+
+            this.router.navigate(["/invoices/invoice-details/" + data.inv.id]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {
               positionClass: "toast-top-right",

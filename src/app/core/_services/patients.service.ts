@@ -31,6 +31,17 @@ export class PatientsService {
     );
   }
 
+  updatePatient(obj: any) {
+    let APIurl = this.BaseAPIurl + "edit-patient";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   getAllPatients(obj: any) {
     let APIurl = this.BaseAPIurl + "get-all-paged-patients";
 

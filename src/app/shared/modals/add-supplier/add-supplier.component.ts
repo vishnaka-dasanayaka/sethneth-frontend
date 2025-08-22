@@ -6,6 +6,7 @@ import { CustomValidators } from "../../validators/custom-validators";
 import { SettingsService } from "../../../core/_services/settings.service";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-supplier",
@@ -26,7 +27,8 @@ export class AddSupplierComponent {
     private sharedService: SharedService,
     private fb: FormBuilder,
     private settingsService: SettingsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.valForm = this.fb.group({
       supplier_name: ["", Validators.required],
@@ -76,6 +78,9 @@ export class AddSupplierComponent {
               icon: "success",
               confirmButtonColor: "#28a745", // Optional: green color for success
             });
+            this.router.navigate([
+              "/settings/supplier-details/" + data.supplier.id,
+            ]);
           } else {
             this.toastr.warning(data.err, "ERROR !!", {
               positionClass: "toast-top-right",
