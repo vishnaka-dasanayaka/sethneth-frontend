@@ -209,4 +209,79 @@ export class InvoiceDetailComponent {
   `);
     popupWin.document.close();
   }
+
+  openInvoiceEditModal() {
+    if (this.inv.status != 0) {
+      swal.fire({
+        title: "Warning!",
+        text: "Order Should be in pending status to edit",
+        icon: "warning",
+        confirmButtonColor: "#ff820d",
+      });
+      return;
+    }
+
+    var obj = {
+      patient_id: this.inv.patient_id.id,
+      id: this.inv.id,
+    };
+
+    this.sharedService.setInvoiceData(obj);
+    this.sharedService.openEditInvoiceModal();
+  }
+
+  deleteItem(id: number) {
+    swal
+      .fire({
+        title: "Please confirm that you want to delete this item",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745", // ✅ Green button
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, proceed",
+        cancelButtonText: "Cancel",
+        customClass: {
+          title: "swal-title-sm",
+          confirmButton: "swal-confirm-sm",
+          cancelButton: "swal-cancel-sm",
+        },
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          var obj = {
+            id: id,
+            uniquekey: this.uniqueid,
+          };
+          this.invoiceService.deleteInvItem(obj).subscribe(
+            (data) => {
+              if (data.status) {
+                this.toastr.success(
+                  "Invoice item deleted successfully.",
+                  "Success",
+                  {
+                    positionClass: "toast-top-right",
+                    closeButton: true,
+                    timeOut: 3000,
+                    progressBar: true,
+                    toastClass: "toast toast-sm", // <-- add your small class here
+                  }
+                );
+
+                this.generateUniqueKey();
+                this.getData(this.id);
+              } else {
+                this.toastr.warning(data.err, "ERROR !!", {
+                  positionClass: "toast-top-right",
+                  closeButton: true,
+                });
+                this.generateUniqueKey();
+              }
+            },
+            (error) => {
+              alert("API ERROR [ERRCODE:001]");
+            }
+          );
+        }
+      });
+  }
 }

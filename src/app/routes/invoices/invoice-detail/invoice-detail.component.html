@@ -69,9 +69,15 @@
   >
     <!-- Supplier Information Section -->
     <div class="mb-8">
-      <h3 class="text-xl font-semibold text-gray-700 mb-4">
-        Basic Information
-      </h3>
+      <div class="w-full flex items-center justify-between">
+        <h3 class="text-xl font-semibold text-gray-700 mb-4">
+          Basic Information
+        </h3>
+
+        <button (click)="openInvoiceEditModal()" class="btn btn-gray">
+          <i class="fa-solid fa-pen-to-square"></i> Edit
+        </button>
+      </div>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div class="space-y-4">
@@ -385,14 +391,12 @@
                           </div>
 
                           <div *ngSwitchCase="'actions'">
-                            <!-- <button
-                              class="btn btn-outline-warning"
-                              routerLink="/invoices/invoice-details/{{
-                                rowData.id
-                              }}"
+                            <button
+                              (click)="deleteItem(rowData?.id)"
+                              class="btn btn-outline-danger ml-3"
                             >
-                              View
-                            </button> -->
+                              Delete
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -690,6 +694,8 @@
     </div>
   </div>
 </div>
+
+<app-edit-invoice (parentFun)="getData(id)"> </app-edit-invoice>
 
 <!-- <div
   id="print-invoice"

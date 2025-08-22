@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
 import { OrderService } from "../../../core/_services/order.service";
+import { SharedService } from "../../../core/_services/shared.service";
 
 @Component({
   selector: "app-order-detail",
@@ -36,7 +37,8 @@ export class OrderDetailComponent {
     private authservice: AuthenticationService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private sharedService: SharedService
   ) {
     this.invoice_cols = [
       { field: "code", header: "Code" },
@@ -220,5 +222,24 @@ export class OrderDetailComponent {
         this.loading = false;
       }
     });
+  }
+
+  openOrderEditModal() {
+    if (this.order.status != 0) {
+      swal.fire({
+        title: "Warning!",
+        text: "Order Should be in pending status to edit",
+        icon: "warning",
+        confirmButtonColor: "#ff820d",
+      });
+      return;
+    }
+
+    var obj = this.order;
+    obj.patient_id = obj.patient_id.id;
+    obj.branch_id = obj.branch_id.id;
+    obj.stock_id = obj.stock_id.id;
+    this.sharedService.setOrderData(obj);
+    this.sharedService.openEditOrderModal();
   }
 }
