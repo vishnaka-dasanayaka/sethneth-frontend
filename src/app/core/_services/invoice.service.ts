@@ -86,10 +86,32 @@ export class InvoiceService {
     );
   }
 
+  updateInvoice(obj: any) {
+    let APIurl = this.BaseAPIurl + "edit-invoice";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   updateInvStatus(obj: any) {
     let APIurl = this.BaseAPIurl + "update-invoice-status";
 
     return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  deleteInvItem(obj: any) {
+    let APIurl = this.BaseAPIurl + "delete-inv-item";
+
+    return this.http.post<any>(APIurl, obj).pipe(
       map((response) => {
         return response;
       }),

@@ -167,6 +167,13 @@
                 >
                   View
                 </button>
+
+                <button
+                  class="btn btn-outline-gray ml-3"
+                  (click)="openEditModal(rowData)"
+                >
+                  Edit
+                </button>
               </div>
             </td>
           </tr>
@@ -177,3 +184,4 @@
 </section>
 
 <app-add-order (parentFun)="getAllOrders()"> </app-add-order>
+<app-edit-order (parentFun)="getAllOrders()"> </app-edit-order>

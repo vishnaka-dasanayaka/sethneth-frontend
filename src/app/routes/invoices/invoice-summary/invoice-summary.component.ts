@@ -3,6 +3,7 @@ import { AuthenticationService } from "../../../core/_services/authentication.se
 import { SharedService } from "../../../core/_services/shared.service";
 import { TableLazyLoadEvent } from "primeng/table";
 import { InvoiceService } from "../../../core/_services/invoice.service";
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-invoice-summary",
@@ -62,5 +63,20 @@ export class InvoiceSummaryComponent {
       this.invoices = data.invoices;
       this.no_of_invoices = data.no_of_invoices;
     });
+  }
+
+  openEditModal(data: any) {
+    if (data.status != 0) {
+      swal.fire({
+        title: "Warning!",
+        text: "Invoice Should be in pending status to edit",
+        icon: "warning",
+        confirmButtonColor: "#ff820d",
+      });
+      return;
+    }
+
+    this.sharedService.setInvoiceData(data);
+    this.sharedService.openEditInvoiceModal();
   }
 }

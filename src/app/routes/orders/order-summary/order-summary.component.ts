@@ -3,6 +3,7 @@ import { AuthenticationService } from "../../../core/_services/authentication.se
 import { SharedService } from "../../../core/_services/shared.service";
 import { TableLazyLoadEvent } from "primeng/table";
 import { OrderService } from "../../../core/_services/order.service";
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-order-summary",
@@ -45,6 +46,20 @@ export class OrderSummaryComponent {
   openAddModal() {
     this.sharedService.setOrderData({ navigate: true });
     this.sharedService.openAddOrderModal();
+  }
+
+  openEditModal(data: any) {
+    if (data.status != 0) {
+      swal.fire({
+        title: "Warning!",
+        text: "Order Should be in pending status to edit",
+        icon: "warning",
+        confirmButtonColor: "#ff820d",
+      });
+      return;
+    }
+    this.sharedService.setOrderData(data);
+    this.sharedService.openEditOrderModal();
   }
 
   getAllOrders(event?: TableLazyLoadEvent) {
