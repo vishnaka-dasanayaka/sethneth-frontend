@@ -27,6 +27,9 @@ export class InvoiceDetailComponent {
   note: any;
   cols: any[] = [];
 
+  payment_cols: any[] = [];
+  payments: any[] = [];
+
   constructor(
     private authservice: AuthenticationService,
     private route: ActivatedRoute,
@@ -42,6 +45,14 @@ export class InvoiceDetailComponent {
       { field: "discount", header: "Discount", sortable: true },
       { field: "total", header: "Total", sortable: true },
       { field: "actions", header: "Actions", sortable: true },
+    ];
+
+    this.payment_cols = [
+      { field: "code", header: "TXN Number" },
+      { field: "amount", header: "Amount" },
+      { field: "date", header: "Date" },
+      { field: "status", header: "Status" },
+      { field: "actions", header: "Actions", sortable: true, width: "200px" },
     ];
   }
 
@@ -67,6 +78,7 @@ export class InvoiceDetailComponent {
     this.invoiceService.getInvoice({ id: id }).subscribe((data) => {
       if (data.status) {
         this.inv = data.inv;
+        this.payments = data.payments;
         this.LoadUI = true;
       }
     });
@@ -283,5 +295,19 @@ export class InvoiceDetailComponent {
           );
         }
       });
+  }
+
+  openAddPaymentModal() {
+    if (this.inv.openbalance <= 0) {
+      swal.fire({
+        title: "Warning!",
+        text: "To make a payment invoice should have a open balance",
+        icon: "warning",
+        confirmButtonColor: "#ff820d",
+      });
+      return;
+    }
+    this.sharedService.setPaymentData({ inv: this.inv });
+    this.sharedService.openAdPaymentrModal();
   }
 }

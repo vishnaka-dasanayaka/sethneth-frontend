@@ -126,11 +126,38 @@ export class AddPaymentComponent {
               });
             }
           }
+
+          var data = this.sharedService.getPaymentData();
+
+          if (data.inv) {
+            var inv = this.inv_list.find((inv) => {
+              return inv.value?.id == data.inv.id;
+            });
+
+            this.valForm.patchValue({ inv: inv?.value });
+          }
         }
       });
   }
 
   openModal() {
+    var data = this.sharedService.getPaymentData();
+    if (data.inv) {
+      this.valForm.patchValue({ patient: data.inv.patient_id });
+      this.valForm.patchValue({ p_name: data.inv.patient_id.name });
+      this.valForm.patchValue({
+        p_no: data.inv.patient_id?.phone
+          ? data.inv.patient_id.phone
+          : "[NOT PROVIDED]",
+      });
+      this.valForm.patchValue({
+        p_nic: data.inv.patient_id?.nic
+          ? data.inv.patient_id.nic
+          : "[NOT PROVIDED]",
+      });
+
+      this.getInvPerPatient(data.inv.patient_id.id);
+    }
     this.showModal = true;
   }
 
