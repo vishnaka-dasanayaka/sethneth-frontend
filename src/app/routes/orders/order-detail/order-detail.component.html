@@ -466,7 +466,7 @@
                 </div>
               </div>
             </p-tabpanel>
-            <p-tabpanel value="3">
+            <p-tabpanel value="2">
               <!-- <div class="flex items-end justify-end">
                 <button disabled (click)="openAddModal()" class="add_btn">
                   <i class="fa-solid fa-plus mr-2"></i>Add Payment
@@ -527,6 +527,36 @@
                             >
                               {{ rowData[col.field] }}
                             </a>
+                          </div>
+
+                          <div *ngSwitchCase="'inv_code'">
+                            <a
+                              class="text-[#ff820d] font-medium hover:underline"
+                              routerLink="/invoices/invoice-details/{{
+                                rowData.inv.id
+                              }}"
+                            >
+                              {{ rowData?.inv?.code }}
+                            </a>
+                            <span
+                              *ngIf="rowData?.inv?.status == 0"
+                              class="badge badge-primary"
+                            >
+                              Pending
+                            </span>
+                            <span
+                              *ngIf="rowData?.inv?.status == 2"
+                              class="badge badge-success"
+                            >
+                              Approved
+                            </span>
+
+                            <span
+                              *ngIf="rowData?.inv?.status == -2"
+                              class="badge badge-danger"
+                            >
+                              Cancelled
+                            </span>
                           </div>
 
                           <div class="text-start" *ngSwitchCase="'date'">
