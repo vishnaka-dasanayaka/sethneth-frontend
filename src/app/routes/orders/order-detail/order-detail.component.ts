@@ -49,7 +49,8 @@ export class OrderDetailComponent {
     ];
 
     this.payment_cols = [
-      { field: "code", header: "Code" },
+      { field: "code", header: "TXN Number" },
+      { field: "inv_code", header: "Invoice" },
       { field: "amount", header: "Amount" },
       { field: "date", header: "Date" },
       { field: "status", header: "Status" },
@@ -81,7 +82,7 @@ export class OrderDetailComponent {
       if (data.status) {
         this.order = data.order;
         this.invoices = data.invoices;
-        //this.payments = data.payments;
+        this.payments = data.payments;
         this.LoadUI = true;
       }
     });
