@@ -161,7 +161,7 @@
             <p class="text-sm text-gray-500">Initial Stock</p>
             <p class="font-medium">{{ stock?.no_of_units }}</p>
           </div>
-          <div>
+          <div *ngIf="sysuser?.id == 1">
             <p class="text-sm text-gray-500">Profit Margin</p>
             <p class="font-medium">
               LKR
