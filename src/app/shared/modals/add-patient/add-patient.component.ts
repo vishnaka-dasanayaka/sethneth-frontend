@@ -8,6 +8,7 @@ import { CustomValidators } from "../../validators/custom-validators";
 import swal from "sweetalert2";
 import { PatientsService } from "../../../core/_services/patients.service";
 import { Router } from "@angular/router";
+import moment from "moment";
 
 @Component({
   selector: "app-add-patient",
@@ -75,6 +76,7 @@ export class AddPatientComponent {
     if (this.valForm.valid) {
       value = this.sharedService.sanitizeFormValues(value);
       value.uniquekey = this.uniqueid;
+      value.dob = moment(value.dob).format("YYYY-MM-DD");
 
       this.patientService.createPatient(value).subscribe(
         (data) => {
