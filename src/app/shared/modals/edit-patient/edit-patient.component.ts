@@ -83,6 +83,7 @@ export class EditPatientComponent {
     if (this.valForm.valid) {
       value = this.sharedService.sanitizeFormValues(value);
       value.uniquekey = this.uniqueid;
+      value.dob = moment(value.dob).format("YYYY-MM-DD");
 
       this.patientService.updatePatient(value).subscribe(
         (data) => {
