@@ -15,6 +15,8 @@ import { ModelsComponent } from "./models/models.component";
 import { StockSummaryComponent } from "./stock-summary/stock-summary.component";
 import { StockDetailComponent } from "./stock-detail/stock-detail.component";
 import { LensesComponent } from "./lenses/lenses.component";
+import { ConsultationSettingsComponent } from "./consultation-settings/consultation-settings.component";
+import { ConsultationTypesComponent } from "./consultation-types/consultation-types.component";
 
 const routes: Routes = [
   // Client paths
@@ -34,6 +36,14 @@ const routes: Routes = [
     component: PurchaseOrderDetailComponent,
   },
   { path: "stock-details/:id", component: StockDetailComponent },
+  {
+    path: "consultation-settings",
+    component: ConsultationSettingsComponent,
+  },
+  {
+    path: "consultation-types",
+    component: ConsultationTypesComponent,
+  },
 ];
 
 @NgModule({
@@ -51,6 +61,8 @@ const routes: Routes = [
     StockSummaryComponent,
     StockDetailComponent,
     LensesComponent,
+    ConsultationSettingsComponent,
+    ConsultationTypesComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],

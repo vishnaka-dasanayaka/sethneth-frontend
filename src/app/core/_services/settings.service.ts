@@ -365,4 +365,49 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  // consultation settings
+
+  createConsType(obj: any) {
+    let APIurl = this.BaseAPIurl + "consultation/create-cons-type";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllConsTypes(obj: any) {
+    let APIurl = this.BaseAPIurl + "consultation/get-all-paged-cons-types";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateConsTypeStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "consultation/update-cons-type-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllActiveConsTypes() {
+    let APIurl = this.BaseAPIurl + "consultation/get-all-active-cons-types";
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

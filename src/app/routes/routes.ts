@@ -20,6 +20,7 @@ import { PatientsModule } from "./patients/patients.module";
 import { OrdersModule } from "./orders/orders.module";
 import { InvoicesModule } from "./invoices/invoices.module";
 import { PaymentsModule } from "./payments/payments.module";
+import { CInvoicesModule } from "./c-invoices/c-invoices.module";
 
 export const routes: Routes = [
   {
@@ -56,6 +57,12 @@ export const routes: Routes = [
         path: "payments",
         loadChildren: () =>
           import("./payments/payments.module").then((m) => PaymentsModule),
+      },
+
+      {
+        path: "c-invoices",
+        loadChildren: () =>
+          import("./c-invoices/c-invoices.module").then((m) => CInvoicesModule),
       },
 
       // NO NEED
