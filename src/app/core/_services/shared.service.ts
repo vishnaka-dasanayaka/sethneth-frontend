@@ -374,4 +374,57 @@ export class SharedService {
   getEditInvoiceClickEvent(): Observable<any> {
     return this.edit_invoice.asObservable();
   }
+
+  // Brand
+
+  private add_cons_type = new Subject<void>();
+  private edit_cons_type = new Subject<any>();
+  private cons_type_data: any = undefined;
+
+  setConsTypelData(data: any) {
+    this.cons_type_data = data;
+  }
+  openAddConsTypeModal() {
+    this.add_cons_type.next();
+  }
+  getAddConsTypeClickEvent(): Observable<any> {
+    return this.add_cons_type.asObservable();
+  }
+  getConsTypeyData(): any {
+    return this.cons_type_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // Invoice Item
+  private add_c_invoice_item = new Subject<void>();
+  private edit_c_invoice_item = new Subject<any>();
+  private c_invoice_item_data: any = undefined;
+
+  setCInvoiceItemData(data: any) {
+    this.c_invoice_item_data = data;
+  }
+  openAddCInvoiceItemModal() {
+    this.add_c_invoice_item.next();
+  }
+  getAddCInvoiceItemClickEvent(): Observable<any> {
+    return this.add_c_invoice_item.asObservable();
+  }
+  getCInvoiceItemData(): any {
+    return this.c_invoice_item_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }

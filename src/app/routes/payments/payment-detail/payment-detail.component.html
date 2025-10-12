@@ -266,8 +266,18 @@
 
                           <div *ngSwitchCase="'actions'">
                             <button
+                              *ngIf="rowData?.invoice_id?.type == 'NORMAL'"
                               class="btn btn-outline-warning"
                               routerLink="/invoices/invoice-details/{{
+                                rowData.invoice_id?.id
+                              }}"
+                            >
+                              View
+                            </button>
+                            <button
+                              *ngIf="rowData?.invoice_id?.type == 'CONS'"
+                              class="btn btn-outline-warning"
+                              routerLink="/c-invoices/c-invoice-details/{{
                                 rowData.invoice_id?.id
                               }}"
                             >

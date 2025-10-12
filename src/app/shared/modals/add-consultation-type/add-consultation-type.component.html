@@ -7,7 +7,7 @@
   <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl mx-auto z-50">
     <!-- Modal Header -->
     <div class="flex justify-between items-center px-6 py-4 border-b">
-      <h4 class="text-xl font-semibold text-gray-800">Edit Invoice</h4>
+      <h4 class="text-xl font-semibold text-gray-800">Add Consultation Type</h4>
       <button
         type="button"
         class="text-gray-500 hover:text-red-600 text-xl"
@@ -27,20 +27,23 @@
         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
           <div>
             <label class="block text-sm font-medium mb-1 text-gray-700"
-              >Patient
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i>
-            </label>
-            <p-select
-              [options]="patients"
-              formControlName="patient"
-              [checkmark]="true"
-              optionLabel="label"
-              optionValue="value"
-              [showClear]="true"
-              placeholder="Select a patient"
-              class="w-full"
-              [filter]="true"
+              >Type
+              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
+            ></label>
+            <input
+              type="text"
+              formControlName="cons_type"
+              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+            <span
+              class="text-red-500 text-xs"
+              *ngIf="
+                valForm.controls['cons_type'].hasError('required') &&
+                (valForm.controls['cons_type'].dirty ||
+                  valForm.controls['cons_type'].touched)
+              "
+              >This field is required</span
+            >
           </div>
         </div>
 
