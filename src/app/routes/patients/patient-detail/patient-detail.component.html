@@ -534,8 +534,18 @@
                         >
                           <div *ngSwitchCase="'code'">
                             <a
+                              *ngIf="rowData?.type == 'NORMAL'"
                               class="text-[#ff820d] font-medium hover:underline"
                               routerLink="/invoices/invoice-details/{{
+                                rowData.id
+                              }}"
+                            >
+                              {{ rowData[col.field] }}
+                            </a>
+                            <a
+                              *ngIf="rowData?.type == 'CONS'"
+                              class="text-[#ff820d] font-medium hover:underline"
+                              routerLink="/c-invoices/c-invoice-details/{{
                                 rowData.id
                               }}"
                             >
@@ -575,8 +585,18 @@
 
                           <div *ngSwitchCase="'actions'">
                             <button
+                              *ngIf="rowData?.type == 'NORMAL'"
                               class="btn btn-outline-warning"
                               routerLink="/invoices/invoice-details/{{
+                                rowData.id
+                              }}"
+                            >
+                              View
+                            </button>
+                            <button
+                              *ngIf="rowData?.type == 'CONS'"
+                              class="btn btn-outline-warning"
+                              routerLink="/c-invoices/c-invoice-details/{{
                                 rowData.id
                               }}"
                             >

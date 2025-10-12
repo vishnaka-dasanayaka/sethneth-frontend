@@ -45,6 +45,9 @@ import { AddInoviceComponent } from "./modals/add-inovice/add-inovice.component"
 import { EditPatientComponent } from "./modals/edit-patient/edit-patient.component";
 import { EditOrderComponent } from "./modals/edit-order/edit-order.component";
 import { EditInvoiceComponent } from "./modals/edit-invoice/edit-invoice.component";
+import { AddConsultationTypeComponent } from "./modals/add-consultation-type/add-consultation-type.component";
+import { AddCInvoiceComponent } from "./modals/add-c-invoice/add-c-invoice.component";
+import { AddCInvoiceItemComponent } from "./modals/add-c-invoice-item/add-c-invoice-item.component";
 
 @NgModule({
   imports: [
@@ -93,6 +96,9 @@ import { EditInvoiceComponent } from "./modals/edit-invoice/edit-invoice.compone
     EditPatientComponent,
     EditOrderComponent,
     EditInvoiceComponent,
+    AddConsultationTypeComponent,
+    AddCInvoiceComponent,
+    AddCInvoiceItemComponent,
   ],
   exports: [
     BlockUIModule,
@@ -135,6 +141,9 @@ import { EditInvoiceComponent } from "./modals/edit-invoice/edit-invoice.compone
     EditPatientComponent,
     EditOrderComponent,
     EditInvoiceComponent,
+    AddConsultationTypeComponent,
+    AddCInvoiceComponent,
+    AddCInvoiceItemComponent,
   ],
 })
 

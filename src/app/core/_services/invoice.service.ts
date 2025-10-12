@@ -128,4 +128,37 @@ export class InvoiceService {
   //     catchError(this.handleError)
   //   );
   // }
+
+  createCInvoice(obj: any) {
+    let APIurl = this.BaseAPIurl + "create-c-invoice";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllCInvoices(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-all-paged-c-invoices";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  createCInvItem(obj: any) {
+    let APIurl = this.BaseAPIurl + "create-c-inv-item";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }
