@@ -27,6 +27,7 @@ export class AddCInvoiceComponent {
 
   patients: SelectItem[] = [];
   cons_types: SelectItem[] = [];
+  doctors: SelectItem[] = [];
 
   constructor(
     private sharedService: SharedService,
@@ -40,9 +41,11 @@ export class AddCInvoiceComponent {
     this.valForm = this.fb.group({
       patient: [null, Validators.required],
       cons_type: [null, Validators.required],
-      description: [null, Validators.required],
-      price: [null, Validators.required],
-      discounted_price: [null, Validators.required],
+      price: [{ value: null, disabled: true }, Validators.required],
+      doctor: [null, Validators.required],
+      consultation_fee: [null, Validators.required],
+      institution_fee: [null, Validators.required],
+      discounted_price: [{ value: null, disabled: true }, Validators.required],
       discount: [null, Validators.required],
     });
 
@@ -74,6 +77,7 @@ export class AddCInvoiceComponent {
 
     if (this.valForm.valid) {
       value.uniquekey = this.uniqueid;
+      value.doctor = value.doctor.id;
 
       this.invoiceservice.createCInvoice(value).subscribe(
         (data) => {
@@ -143,6 +147,36 @@ export class AddCInvoiceComponent {
       }
     );
 
+    this.settingsService.getAllActiveDoctors().subscribe(
+      (data) => {
+        if (data.status) {
+          this.doctors = [];
+
+          this.doctors.push({
+            label: "Please Select a doctor",
+            value: null,
+            disabled: true,
+          });
+
+          for (var item of data.doctors) {
+            this.doctors.push({
+              label: item.name,
+              value: item,
+            });
+          }
+        } else {
+          this.toastr.warning(data.err, "ERROR !!", {
+            positionClass: "toast-top-right",
+            closeButton: true,
+          });
+          this.generateUniqueKey();
+        }
+      },
+      (error) => {
+        alert("API ERROR [ERRCODE:001]");
+      }
+    );
+
     this.settingsService.getAllActiveConsTypes().subscribe(
       (data) => {
         if (data.status) {
@@ -175,9 +209,21 @@ export class AddCInvoiceComponent {
   }
 
   updatePrice() {
+    var consultation_fee = this.valForm.get("consultation_fee")?.value || 0;
+    var institution_fee = this.valForm.get("institution_fee")?.value || 0;
+    var price = consultation_fee + institution_fee;
     var discount = this.valForm.get("discount")?.value;
-    var price = this.valForm.get("price")?.value;
 
     this.valForm.patchValue({ discounted_price: price - discount });
+    this.valForm.patchValue({ price: price });
+  }
+
+  onDoctorChange() {
+    var selectedDoctor = this.valForm.get("doctor")?.value;
+    if (selectedDoctor) {
+      var consultation_fee = selectedDoctor.fee || 0;
+      this.valForm.patchValue({ consultation_fee: consultation_fee });
+      this.updatePrice();
+    }
   }
 }

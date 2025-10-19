@@ -427,4 +427,31 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Doctor
+
+  private add_doctor = new Subject<void>();
+  private edit_doctor = new Subject<any>();
+  private doctor_data: any = undefined;
+
+  setDoctorData(data: any) {
+    this.cons_type_data = data;
+  }
+  openAddDoctorModal() {
+    this.add_doctor.next();
+  }
+  getAddDoctorClickEvent(): Observable<any> {
+    return this.add_doctor.asObservable();
+  }
+  getDoctorData(): any {
+    return this.doctor_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }
