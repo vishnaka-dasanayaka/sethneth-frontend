@@ -38,10 +38,8 @@ export class CInvoiceDetailComponent {
     private sharedService: SharedService
   ) {
     this.cols = [
-      { field: "item", header: "Item", sortable: true },
       { field: "desc", header: "Description", sortable: true },
-      { field: "qty", header: "QTY", sortable: true },
-      { field: "unit_price", header: "Unit Price", sortable: true },
+      { field: "unit_price", header: "Price", sortable: true },
       { field: "discount", header: "Discount", sortable: true },
       { field: "total", header: "Total", sortable: true },
       { field: "actions", header: "Actions", sortable: true },

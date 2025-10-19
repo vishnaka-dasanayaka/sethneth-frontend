@@ -129,6 +129,13 @@
               {{ inv?.cons_type?.type }}
             </p>
           </div>
+
+          <div>
+            <p class="text-sm text-gray-500">Consultant Doctor</p>
+            <p class="mt-1 text-start">
+              {{ inv?.doctor_id?.name }}
+            </p>
+          </div>
         </div>
 
         <div class="space-y-4">
@@ -237,135 +244,6 @@
                       let-columns="columns"
                     >
                       <tr
-                        *ngIf="
-                          rowData?.item_type == 'ORDER' &&
-                          rowData?.order_id?.stock_id
-                        "
-                        class="hover:bg-orange-50 transition"
-                      >
-                        <td
-                          *ngFor="let col of columns"
-                          class="px-3 py-2 text-sm text-center"
-                          [ngSwitch]="col.field"
-                        >
-                          <div *ngSwitchCase="'item'">
-                            {{ rowData?.order_id?.stock_id?.category.name }} >
-                            {{ rowData?.order_id?.stock_id?.brand.name }} >
-                            {{ rowData?.order_id?.stock_id?.model.name }}
-                          </div>
-
-                          <div *ngSwitchCase="'desc'">
-                            {{ rowData?.order_id?.code }}
-                          </div>
-
-                          <div class="text-start" *ngSwitchCase="'qty'">
-                            {{ rowData?.total_quantity }}
-                          </div>
-
-                          <div *ngSwitchCase="'unit_price'" class="text-right">
-                            LKR
-                            {{
-                              rowData?.order_id?.frame_price | number : "0.2"
-                            }}
-                          </div>
-
-                          <div *ngSwitchCase="'discount'" class="text-right">
-                            LKR
-                            {{
-                              rowData?.order_id?.frame_discount | number : "0.2"
-                            }}
-                          </div>
-
-                          <div *ngSwitchCase="'total'" class="text-right">
-                            LKR
-                            {{
-                              rowData?.order_id?.frame_price -
-                                rowData?.order_id?.frame_discount
-                                | number : "0.2"
-                            }}
-                          </div>
-
-                          <div *ngSwitchCase="'actions'">
-                            <button
-                              class="btn btn-outline-warning"
-                              routerLink="/orders/order-details/{{
-                                rowData?.order_id?.id
-                              }}"
-                            >
-                              <i class="fa-solid fa-eye"></i> Order
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr
-                        *ngIf="
-                          rowData?.item_type == 'ORDER' &&
-                          rowData?.order_lenses?.length > 0
-                        "
-                        class="hover:bg-orange-50 transition"
-                      >
-                        <td
-                          *ngFor="let col of columns"
-                          class="px-3 py-2 text-sm text-center"
-                          [ngSwitch]="col.field"
-                        >
-                          <div *ngSwitchCase="'item'">
-                            <span
-                              *ngFor="
-                                let item of rowData?.order_lenses;
-                                let last = last
-                              "
-                            >
-                              {{ item?.lense_id?.name
-                              }}<span *ngIf="!last"> <br /> </span>
-                            </span>
-                          </div>
-
-                          <div *ngSwitchCase="'desc'">
-                            {{ rowData?.order_id?.code }}
-                          </div>
-
-                          <div class="text-start" *ngSwitchCase="'qty'">
-                            {{ rowData?.total_quantity }}
-                          </div>
-
-                          <div *ngSwitchCase="'unit_price'" class="text-right">
-                            LKR
-                            {{
-                              rowData?.order_id?.lense_price | number : "0.2"
-                            }}
-                          </div>
-
-                          <div *ngSwitchCase="'discount'" class="text-right">
-                            LKR
-                            {{
-                              rowData?.order_id?.lense_discount | number : "0.2"
-                            }}
-                          </div>
-
-                          <div *ngSwitchCase="'total'" class="text-right">
-                            LKR
-                            {{
-                              rowData?.order_id?.lense_price -
-                                rowData?.order_id?.lense_discount
-                                | number : "0.2"
-                            }}
-                          </div>
-
-                          <div *ngSwitchCase="'actions'">
-                            <button
-                              class="btn btn-outline-warning"
-                              routerLink="/orders/order-details/{{
-                                rowData?.order_id?.id
-                              }}"
-                            >
-                              <i class="fa-solid fa-eye"></i> Order
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr
                         *ngIf="rowData?.item_type != 'ORDER'"
                         class="hover:bg-orange-50 transition"
                       >
@@ -374,25 +252,19 @@
                           class="px-3 py-2 text-sm text-center"
                           [ngSwitch]="col.field"
                         >
-                          <div *ngSwitchCase="'item'">Consultation Fee</div>
-
                           <div *ngSwitchCase="'desc'">
                             {{ rowData?.description }}
                           </div>
 
-                          <div class="text-start" *ngSwitchCase="'qty'">
-                            {{ rowData?.total_quantity }}
-                          </div>
-
-                          <div *ngSwitchCase="'unit_price'" class="text-right">
+                          <div *ngSwitchCase="'unit_price'" class="text-center">
                             LKR {{ rowData?.unit_price | number : "0.2" }}
                           </div>
 
-                          <div *ngSwitchCase="'discount'" class="text-right">
+                          <div *ngSwitchCase="'discount'" class="text-center">
                             LKR {{ rowData?.discount | number : "0.2" }}
                           </div>
 
-                          <div *ngSwitchCase="'total'" class="text-right">
+                          <div *ngSwitchCase="'total'" class="text-center">
                             LKR {{ rowData?.discounted_price | number : "0.2" }}
                           </div>
 
@@ -686,12 +558,14 @@
     </div>
   </div>
 
-  <h3 class="mt-4 font-semibold text-md">Invoice Items</h3>
+  <h5 class="mt-4 text-sm">
+    Name of Consultant Dr. :
+    <span class="font-semibold">{{ inv?.doctor_id?.name }}</span>
+  </h5>
   <table class="w-full text-xs mt-2 border border-collapse">
     <thead>
       <tr class="bg-gray-100">
-        <th class="border px-2 py-1 text-right">Qty</th>
-        <th class="border px-2 py-1 text-left">Item</th>
+        <th class="border px-2 py-1 text-left">Description</th>
         <th class="border px-2 py-1 text-right">Price (LKR)</th>
         <th class="border px-2 py-1 text-right">Discount (LKR)</th>
         <th class="border px-2 py-1 text-right">Total (LKR)</th>
@@ -699,58 +573,7 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let item of inv_items">
-        <tr *ngIf="item?.item_type == 'ORDER' && item?.order_id?.stock_id">
-          <td class="border px-2 py-1 text-center">
-            {{ item.total_quantity }}
-          </td>
-          <td class="border px-2 py-1">
-            {{ item?.order_id?.stock_id?.category.name }} >
-            {{ item?.order_id?.stock_id?.brand.name }} >
-            {{ item?.order_id?.stock_id?.model.name }}
-          </td>
-          <td class="border px-2 py-1 text-right">
-            KR
-            {{ item?.order_id?.frame_price | number : "0.2" }}
-          </td>
-          <td class="border px-2 py-1 text-right">
-            {{ item?.order_id?.frame_discount | number : "0.2" }}
-          </td>
-          <td class="border px-2 py-1 text-right">
-            {{
-              item?.order_id?.frame_price - item?.order_id?.frame_discount
-                | number : "0.2"
-            }}
-          </td>
-        </tr>
-        <tr
-          *ngIf="item?.item_type == 'ORDER' && item?.order_lenses?.length > 0"
-        >
-          <td class="border px-2 py-1 text-center">
-            {{ item.total_quantity }}
-          </td>
-          <td class="border px-2 py-1">
-            <span *ngFor="let data of item?.order_lenses; let last = last">
-              {{ data?.lense_id?.name }}<span *ngIf="!last"> <br /> </span>
-            </span>
-          </td>
-          <td class="border px-2 py-1 text-right">
-            {{ item?.order_id?.lense_price | number : "0.2" }}
-          </td>
-          <td class="border px-2 py-1 text-right">
-            {{ item?.order_id?.lense_discount | number : "0.2" }}
-          </td>
-          <td class="border px-2 py-1 text-right">
-            {{
-              item?.order_id?.lense_price - item?.order_id?.lense_discount
-                | number : "0.2"
-            }}
-          </td>
-        </tr>
-
         <tr *ngIf="item?.item_type != 'ORDER'">
-          <td class="border px-2 py-1 text-center">
-            {{ item.total_quantity }}
-          </td>
           <td class="border px-2 py-1">
             {{ item?.description }}
           </td>
