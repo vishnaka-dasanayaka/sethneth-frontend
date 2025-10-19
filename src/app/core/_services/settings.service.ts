@@ -410,4 +410,47 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  createDoctor(obj: any) {
+    let APIurl = this.BaseAPIurl + "consultation/create-doctor";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllDoctors(obj: any) {
+    let APIurl = this.BaseAPIurl + "consultation/get-all-paged-doctors";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateDoctorStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "consultation/update-doctor-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllActiveDoctors() {
+    let APIurl = this.BaseAPIurl + "consultation/get-all-active-doctors";
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }
