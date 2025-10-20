@@ -46,12 +46,12 @@ export class AddOrderComponent {
       patient: [null, Validators.required],
       date: [this.getTodayDate(), Validators.required],
       branch: [null, Validators.required],
-      model: [null, Validators.required],
-      lense: [null, Validators.required],
-      lense_price: [null, Validators.required],
+      model: [null],
+      lense: [null],
+      lense_price: [{ value: null, disabled: true }],
       price: [{ value: 0, disabled: true }, Validators.required],
-      frame_discount: [0, Validators.required],
-      lense_discount: [0, Validators.required],
+      frame_discount: [{ value: 0, disabled: true }, Validators.required],
+      lense_discount: [{ value: 0, disabled: true }, Validators.required],
       discounted_price: [{ value: 0, disabled: true }, Validators.required],
     });
 
@@ -68,6 +68,36 @@ export class AddOrderComponent {
     this.getAllActiveBranches();
     this.getAllActiveModels();
     this.getAllActiveLences();
+
+    this.valForm.get("model")?.valueChanges.subscribe((val) => {
+      const frame_discount_control = this.valForm.get("frame_discount");
+      if (val) {
+        frame_discount_control?.enable();
+      } else {
+        frame_discount_control?.disable();
+        frame_discount_control?.setValue(0);
+      }
+      this.updatePrice();
+    });
+
+    this.valForm.get("lense")?.valueChanges.subscribe((val) => {
+      const lense_discount_control = this.valForm.get("lense_discount");
+      if (val) {
+        lense_discount_control?.enable();
+      } else {
+        lense_discount_control?.disable();
+        lense_discount_control?.setValue(0);
+      }
+
+      const lense_price_control = this.valForm.get("lense_price");
+      if (val) {
+        lense_price_control?.enable();
+      } else {
+        lense_price_control?.disable();
+        lense_price_control?.setValue(0);
+      }
+      this.updatePrice();
+    });
   }
 
   getAllActivePatients() {
@@ -178,7 +208,7 @@ export class AddOrderComponent {
       value.uniquekey = this.uniqueid;
       value.branch = value.branch.id;
       value.patient = value.patient.id;
-      value.model = value.model.id;
+      value.model = value.model?.id;
       value.date = moment(value.date).format("YYYY-MM-DD");
 
       this.orderService.createOrder(value).subscribe(
@@ -235,10 +265,12 @@ export class AddOrderComponent {
     var frame_discount = this.valForm.get("frame_discount")?.value;
     var lense_discount = this.valForm.get("lense_discount")?.value;
 
-    this.valForm.patchValue({ price: lense_price + model.selling_price });
+    var model_selling_price = model?.selling_price ? model?.selling_price : 0;
+
+    this.valForm.patchValue({ price: lense_price + model_selling_price });
     this.valForm.patchValue({
       discounted_price:
-        lense_price + model.selling_price - frame_discount - lense_discount,
+        lense_price + model_selling_price - frame_discount - lense_discount,
     });
   }
 
@@ -248,9 +280,11 @@ export class AddOrderComponent {
     var frame_discount = this.valForm.get("frame_discount")?.value;
     var lense_discount = this.valForm.get("lense_discount")?.value;
 
+    var model_selling_price = model?.selling_price ? model?.selling_price : 0;
+
     this.valForm.patchValue({
       discounted_price:
-        lense_price + model.selling_price - frame_discount - lense_discount,
+        lense_price + model_selling_price - frame_discount - lense_discount,
     });
   }
 }

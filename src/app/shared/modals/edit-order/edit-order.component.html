@@ -7,7 +7,7 @@
   <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-auto z-50">
     <!-- Modal Header -->
     <div class="flex justify-between items-center px-6 py-4 border-b">
-      <h4 class="text-xl font-semibold text-gray-800">Add Order</h4>
+      <h4 class="text-xl font-semibold text-gray-800">Update Order</h4>
       <button
         type="button"
         class="text-gray-500 hover:text-red-600 text-xl"
@@ -85,7 +85,6 @@
           <div class="col-span-2">
             <label class="block text-sm font-medium mb-1 text-gray-700"
               >Frame Model
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i>
             </label>
             <p-select
               [options]="model_list"
@@ -118,8 +117,7 @@
           <div>
             <label class="block text-sm font-medium mb-1 text-gray-700"
               >Lense
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
-            ></label>
+            </label>
 
             <p-multiselect
               [options]="lenses_list"
@@ -137,8 +135,7 @@
           <div>
             <label class="block text-sm font-medium mb-1 text-gray-700"
               >Lense price
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
-            ></label>
+            </label>
             <input
               type="number"
               formControlName="lense_price"
@@ -173,8 +170,7 @@
           <div>
             <label class="block text-sm font-medium mb-1 text-gray-700"
               >Frame Discount
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
-            ></label>
+            </label>
             <input
               type="number"
               formControlName="frame_discount"
@@ -185,8 +181,7 @@
           <div>
             <label class="block text-sm font-medium mb-1 text-gray-700"
               >Lense Discount
-              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
-            ></label>
+            </label>
             <input
               type="number"
               formControlName="lense_discount"

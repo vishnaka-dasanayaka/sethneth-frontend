@@ -143,15 +143,22 @@
         <div class="space-y-4">
           <div>
             <p class="text-sm text-gray-500">Brand</p>
-            <p class="font-medium">
+            <p *ngIf="order?.stock_id" class="font-medium">
               {{ order?.stock_id?.category?.name }} >
               {{ order?.stock_id?.brand?.name }}
+            </p>
+
+            <p *ngIf="order?.stock_id == null" class="font-medium">
+              [ NO FRAME ]
             </p>
           </div>
           <div>
             <p class="text-sm text-gray-500">Model</p>
             <p class="font-medium">
               {{ order?.stock_id?.model?.name }}
+            </p>
+            <p *ngIf="order?.stock_id == null" class="font-medium">
+              [ NO FRAME ]
             </p>
           </div>
           <div>
@@ -160,6 +167,7 @@
               <span *ngFor="let item of lense_list; let last = last">
                 {{ item?.lense_id?.name }}<span *ngIf="!last"> | </span>
               </span>
+              <span *ngIf="lense_list.length == 0"> [ NO LENSES ] </span>
             </p>
           </div>
           <div>
@@ -208,7 +216,7 @@
           <div>
             <p class="text-sm text-gray-500">Frame Price</p>
             <p class="font-medium text-teal-600">
-              LKR {{ order?.stock_id?.selling_price | number : "0.2" }}
+              LKR {{ order?.frame_price | number : "0.2" }}
             </p>
           </div>
           <div>

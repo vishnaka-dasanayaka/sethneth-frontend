@@ -120,6 +120,7 @@
 
               <div *ngSwitchCase="'model'">
                 {{ rowData?.model_name }}
+                <span *ngIf="rowData?.model_name == null">[ NO FRAME ]</span>
               </div>
 
               <div class="text-left" *ngSwitchCase="'status'">
