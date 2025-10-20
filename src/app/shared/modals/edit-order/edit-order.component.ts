@@ -276,10 +276,12 @@ export class EditOrderComponent {
     var frame_discount = this.valForm.get("frame_discount")?.value;
     var lense_discount = this.valForm.get("lense_discount")?.value;
 
-    this.valForm.patchValue({ price: lense_price + model.selling_price });
+    var model_selling_price = model?.selling_price ? model?.selling_price : 0;
+
+    this.valForm.patchValue({ price: lense_price + model_selling_price });
     this.valForm.patchValue({
       discounted_price:
-        lense_price + model.selling_price - frame_discount - lense_discount,
+        lense_price + model_selling_price - frame_discount - lense_discount,
     });
   }
 
@@ -289,9 +291,11 @@ export class EditOrderComponent {
     var frame_discount = this.valForm.get("frame_discount")?.value;
     var lense_discount = this.valForm.get("lense_discount")?.value;
 
+    var model_selling_price = model?.selling_price ? model?.selling_price : 0;
+
     this.valForm.patchValue({
       discounted_price:
-        lense_price + model.selling_price - frame_discount - lense_discount,
+        lense_price + model_selling_price - frame_discount - lense_discount,
     });
   }
 }

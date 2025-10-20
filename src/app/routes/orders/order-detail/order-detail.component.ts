@@ -239,7 +239,7 @@ export class OrderDetailComponent {
     var obj = this.order;
     obj.patient_id = obj.patient_id.id;
     obj.branch_id = obj.branch_id.id;
-    obj.stock_id = obj.stock_id.id;
+    obj.stock_id = obj.stock_id?.id;
     this.sharedService.setOrderData(obj);
     this.sharedService.openEditOrderModal();
   }
