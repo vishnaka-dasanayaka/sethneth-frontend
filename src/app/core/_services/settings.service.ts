@@ -201,6 +201,17 @@ export class SettingsService {
     );
   }
 
+  updateBrandStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "stock/update-brand-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   getAllBrands(obj: any) {
     let APIurl = this.BaseAPIurl + "stock/get-all-paged-brands";
 

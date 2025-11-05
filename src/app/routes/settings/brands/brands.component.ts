@@ -80,7 +80,7 @@ export class BrandsComponent {
     swal
       .fire({
         title:
-          "Please confirm that you want to " + statusString + " the category.",
+          "Please confirm that you want to " + statusString + " the brand.",
         icon: "question",
         showCancelButton: true,
         confirmButtonColor: "#28a745", // ✅ Green button
@@ -100,11 +100,11 @@ export class BrandsComponent {
             id: id,
             uniquekey: this.uniqueid,
           };
-          this.settingsService.updateCategorystatus(obj).subscribe(
+          this.settingsService.updateBrandStatus(obj).subscribe(
             (data) => {
               if (data.status) {
                 this.toastr.success(
-                  "Category status has been updated successfully.",
+                  "Brand status has been updated successfully.",
                   "Success",
                   {
                     positionClass: "toast-top-right",

@@ -111,6 +111,7 @@
                   <th class="py-3 px-4 font-medium">Model</th>
                   <th class="py-3 px-4 font-medium">Initial Qty</th>
                   <th class="py-3 px-4 font-medium">Available Qty</th>
+                  <th class="py-3 px-4 font-medium">Sold Qty</th>
                   <th class="py-3 px-4 font-medium">Status</th>
                   <th class="py-3 px-4 font-medium">Buying Price</th>
                   <th class="py-3 px-4 font-medium">Selling Price</th>
@@ -130,6 +131,9 @@
                   </td>
                   <td class="py-3 px-4 text-center">
                     {{ item?.available_no_of_units }}
+                  </td>
+                  <td class="py-3 px-4 text-center">
+                    {{ item?.no_of_units - item?.available_no_of_units }}
                   </td>
                   <td class="py-3 px-4 text-center">
                     <span *ngIf="item.status == 0" class="badge badge-primary">
