@@ -454,4 +454,57 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // User
+
+  private add_user = new Subject<void>();
+  private edit_user = new Subject<any>();
+  private user_data: any = undefined;
+
+  setUserData(data: any) {
+    this.user_data = data;
+  }
+  openAddUserModal() {
+    this.add_user.next();
+  }
+  getAddUserClickEvent(): Observable<any> {
+    return this.add_user.asObservable();
+  }
+  getUserData(): any {
+    return this.user_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
+
+  // User Level
+  private add_user_level = new Subject<void>();
+  private edit_user_level = new Subject<any>();
+  private user_level_data: any = undefined;
+
+  setUserLevellData(data: any) {
+    this.user_level_data = data;
+  }
+  openAddUserLevelModal() {
+    this.add_user_level.next();
+  }
+  getAddUserLevelClickEvent(): Observable<any> {
+    return this.add_user_level.asObservable();
+  }
+  getUserLevelyData(): any {
+    return this.user_level_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }

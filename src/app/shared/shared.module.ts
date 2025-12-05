@@ -49,6 +49,8 @@ import { AddConsultationTypeComponent } from "./modals/add-consultation-type/add
 import { AddCInvoiceComponent } from "./modals/add-c-invoice/add-c-invoice.component";
 import { AddCInvoiceItemComponent } from "./modals/add-c-invoice-item/add-c-invoice-item.component";
 import { AddDoctorComponent } from "./modals/add-doctor/add-doctor.component";
+import { AddUserComponent } from "./modals/add-user/add-user.component";
+import { AddUserLevelComponent } from "./modals/add-user-level/add-user-level.component";
 
 @NgModule({
   imports: [
@@ -101,6 +103,8 @@ import { AddDoctorComponent } from "./modals/add-doctor/add-doctor.component";
     AddCInvoiceComponent,
     AddCInvoiceItemComponent,
     AddDoctorComponent,
+    AddUserComponent,
+    AddUserLevelComponent,
   ],
   exports: [
     BlockUIModule,
@@ -147,6 +151,8 @@ import { AddDoctorComponent } from "./modals/add-doctor/add-doctor.component";
     AddCInvoiceComponent,
     AddCInvoiceItemComponent,
     AddDoctorComponent,
+    AddUserComponent,
+    AddUserLevelComponent,
   ],
 })
 
