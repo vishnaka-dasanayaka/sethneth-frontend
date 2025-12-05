@@ -1,12 +1,27 @@
 <section class="">
-  <h6 class="text-xs mb-2">Orders > Order Summary</h6>
+  <h6 class="text-xs mb-2">
+    <span
+      [routerLink]="['/settings/settings-menu']"
+      routerLinkActive="router-link-active"
+      class="text-blue-500 cursor-pointer"
+      >Settings</span
+    >
+    >
+    <span
+      [routerLink]="['/settings/user-settings']"
+      routerLinkActive="router-link-active"
+      class="text-blue-500 cursor-pointer"
+      >User Settings</span
+    >
+    > Users Summary
+  </h6>
   <div class="flex items-end justify-between">
     <div>
-      <h1 class="text-xl font-semibold">Order Summary</h1>
-      <h5 class="text-xs font-thin">List of Orders appear here</h5>
+      <h1 class="text-xl font-semibold">Users Summary</h1>
+      <h5 class="text-xs font-thin">Add, View and Edit users here</h5>
     </div>
     <button (click)="openAddModal()" class="add_btn">
-      <i class="fa-solid fa-plus mr-2"></i>Add Order
+      <i class="fa-solid fa-plus mr-2"></i>Add User
     </button>
   </div>
 
@@ -27,16 +42,14 @@
       <p-table
         #dt1
         [columns]="cols"
-        [value]="orders"
+        [value]="users"
         [paginator]="true"
         [rows]="10"
         [globalFilterFields]="[
-          'client_code',
-          'name',
-          'nic_or_passport_no',
-          'address',
-          'contact_no',
-          'email'
+          'firstname',
+          'lastname',
+          'userlevel',
+          'designation'
         ]"
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -46,8 +59,8 @@
         [rowHover]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
         [lazy]="true"
-        (onLazyLoad)="getAllOrders($event)"
-        [totalRecords]="no_of_orders"
+        (onLazyLoad)="getAllUsers($event)"
+        [totalRecords]="no_of_users"
         [sortOrder]="1"
       >
         <ng-template #caption>
@@ -96,84 +109,70 @@
               class="px-3 py-2 text-sm text-center"
               [ngSwitch]="col.field"
             >
-              <div *ngSwitchCase="'code'">
-                <a
-                  class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/orders/order-details/{{ rowData.id }}"
+              <div *ngSwitchCase="'id'">
+                {{ rowData[col.field] }}
+              </div>
+
+              <div *ngSwitchCase="'firstname'">
+                {{ rowData?.firstname }}
+              </div>
+
+              <div *ngSwitchCase="'lastname'">
+                {{ rowData?.lastname }}
+              </div>
+
+              <div *ngSwitchCase="'userlevel'">
+                <span
+                  class="badge badge-orange"
+                  *ngIf="rowData?.userlevel == 1"
                 >
-                  {{ rowData[col.field] }}
-                </a>
+                  {{ rowData?.rolename }}
+                </span>
+                <span class="badge badge-teal" *ngIf="rowData?.userlevel == 2">
+                  {{ rowData?.rolename }}
+                </span>
+                <span class="badge badge-cyan" *ngIf="rowData?.userlevel == 3">
+                  {{ rowData?.rolename }}
+                </span>
               </div>
 
-              <div *ngSwitchCase="'patient'">
-                <a
-                  class="text-[#ff820d] font-medium hover:underline"
-                  routerLink="/patients/patient-details/{{ rowData.id }}"
-                >
-                  {{ rowData?.patient_name }}
-                </a>
-              </div>
-
-              <div class="text-start" *ngSwitchCase="'date'">
-                {{ rowData[col.field] | date : "mediumDate" }}
-              </div>
-
-              <div *ngSwitchCase="'model'">
-                {{ rowData?.model_name }}
-                <span *ngIf="rowData?.model_name == null">[ NO FRAME ]</span>
+              <div *ngSwitchCase="'designation'">
+                {{ rowData?.designation }}
               </div>
 
               <div class="text-left" *ngSwitchCase="'status'">
-                <span
-                  *ngIf="rowData[col.field] == 0"
-                  class="badge badge-primary"
-                >
-                  Pending
+                <span *ngIf="rowData?.disabled == 1" class="badge badge-danger">
+                  Disabled
                 </span>
                 <span
-                  *ngIf="rowData[col.field] == 10"
+                  *ngIf="rowData?.disabled == 0"
                   class="badge badge-success"
                 >
-                  Delivered
+                  Active
                 </span>
-
-                <span
-                  *ngIf="rowData[col.field] == -2"
-                  class="badge badge-danger"
-                >
-                  Cancelled
-                </span>
-                <span *ngIf="rowData[col.field] == 2" class="badge badge-cyan">
-                  Confirmed
-                </span>
-                <span
-                  *ngIf="rowData[col.field] == 4"
-                  class="badge badge-orange"
-                >
-                  Sent to W/S
-                </span>
-                <span *ngIf="rowData[col.field] == 6" class="badge badge-teal">
-                  Received from W/S
-                </span>
-              </div>
-
-              <div *ngSwitchCase="'price'">
-                LKR {{ rowData?.discounted_price | number : "0.2" }}
               </div>
 
               <div *ngSwitchCase="'actions'">
                 <button
-                  class="btn btn-outline-warning"
-                  routerLink="/orders/order-details/{{ rowData.id }}"
+                  *ngIf="rowData?.disabled == 1 && rowData?.id != 1"
+                  class="btn btn-outline-success mr-2"
+                  (click)="updateStatus(rowData.id, 0)"
                 >
-                  View
+                  Enable
+                </button>
+                <button
+                  *ngIf="rowData?.disabled == 0 && rowData?.id != 1"
+                  class="btn btn-outline-danger mr-2"
+                  (click)="updateStatus(rowData.id, 1)"
+                >
+                  Disable
                 </button>
 
                 <button
-                  class="btn btn-outline-gray ml-3"
-                  (click)="openEditModal(rowData)"
+                  class="btn btn-outline-warning"
+                  routerLink="/settings/user-detail/{{ rowData.id }}"
                 >
-                  Edit
+                  View
                 </button>
               </div>
             </td>
@@ -184,5 +183,4 @@
   </div>
 </section>
 
-<app-add-order (parentFun)="getAllOrders()"> </app-add-order>
-<app-edit-order (parentFun)="getAllOrders()"> </app-edit-order>
+<app-add-user (parentFun)="getAllUsers()"> </app-add-user>
