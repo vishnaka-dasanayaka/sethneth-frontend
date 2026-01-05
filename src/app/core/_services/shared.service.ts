@@ -507,4 +507,30 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Branch
+  private add_branch = new Subject<void>();
+  private edit_branch = new Subject<any>();
+  private branch_data: any = undefined;
+
+  setBranchData(data: any) {
+    this.branch_data = data;
+  }
+  openAddBranchModal() {
+    this.add_branch.next();
+  }
+  getAddBranchClickEvent(): Observable<any> {
+    return this.add_branch.asObservable();
+  }
+  getBranchData(): any {
+    return this.branch_data;
+  }
+
+  // openEditClientModal() {
+  //   this.edit_supplier.next();
+  // }
+
+  // getEditClientClickEvent(): Observable<any> {
+  //   return this.edit_supplier.asObservable();
+  // }
 }

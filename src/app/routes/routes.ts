@@ -9,7 +9,6 @@ import { MyEventComponent } from "./events/my-event/my-event.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { NewEventsComponent } from "./events/new-events/new-events.component";
 import { EditedEventsComponent } from "./events/edited-events/edited-events.component";
-import { ProfileComponent } from "./profile/profile.component";
 import { TicketsModule } from "./tickets/tickets.module";
 import { PendingEventsComponent } from "./events/pending-events/pending-events.component";
 import { MyTicketsComponent } from "./tickets/my-tickets/my-tickets.component";
@@ -80,7 +79,6 @@ export const routes: Routes = [
           import("./tickets/tickets.module").then((m) => TicketsModule),
       },
       { path: "dashboard", component: DashboardComponent },
-      { path: "profile", component: ProfileComponent },
       { path: "my-tickets", component: MyTicketsComponent },
       {
         path: "home",

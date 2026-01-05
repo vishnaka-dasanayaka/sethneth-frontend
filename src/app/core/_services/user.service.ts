@@ -102,4 +102,26 @@ export class UserService {
       catchError(this.handleError)
     );
   }
+
+  setPermissionGroup(obj: any) {
+    let APIurl = this.BaseAPIurl + "/update-permission-group";
+
+    return this.http.post<any>(APIurl, JSON.stringify(obj)).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getUserList(obj: any) {
+    let APIurl = this.BaseAPIurl + "/get-user-list";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

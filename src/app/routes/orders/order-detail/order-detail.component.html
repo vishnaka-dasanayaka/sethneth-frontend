@@ -21,7 +21,7 @@
       <h1 class="text-xl font-semibold">Order Details</h1>
       <h5 class="text-xs font-thin">{{ order?.code }}</h5>
     </div>
-    <div>
+    <div *hasPermission="[[6], sysuser]">
       <button
         [disabled]="order?.status == -2"
         class="mr-2 btn-lg btn-danger"

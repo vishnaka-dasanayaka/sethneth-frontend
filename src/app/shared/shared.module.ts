@@ -51,6 +51,8 @@ import { AddCInvoiceItemComponent } from "./modals/add-c-invoice-item/add-c-invo
 import { AddDoctorComponent } from "./modals/add-doctor/add-doctor.component";
 import { AddUserComponent } from "./modals/add-user/add-user.component";
 import { AddUserLevelComponent } from "./modals/add-user-level/add-user-level.component";
+import { HasPermissionDirective } from "./directives/has-permission.directive";
+import { AddBranchComponent } from "./add-branch/add-branch.component";
 
 @NgModule({
   imports: [
@@ -105,6 +107,8 @@ import { AddUserLevelComponent } from "./modals/add-user-level/add-user-level.co
     AddDoctorComponent,
     AddUserComponent,
     AddUserLevelComponent,
+    HasPermissionDirective,
+    AddBranchComponent,
   ],
   exports: [
     BlockUIModule,
@@ -153,6 +157,8 @@ import { AddUserLevelComponent } from "./modals/add-user-level/add-user-level.co
     AddDoctorComponent,
     AddUserComponent,
     AddUserLevelComponent,
+    HasPermissionDirective,
+    AddBranchComponent,
   ],
 })
 

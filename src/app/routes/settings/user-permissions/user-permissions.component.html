@@ -161,11 +161,11 @@
               <span
                 class="text-xs font-semibold px-3 py-1 rounded-full"
                 [ngClass]="{
-                  'bg-green-100 text-green-700': perm.enabled,
-                  'bg-red-100 text-red-600': !perm.enabled
+                  'bg-green-100 text-green-700': perm.status,
+                  'bg-red-100 text-red-600': !perm.status
                 }"
               >
-                {{ perm.enabled ? "ENABLED" : "DISABLED" }}
+                {{ perm.status ? "ENABLED" : "DISABLED" }}
               </span>
 
               <!-- Toggle Switch -->
@@ -173,7 +173,9 @@
                 <input
                   type="checkbox"
                   class="sr-only peer"
-                  [(ngModel)]="perm.enabled"
+                  [(ngModel)]="perm.status"
+                  (ngModelChange)="onTogglePermission(perm)"
+                  [disabled]="block_switch"
                 />
                 <div
                   class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:bg-[#ff820d] transition-all"

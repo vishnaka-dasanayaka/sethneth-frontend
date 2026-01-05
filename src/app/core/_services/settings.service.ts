@@ -464,4 +464,48 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  createBranch(obj: any) {
+    let APIurl = this.BaseAPIurl + "branch/create-branch";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllBranches(obj: any) {
+    let APIurl = this.BaseAPIurl + "branch/get-all-paged-branches";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getBranch(id: number) {
+    let APIurl = this.BaseAPIurl + "branch/" + id;
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateBranchStatus(obj: any) {
+    let APIurl = this.BaseAPIurl + "branch/update-branch-status";
+
+    return this.http.patch<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }
