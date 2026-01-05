@@ -23,6 +23,7 @@
     </div>
     <div>
       <button
+        *hasPermission="[[1], sysuser]"
         [disabled]="inv?.status == -2"
         class="mr-2 btn-lg btn-danger"
         [ngClass]="{ 'btn-disable': inv?.status == -2 }"
@@ -31,6 +32,7 @@
         <i class="fa-solid fa-circle-xmark text-danger mr-2"></i> Cancel
       </button>
       <button
+        *hasPermission="[[1], sysuser]"
         [disabled]="inv?.status == 0 || inv?.status == -2"
         [ngClass]="{ 'btn-disable': inv?.status == 0 || inv?.status == -2 }"
         class="mr-2 btn-lg btn-primary"
@@ -40,6 +42,7 @@
         Pending
       </button>
       <button
+        *hasPermission="[[1], sysuser]"
         [disabled]="inv?.status == 2 || inv?.status == -2"
         class="mr-2 btn-lg btn-success"
         [ngClass]="{ 'btn-disable': inv?.status == 2 || inv?.status == -2 }"

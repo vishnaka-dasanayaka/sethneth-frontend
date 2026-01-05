@@ -73,7 +73,7 @@ export class LoginComponent {
               this.router.navigate([this.returnUrl || "/"]);
             }
           } else {
-            this.toastr.error("Username or Password Invalid", "ERROR !!", {
+            this.toastr.error(data.err, "ERROR !!", {
               positionClass: "toast-top-right",
               closeButton: true,
             });

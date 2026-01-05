@@ -6,26 +6,17 @@
       class="text-blue-500 cursor-pointer"
       >Settings</span
     >
-    >
-    <span
-      [routerLink]="['/settings/user-settings']"
-      routerLinkActive="router-link-active"
-      class="text-blue-500 cursor-pointer"
-      >User Settings</span
-    >
-    > Users Summary
+    > Branch Summary
   </h6>
   <div class="flex items-end justify-between">
     <div>
-      <h1 class="text-xl font-semibold">Users Summary</h1>
-      <h5 class="text-xs font-thin">Add, View and Edit users here</h5>
+      <h1 class="text-xl font-semibold">Branch Summary</h1>
+      <h5 class="text-xs font-thin">
+        Add and manage branch contacts and details
+      </h5>
     </div>
-    <button
-      *hasPermission="[[2], sysuser]"
-      (click)="openAddModal()"
-      class="add_btn"
-    >
-      <i class="fa-solid fa-plus mr-2"></i>Add User
+    <button (click)="openAddModal()" class="add_btn">
+      <i class="fa-solid fa-plus mr-2"></i>Add Branch
     </button>
   </div>
 
@@ -46,14 +37,16 @@
       <p-table
         #dt1
         [columns]="cols"
-        [value]="users"
+        [value]="branches"
         [paginator]="true"
         [rows]="10"
         [globalFilterFields]="[
-          'firstname',
-          'lastname',
-          'userlevel',
-          'designation'
+          'client_code',
+          'name',
+          'nic_or_passport_no',
+          'address',
+          'contact_no',
+          'email'
         ]"
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -63,8 +56,8 @@
         [rowHover]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
         [lazy]="true"
-        (onLazyLoad)="getAllUsers($event)"
-        [totalRecords]="no_of_users"
+        (onLazyLoad)="getAllBranches($event)"
+        [totalRecords]="no_of_branches"
         [sortOrder]="1"
       >
         <ng-template #caption>
@@ -113,72 +106,61 @@
               class="px-3 py-2 text-sm text-center"
               [ngSwitch]="col.field"
             >
-              <div *ngSwitchCase="'id'">
+              <div *ngSwitchCase="'code'">
+                <a
+                  class="text-[#ff820d] font-medium hover:underline"
+                  routerLink="/settings/supplier-details/{{ rowData.id }}"
+                >
+                  {{ rowData[col.field] }}
+                </a>
+              </div>
+
+              <div *ngSwitchCase="'name'">
+                <a
+                  class="text-[#ff820d] font-medium hover:underline"
+                  routerLink="/settings/supplier-details/{{ rowData.id }}"
+                >
+                  {{ rowData[col.field] }}
+                </a>
+              </div>
+
+              <div *ngSwitchCase="'type'">
+                <span *ngIf="rowData[col.field] == 'MAIN'">Main Branch</span>
+                <span *ngIf="rowData[col.field] == 'SUB'">Sub Branch</span>
+              </div>
+
+              <div *ngSwitchCase="'phone'">
                 {{ rowData[col.field] }}
               </div>
 
-              <div *ngSwitchCase="'firstname'">
-                {{ rowData?.firstname }}
+              <div *ngSwitchCase="'created_on'">
+                {{ rowData[col.field] | date : "mediumDate" }}
               </div>
 
-              <div *ngSwitchCase="'lastname'">
-                {{ rowData?.lastname }}
-              </div>
-
-              <div *ngSwitchCase="'userlevel'">
+              <div *ngSwitchCase="'status'">
                 <span
-                  class="badge badge-orange"
-                  *ngIf="rowData?.userlevel == 1"
-                >
-                  {{ rowData?.rolename }}
-                </span>
-                <span class="badge badge-teal" *ngIf="rowData?.userlevel == 2">
-                  {{ rowData?.rolename }}
-                </span>
-                <span class="badge badge-cyan" *ngIf="rowData?.userlevel == 3">
-                  {{ rowData?.rolename }}
-                </span>
-              </div>
-
-              <div *ngSwitchCase="'designation'">
-                {{ rowData?.designation }}
-              </div>
-
-              <div class="text-left" *ngSwitchCase="'status'">
-                <span *ngIf="rowData?.disabled == 1" class="badge badge-danger">
-                  Disabled
-                </span>
-                <span
-                  *ngIf="rowData?.disabled == 0"
+                  *ngIf="rowData[col.field] == 1"
                   class="badge badge-success"
                 >
                   Active
                 </span>
+
+                <span
+                  *ngIf="rowData[col.field] == 0"
+                  class="badge badge-danger"
+                >
+                  Inactive
+                </span>
+              </div>
+
+              <div *ngSwitchCase="'email'">
+                {{ rowData[col.field] }}
               </div>
 
               <div *ngSwitchCase="'actions'">
-                <ng-container *hasPermission="[[4], sysuser]">
-                  <button
-                    *ngIf="rowData?.disabled == 1 && rowData?.id != 1"
-                    class="btn btn-outline-success mr-2"
-                    (click)="updateStatus(rowData.id, 0)"
-                  >
-                    Enable
-                  </button></ng-container
-                >
-                <ng-container *hasPermission="[[4], sysuser]">
-                  <button
-                    *ngIf="rowData?.disabled == 0 && rowData?.id != 1"
-                    class="btn btn-outline-danger mr-2"
-                    (click)="updateStatus(rowData.id, 1)"
-                  >
-                    Disable
-                  </button>
-                </ng-container>
-
                 <button
                   class="btn btn-outline-warning"
-                  routerLink="/settings/user-detail/{{ rowData.id }}"
+                  routerLink="/settings/branch-details/{{ rowData.id }}"
                 >
                   View
                 </button>
@@ -191,4 +173,4 @@
   </div>
 </section>
 
-<app-add-user (parentFun)="getAllUsers()"> </app-add-user>
+<app-add-branch (parentFun)="getAllBranches()"> </app-add-branch>
