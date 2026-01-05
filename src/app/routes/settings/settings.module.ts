@@ -23,6 +23,9 @@ import { UserSummaryComponent } from "./user-summary/user-summary.component";
 import { UserDetailComponent } from "./user-detail/user-detail.component";
 import { UserLevelsComponent } from "./user-levels/user-levels.component";
 import { UserPermissionsComponent } from "./user-permissions/user-permissions.component";
+import { BranchSummaryComponent } from "./branch-summary/branch-summary.component";
+import { BranchDetailsComponent } from "./branch-details/branch-details.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
   // Client paths
@@ -74,6 +77,18 @@ const routes: Routes = [
     path: "user-permissions",
     component: UserPermissionsComponent,
   },
+  {
+    path: "branch-summary",
+    component: BranchSummaryComponent,
+  },
+  {
+    path: "branch-details/:id",
+    component: BranchDetailsComponent,
+  },
+  {
+    path: "my-profile",
+    component: ProfileComponent,
+  },
 ];
 
 @NgModule({
@@ -99,6 +114,9 @@ const routes: Routes = [
     UserDetailComponent,
     UserLevelsComponent,
     UserPermissionsComponent,
+    BranchSummaryComponent,
+    BranchDetailsComponent,
+    ProfileComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), SharedModule],
   exports: [RouterModule],

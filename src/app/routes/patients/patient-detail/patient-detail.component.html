@@ -31,6 +31,7 @@
         <i class="fa-solid fa-circle-check mr-2"></i>Mark as Approved
       </button>
       <button
+        *hasPermission="[[7], sysuser]"
         [disabled]="patient?.status == 0"
         [ngClass]="{ 'btn-disable': patient?.status == 0 }"
         class="mr-2 btn-lg btn-primary"
@@ -39,6 +40,7 @@
         <i class="fa-solid fa-circle-check mr-2"></i>Mark as Pending
       </button>
       <button
+        *hasPermission="[[7], sysuser]"
         [disabled]="patient?.status == -2"
         class="mr-2 btn-lg btn-danger"
         [ngClass]="{ 'btn-disable': patient?.status == -2 }"

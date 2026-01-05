@@ -27,7 +27,7 @@
       <h1 class="text-xl font-semibold">Stock Details</h1>
       <h5 class="text-xs font-thin">{{ stock?.code }}</h5>
     </div>
-    <div>
+    <div *hasPermission="[[10], sysuser]">
       <button
         [disabled]="stock?.status == 2"
         class="mr-2 btn-lg btn-success"

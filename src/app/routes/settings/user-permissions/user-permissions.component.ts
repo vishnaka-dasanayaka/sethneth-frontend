@@ -34,6 +34,8 @@ export class UserPermissionsComponent {
   user_levels: any[] = [];
   no_of_user_levels: number = 0;
 
+  block_switch: boolean = false;
+
   constructor(
     private authservice: AuthenticationService,
     private sharedService: SharedService,
@@ -165,5 +167,45 @@ export class UserPermissionsComponent {
     const timestamp = new Date().valueOf();
     const random = Math.random().toString(36).substring(2);
     this.uniqueid = `${timestamp}${random}`;
+  }
+
+  onTogglePermission(data: any) {
+    this.block_switch = true;
+
+    if (data.status) {
+      var st_text2 = "added to user level";
+    } else {
+      var st_text2 = "removed from user level";
+    }
+
+    var obj = {
+      state: data.status,
+      id: data.id,
+      userlevel: this.selected_user_level,
+    };
+
+    this.userService.setPermissionGroup(obj).subscribe(
+      (data) => {
+        if (data.status) {
+          this.block_switch = false;
+          this.toastr.success("Permission has been " + st_text2, "Success !!", {
+            positionClass: "toast-top-right",
+            closeButton: true,
+          });
+          this.getData();
+        } else {
+          this.getData();
+          this.block_switch = false;
+          this.toastr.warning(data.err, "ERROR !!", {
+            positionClass: "toast-top-right",
+            closeButton: true,
+          });
+        }
+      },
+      (error) => {
+        this.block_switch = false;
+        alert("API ERROR [ERRCODE:001]");
+      }
+    );
   }
 }
