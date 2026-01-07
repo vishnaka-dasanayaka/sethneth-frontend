@@ -52,7 +52,8 @@ import { AddDoctorComponent } from "./modals/add-doctor/add-doctor.component";
 import { AddUserComponent } from "./modals/add-user/add-user.component";
 import { AddUserLevelComponent } from "./modals/add-user-level/add-user-level.component";
 import { HasPermissionDirective } from "./directives/has-permission.directive";
-import { AddBranchComponent } from "./add-branch/add-branch.component";
+import { AddBranchComponent } from "./modals/add-branch/add-branch.component";
+import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
 
 @NgModule({
   imports: [
@@ -109,6 +110,7 @@ import { AddBranchComponent } from "./add-branch/add-branch.component";
     AddUserLevelComponent,
     HasPermissionDirective,
     AddBranchComponent,
+    ChangePasswordComponent,
   ],
   exports: [
     BlockUIModule,
@@ -159,6 +161,7 @@ import { AddBranchComponent } from "./add-branch/add-branch.component";
     AddUserLevelComponent,
     HasPermissionDirective,
     AddBranchComponent,
+    ChangePasswordComponent,
   ],
 })
 

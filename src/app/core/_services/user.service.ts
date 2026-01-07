@@ -124,4 +124,15 @@ export class UserService {
       catchError(this.handleError)
     );
   }
+
+  changePassword(obj: any) {
+    let APIurl = this.BaseAPIurl + "/change-password";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }

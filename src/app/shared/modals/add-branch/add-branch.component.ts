@@ -2,13 +2,13 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import swal from "sweetalert2";
-import { SharedService } from "../../core/_services/shared.service";
-import { SettingsService } from "../../core/_services/settings.service";
 import { ToastrService } from "ngx-toastr";
-import { CustomValidators } from "../validators/custom-validators";
 import { Router } from "@angular/router";
 import { SelectItem } from "primeng/api";
-import { UserService } from "../../core/_services/user.service";
+import { SharedService } from "../../../core/_services/shared.service";
+import { SettingsService } from "../../../core/_services/settings.service";
+import { UserService } from "../../../core/_services/user.service";
+import { CustomValidators } from "../../validators/custom-validators";
 
 @Component({
   selector: "app-add-branch",
