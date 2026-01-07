@@ -15,7 +15,7 @@
       <h5 class="text-xs font-thin">{{ sysuser?.code }}</h5>
     </div>
     <div>
-      <button class="mr-2 btn-lg btn-danger">
+      <button (click)="openModal()" class="mr-2 btn-lg btn-danger">
         <i class="fa-solid fa-key text-danger mr-2"></i> Change Password
       </button>
     </div>
@@ -118,4 +118,4 @@
   </div>
 </section>
 
-<!-- <app-edit-invoice (parentFun)="getData(id)"> </app-edit-invoice> -->
+<app-change-password></app-change-password>
