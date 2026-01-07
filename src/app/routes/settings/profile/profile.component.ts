@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import swal from "sweetalert2";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
+import { SharedService } from "../../../core/_services/shared.service";
 
 @Component({
   selector: "app-profile",
@@ -13,7 +14,10 @@ export class ProfileComponent {
   sysuser: any;
   LoadUI: boolean = false;
 
-  constructor(private authservice: AuthenticationService) {}
+  constructor(
+    private authservice: AuthenticationService,
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit(): void {
     this.generateUniqueKey();
@@ -29,23 +33,10 @@ export class ProfileComponent {
     this.uniqueid = `${timestamp}${random}`;
   }
 
-  // openInvoiceEditModal() {
-  //   if (this.branch.status != 0) {
-  //     swal.fire({
-  //       title: "Warning!",
-  //       text: "Order Should be in pending status to edit",
-  //       icon: "warning",
-  //       confirmButtonColor: "#ff820d",
-  //     });
-  //     return;
-  //   }
+  openModal() {
+    console.log("onChangePasswordClick called");
 
-  //   var obj = {
-  //     patient_id: this.branch.patient_id.id,
-  //     id: this.branch.id,
-  //   };
-
-  //   this.sharedService.setInvoiceData(obj);
-  //   this.sharedService.openEditInvoiceModal();
-  // }
+    this.sharedService.setPasswordData({ navigate: true });
+    this.sharedService.openChangePasswordModal();
+  }
 }

@@ -533,4 +533,26 @@ export class SharedService {
   // getEditClientClickEvent(): Observable<any> {
   //   return this.edit_supplier.asObservable();
   // }
+
+  // Change Password
+
+  private change_password = new Subject<void>();
+  private password_data: any = undefined;
+
+  setPasswordData(data: any) {
+    this.password_data = data;
+    console.log("setPasswordData");
+  }
+  openChangePasswordModal() {
+    this.change_password.next();
+    console.log("openChangePasswordModal");
+  }
+  getChangePasswordClickEvent(): Observable<any> {
+    console.log("getChangePasswordClickEvent");
+
+    return this.change_password.asObservable();
+  }
+  getPasswordData(): any {
+    return this.password_data;
+  }
 }

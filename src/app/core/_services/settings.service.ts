@@ -508,4 +508,26 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  addNote(obj: any) {
+    let APIurl = this.BaseAPIurl + "add-note";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  getNotes(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-notes";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }
