@@ -22,8 +22,6 @@ export class SupplierDetailComponent implements OnInit {
 
   purchase_orders: any[] = [];
 
-  note: any;
-
   constructor(
     private authservice: AuthenticationService,
     private settingsService: SettingsService,

@@ -23,8 +23,6 @@ export class PatientDetailComponent {
   patient: any;
   age: number = 0;
 
-  note: any;
-
   order_cols: any[] = [];
   orders: any[] = [];
 

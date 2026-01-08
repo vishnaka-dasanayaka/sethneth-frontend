@@ -23,7 +23,6 @@ export class PaymentDetailComponent {
 
   loading: boolean = false;
 
-  note: any;
   cols: any[] = [];
 
   constructor(
