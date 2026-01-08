@@ -20,8 +20,6 @@ export class StockDetailComponent {
   id!: number;
   stock: any;
 
-  note: any;
-
   constructor(
     private authservice: AuthenticationService,
     private settingsService: SettingsService,

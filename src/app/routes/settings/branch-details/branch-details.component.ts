@@ -22,8 +22,6 @@ export class BranchDetailsComponent {
   id!: number;
   branch: any;
 
-  note: any;
-
   constructor(
     private authservice: AuthenticationService,
     private route: ActivatedRoute,

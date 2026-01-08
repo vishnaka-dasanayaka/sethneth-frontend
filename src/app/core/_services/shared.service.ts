@@ -1,9 +1,19 @@
 import { Injectable } from "@angular/core";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Observable, Subject } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
 export class SharedService {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  htmlSanitize(html: string): SafeHtml | string {
+    if (!html) {
+      return "";
+    }
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
   sanitizeFormValues(values: any): any {
     const cleanedValues: any = {};
 

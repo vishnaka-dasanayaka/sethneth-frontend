@@ -24,7 +24,6 @@ export class CInvoiceDetailComponent {
 
   loading: boolean = false;
 
-  note: any;
   cols: any[] = [];
 
   payment_cols: any[] = [];

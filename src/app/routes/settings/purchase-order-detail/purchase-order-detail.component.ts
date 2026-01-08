@@ -20,8 +20,6 @@ export class PurchaseOrderDetailComponent {
   id!: number;
   purchase_order: any;
 
-  note: any;
-
   constructor(
     private authservice: AuthenticationService,
     private settingsService: SettingsService,

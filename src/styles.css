@@ -148,6 +148,14 @@ body {
   font-weight: 600;
 }
 
+.delete_btn {
+  color: white;
+  background-color: oklch(50.5% 0.213 27.518);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
 .badge {
   font-size: var(--text-xs) /* 0.75rem = 12px */;
   line-height: var(
