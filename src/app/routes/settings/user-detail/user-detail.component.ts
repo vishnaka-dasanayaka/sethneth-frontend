@@ -21,8 +21,6 @@ export class UserDetailComponent implements OnInit {
   id!: number;
   user: any;
 
-  note: any;
-
   constructor(
     private authservice: AuthenticationService,
     private settingsService: SettingsService,

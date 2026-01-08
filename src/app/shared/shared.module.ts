@@ -54,6 +54,7 @@ import { AddUserLevelComponent } from "./modals/add-user-level/add-user-level.co
 import { HasPermissionDirective } from "./directives/has-permission.directive";
 import { AddBranchComponent } from "./modals/add-branch/add-branch.component";
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
+import { NoteComponent } from "./modals/note/note.component";
 
 @NgModule({
   imports: [
@@ -111,6 +112,7 @@ import { ChangePasswordComponent } from "./modals/change-password/change-passwor
     HasPermissionDirective,
     AddBranchComponent,
     ChangePasswordComponent,
+    NoteComponent,
   ],
   exports: [
     BlockUIModule,
@@ -162,6 +164,7 @@ import { ChangePasswordComponent } from "./modals/change-password/change-passwor
     HasPermissionDirective,
     AddBranchComponent,
     ChangePasswordComponent,
+    NoteComponent,
   ],
 })
 

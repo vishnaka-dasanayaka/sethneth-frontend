@@ -25,9 +25,6 @@ export class InvoiceDetailComponent {
 
   loading: boolean = false;
 
-  note: any;
-  notes: any[] = [];
-
   cols: any[] = [];
 
   payment_cols: any[] = [];
@@ -69,7 +66,6 @@ export class InvoiceDetailComponent {
     this.sub = this.route.params.subscribe((params) => {
       this.id = +params["id"];
       this.getData(this.id);
-      this.getNotes();
     });
   }
 
@@ -91,20 +87,6 @@ export class InvoiceDetailComponent {
     this.invoiceService.getInvoiceItems({ id: id }).subscribe((data) => {
       if (data.status) {
         this.inv_items = data.inv_items;
-      }
-    });
-  }
-
-  getNotes() {
-    var obj = {
-      type: "INV",
-      f_key: this.id,
-    };
-
-    this.settingsService.getNotes(obj).subscribe((data) => {
-      if (data.status) {
-        this.notes = [];
-        this.notes = data.notes;
       }
     });
   }
@@ -328,57 +310,5 @@ export class InvoiceDetailComponent {
     }
     this.sharedService.setPaymentData({ inv: this.inv });
     this.sharedService.openAdPaymentrModal();
-  }
-
-  addNote() {
-    const rawValue = this.note || "";
-
-    let stripped = rawValue.replace(/<[^>]*>/g, "");
-    stripped = stripped.replace(/&nbsp;/gi, " ");
-    stripped = stripped.trim();
-
-    if (!stripped) {
-      swal.fire({
-        title: "Warning!",
-        text: "Note cannot be blank",
-        icon: "warning",
-        confirmButtonColor: "#ff820d",
-      });
-      return;
-    }
-
-    var obj = {
-      type: "INV",
-      f_key: this.id,
-      note: stripped,
-      uniquekey: this.uniqueid,
-    };
-
-    this.settingsService.addNote(obj).subscribe(
-      (data) => {
-        if (data.status) {
-          this.toastr.success("Note added successfully.", "Success", {
-            positionClass: "toast-top-right",
-            closeButton: true,
-            timeOut: 3000,
-            progressBar: true,
-            toastClass: "toast toast-sm", // <-- add your small class here
-          });
-
-          this.generateUniqueKey();
-          this.getNotes();
-          this.note = null;
-        } else {
-          this.toastr.warning(data.err, "ERROR !!", {
-            positionClass: "toast-top-right",
-            closeButton: true,
-          });
-          this.generateUniqueKey();
-        }
-      },
-      (error) => {
-        alert("API ERROR [ERRCODE:001]");
-      }
-    );
   }
 }

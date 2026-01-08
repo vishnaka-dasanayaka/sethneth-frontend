@@ -25,8 +25,6 @@ export class OrderDetailComponent {
 
   loading: boolean = false;
 
-  note: any;
-
   invoice_cols: any[] = [];
   invoices: any[] = [];
 

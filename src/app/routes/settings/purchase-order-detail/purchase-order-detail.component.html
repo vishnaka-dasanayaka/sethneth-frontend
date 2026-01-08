@@ -167,50 +167,7 @@
               </div>
             </p-tabpanel>
             <p-tabpanel value="1">
-              <div class="card">
-                <p-editor [(ngModel)]="note" [style]="{ height: '200px' }" />
-                <button class="add_btn flex my-3">Add Note</button>
-              </div>
-
-              <div
-                class="flex items-center mb-3 justify-between bg-gray-100 p-3 min-h-[5rem] rounded-lg"
-              >
-                <!-- Left section: Note content -->
-                <div class="flex flex-col items-start justify-around">
-                  <h6 class="font-medium text-gray-800">
-                    Supplier contacted for updated invoice
-                  </h6>
-                  <p class="text-sm text-gray-600 mt-1">
-                    Harsha Renuka •
-                    {{ purchase_order?.created_on | date : "mediumDate" }}
-                  </p>
-                </div>
-                <div>
-                  <button class="btn btn-outline-danger">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              </div>
-
-              <div
-                class="flex items-center mb-3 justify-between bg-gray-100 p-3 min-h-[5rem] rounded-lg"
-              >
-                <!-- Left section: Note content -->
-                <div class="flex flex-col items-start justify-around">
-                  <h6 class="font-medium text-gray-800">
-                    Followed up regarding pending payment terms.
-                  </h6>
-                  <p class="text-sm text-gray-600 mt-1">
-                    Hashan Thennakoon •
-                    {{ purchase_order?.created_on | date : "mediumDate" }}
-                  </p>
-                </div>
-                <div>
-                  <button class="btn btn-outline-danger">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              </div>
+              <app-note [f_key]="id" [type]="'PO'"></app-note>
             </p-tabpanel>
           </p-tabpanels>
         </p-tabs>
