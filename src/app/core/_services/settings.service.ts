@@ -552,4 +552,15 @@ export class SettingsService {
       catchError(this.handleError)
     );
   }
+
+  getDashboardDate() {
+    let APIurl = this.BaseAPIurl + "get-dashboard-data";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
 }
