@@ -20,10 +20,30 @@
       </div>
     </div>
 
-    <a href="" title="Log Out" [routerLink]="'/login'">
-      <i
-        class="fa-solid text-white scale-110 fa-arrow-right-from-bracket cursor-pointer"
-      ></i>
-    </a>
+    <div class="flex items-center justify-center">
+      <div class="w-full mr-5">
+        <select
+          [(ngModel)]="selected_branch"
+          (ngModelChange)="changeBranchForSession()"
+          class="px-4 py-2.5 rounded-xl w-20 md:w-full text-white focus:outline-none bg-transparent shadow-sm"
+        >
+          <option value="" disabled selected>Select a branch</option>
+
+          <option
+            *ngFor="let branch of branches"
+            class="bg-red-300"
+            [value]="branch.value"
+          >
+            {{ branch.label }}
+          </option>
+        </select>
+      </div>
+
+      <a href="" title="Log Out" [routerLink]="'/login'">
+        <i
+          class="fa-solid text-white scale-110 fa-arrow-right-from-bracket cursor-pointer"
+        ></i>
+      </a>
+    </div>
   </div>
 </div>

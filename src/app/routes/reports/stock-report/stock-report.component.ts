@@ -22,8 +22,6 @@ export class StockReportComponent implements OnInit {
       this.sysuser = sysuser;
       this.LoadUI = true;
     });
-
-    this.generateReport();
   }
 
   from_date: String = "";

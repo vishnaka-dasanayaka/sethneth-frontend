@@ -22,7 +22,7 @@ export class StockSummaryComponent {
   constructor(
     private authservice: AuthenticationService,
     private sharedService: SharedService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +32,7 @@ export class StockSummaryComponent {
       { field: "brand", header: "Brand" },
       { field: "model", header: "Model" },
       { field: "supplier", header: "Supplier" },
+      { field: "branch", header: "Branch" },
       { field: "no_of_units", header: "Initial Stock" },
       { field: "available_no_of_units", header: "Available Stock" },
       { field: "status", header: "Status" },

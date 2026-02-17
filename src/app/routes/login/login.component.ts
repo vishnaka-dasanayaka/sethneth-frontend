@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { AuthenticationService } from "../../core/_services/authentication.service";
 import { first } from "rxjs/operators";
 import { isPlatformBrowser } from "@angular/common";
+import { SettingsService } from "../../core/_services/settings.service";
 
 @Component({
   selector: "app-login",
@@ -27,7 +28,8 @@ export class LoginComponent {
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private compiler: Compiler,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private settingsService: SettingsService,
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.loginForm = this.fb.group({
       username: ["", Validators.required],
@@ -39,6 +41,7 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
+    this.settingsService.removeSessionBranch().subscribe();
     // reset login status
     if (this.isBrowser) {
       this.authenticationService.logout();
@@ -67,7 +70,7 @@ export class LoginComponent {
                 const user_id = data.body.username;
                 localStorage.setItem(
                   "currentUser",
-                  JSON.stringify({ user_id, token: data.body.token })
+                  JSON.stringify({ user_id, token: data.body.token }),
                 );
               }
               this.router.navigate([this.returnUrl || "/"]);
@@ -85,7 +88,7 @@ export class LoginComponent {
             positionClass: "toast-top-right",
             closeButton: true,
           });
-        }
+        },
       );
   }
 }
