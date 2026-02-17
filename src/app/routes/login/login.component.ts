@@ -41,7 +41,6 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    this.settingsService.removeSessionBranch().subscribe();
     // reset login status
     if (this.isBrowser) {
       this.authenticationService.logout();
