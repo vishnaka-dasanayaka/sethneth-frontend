@@ -1,6 +1,10 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../core/_services/authentication.service";
+import { SelectItem } from "primeng/api";
+import { BranchesService } from "../../core/_services/branches.service";
+import { SettingsService } from "../../core/_services/settings.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-header",
@@ -12,9 +16,15 @@ export class HeaderComponent {
   sysuser: any;
   private sub: any;
 
+  branches: SelectItem[] = [];
+  selected_branch: number = 1;
+
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private branchService: BranchesService,
+    private settingsService: SettingsService,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -22,6 +32,8 @@ export class HeaderComponent {
       .validateUser()
       .subscribe((sysuser) => {
         this.sysuser = sysuser;
+        this.getBranches();
+        this.selected_branch = sysuser.branch.id;
 
         // if (
         //   this.sysuser.app_settings.admin_settings.header_name &&
@@ -54,5 +66,34 @@ export class HeaderComponent {
         //   }, 5000);
         // }
       });
+  }
+
+  changeBranchForSession() {
+    this.settingsService
+      .setSessionBranch({ branch_id: this.selected_branch })
+      .subscribe((data) => {
+        if (data.status) {
+          this.toastr.success("Branch Saved", "Success", {
+            positionClass: "toast-top-right",
+            closeButton: true,
+            timeOut: 3000,
+            progressBar: true,
+            toastClass: "toast toast-sm", // <-- add your small class here
+          });
+        }
+      });
+  }
+
+  getBranches() {
+    this.branchService.getAllActiveBranches().subscribe((data) => {
+      if (data.status) {
+        for (var item of data.branches) {
+          this.branches.push({
+            value: item.id,
+            label: item.code + " - " + item.name,
+          });
+        }
+      }
+    });
   }
 }
