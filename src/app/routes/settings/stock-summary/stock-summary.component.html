@@ -51,7 +51,7 @@
           'nic_or_passport_no',
           'address',
           'contact_no',
-          'email'
+          'email',
         ]"
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -141,6 +141,15 @@
                   routerLink="/settings/supplier-details/{{ rowData.id }}"
                 >
                   {{ rowData?.supplier_name }}
+                </a>
+              </div>
+
+              <div *ngSwitchCase="'branch'">
+                <a
+                  class="text-[#ff820d] font-medium hover:underline"
+                  routerLink="/settings/branch-details/{{ rowData.branch }}"
+                >
+                  {{ rowData?.branch_code }}
                 </a>
               </div>
 
