@@ -575,17 +575,6 @@ export class SettingsService {
     );
   }
 
-  removeSessionBranch() {
-    let APIurl = this.BaseAPIurl + "remove-session-branch";
-
-    return this.http.get<any>(APIurl).pipe(
-      map((response) => {
-        return response;
-      }),
-      catchError(this.handleError),
-    );
-  }
-
   setSessionBranch(obj: any) {
     let APIurl = this.BaseAPIurl + "set-session-branch";
 
