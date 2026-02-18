@@ -551,18 +551,50 @@ export class SharedService {
 
   setPasswordData(data: any) {
     this.password_data = data;
-    console.log("setPasswordData");
   }
   openChangePasswordModal() {
     this.change_password.next();
-    console.log("openChangePasswordModal");
   }
   getChangePasswordClickEvent(): Observable<any> {
-    console.log("getChangePasswordClickEvent");
-
     return this.change_password.asObservable();
   }
   getPasswordData(): any {
     return this.password_data;
+  }
+
+  // Stock Transfer
+
+  private stock_transfer = new Subject<void>();
+  private stock_transfer_data: any = undefined;
+
+  setStockTransferData(data: any) {
+    this.stock_transfer_data = data;
+  }
+  openStockTransferModal() {
+    this.stock_transfer.next();
+  }
+  getStockTransferClickEvent(): Observable<any> {
+    return this.stock_transfer.asObservable();
+  }
+  getStockTransferData(): any {
+    return this.stock_transfer_data;
+  }
+
+  // Stock Bulk Transfer
+
+  private bulk_stock_transfer = new Subject<void>();
+  private bulk_stock_transfer_data: any = undefined;
+
+  setBulkStockTransferData(data: any) {
+    this.bulk_stock_transfer_data = data;
+  }
+  openBulkStockTransferModal() {
+    this.bulk_stock_transfer.next();
+  }
+  getBulkStockTransferClickEvent(): Observable<any> {
+    return this.bulk_stock_transfer.asObservable();
+  }
+  getBulkStockTransferData(): any {
+    return this.bulk_stock_transfer_data;
   }
 }

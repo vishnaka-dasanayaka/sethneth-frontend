@@ -27,27 +27,28 @@
       <h1 class="text-xl font-semibold">Stock Details</h1>
       <h5 class="text-xs font-thin">{{ stock?.code }}</h5>
     </div>
+
     <div *hasPermission="[[10], sysuser]">
       <button
-        [disabled]="stock?.status == 2"
+        [disabled]="stock?.status == 2 || stock?.status == 4"
         class="mr-2 btn-lg btn-success"
-        [ngClass]="{ 'btn-disable': stock?.status == 2 }"
+        [ngClass]="{ 'btn-disable': stock?.status == 2 || stock?.status == 4 }"
         (click)="updateStatus(2)"
       >
         <i class="fa-solid fa-circle-check mr-2"></i>Mark as Approved
       </button>
       <button
-        [disabled]="stock?.status == 0"
-        [ngClass]="{ 'btn-disable': stock?.status == 0 }"
+        [disabled]="stock?.status == 0 || stock?.status == 4"
+        [ngClass]="{ 'btn-disable': stock?.status == 0 || stock?.status == 4 }"
         class="mr-2 btn-lg btn-primary"
         (click)="updateStatus(0)"
       >
         <i class="fa-solid fa-circle-check mr-2"></i>Mark as Pending
       </button>
       <button
-        [disabled]="stock?.status == -2"
+        [disabled]="stock?.status == -2 || stock?.status == 4"
         class="mr-2 btn-lg btn-danger"
-        [ngClass]="{ 'btn-disable': stock?.status == -2 }"
+        [ngClass]="{ 'btn-disable': stock?.status == -2 || stock?.status == 4 }"
         (click)="updateStatus(-2)"
       >
         <i class="fa-solid fa-circle-check mr-2"></i>Mark as Rejected
@@ -121,11 +122,13 @@
             <p class="text-sm text-gray-500">Supplier</p>
 
             <a
+              *ngIf="stock?.supplier?.id"
               class="text-[#ff820d] font-medium hover:underline"
               routerLink="/settings/supplier-details/ {{ stock?.supplier?.id }}"
             >
               {{ stock?.supplier?.name }}
             </a>
+            <p *ngIf="!stock?.supplier?.id" class="font-medium">Transferred</p>
           </div>
           <div>
             <p class="text-sm text-gray-500">Status</p>
@@ -146,6 +149,13 @@
               class="badge badge-primary w-16 mt-1 text-center"
             >
               Pending
+            </p>
+
+            <p
+              *ngIf="stock?.status == 4"
+              class="badge badge-teal w-28 mt-1 text-center"
+            >
+              Fully Transferred
             </p>
           </div>
 
@@ -185,6 +195,12 @@
                 %</span
               >
             </p>
+          </div>
+
+          <div *ngIf="stock.status == 2">
+            <button class="btn btn-gray" (click)="openAddModal()">
+              Transfer Stock
+            </button>
           </div>
         </div>
         <div class="space-y-4">
@@ -275,7 +291,7 @@
       </div>
 
       <!-- Supplier Card -->
-      <div class="bg-white rounded-md shadow p-4">
+      <div *ngIf="stock?.supplier?.id" class="bg-white rounded-md shadow p-4">
         <div class="flex items-start gap-2 mb-2">
           <div class="bg-gray-100 p-2 rounded-md">
             <i class="fa-solid fa-truck-field text-gray-600"></i>
@@ -319,3 +335,5 @@
     </div>
   </div>
 </section>
+
+<app-stock-transfer-modal (parentFun)="getData(id)"> </app-stock-transfer-modal>

@@ -12,7 +12,7 @@
         SETHNETH
       </h1>
 
-      <div class="flex items-center justify-center cursor-pointer">
+      <div class="hidden md:flex items-center justify-center cursor-pointer">
         <i class="ml-10 text-white hover:text-gray-300 fa-regular fa-user"></i>
         <p class="text-white hover:text-gray-300 ml-3">
           {{ sysuser?.firstname }}
@@ -25,7 +25,7 @@
         <select
           [(ngModel)]="selected_branch"
           (ngModelChange)="changeBranchForSession()"
-          class="px-4 py-2.5 rounded-xl w-20 md:w-full text-white focus:outline-none bg-transparent shadow-sm"
+          class="px-4 py-2.5 rounded-xl w-30 md:w-full text-white focus:outline-none bg-transparent shadow-sm"
         >
           <option value="" disabled selected>Select a branch</option>
 
