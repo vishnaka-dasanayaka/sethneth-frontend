@@ -1,0 +1,168 @@
+<!-- Modal Backdrop -->
+<div
+  *ngIf="showModal"
+  class="fixed inset-0 bg-black/50 z-99 flex items-center justify-center"
+>
+  <!-- Modal Container -->
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl mx-auto z-50">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h4 class="text-xl font-semibold text-gray-800">Transfer Stock</h4>
+      <button
+        type="button"
+        class="text-gray-500 hover:text-red-600 text-xl"
+        (click)="closeModal()"
+      >
+        &times;
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="px-6 py-4 overflow-y-auto max-h-[75vh] scrollbar-hidden">
+      <form
+        [formGroup]="valForm"
+        (ngSubmit)="submitForm(valForm.value)"
+        class="space-y-4"
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Stock Code
+            </label>
+
+            <input
+              type="text"
+              [value]="stock.code"
+              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Parent Branch
+            </label>
+            <input
+              type="text"
+              [value]="stock.branch?.code + ' - ' + stock.branch?.name"
+              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Initial Stock
+            </label>
+            <input
+              type="number"
+              [value]="stock.no_of_units"
+              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Available Stock
+            </label>
+            <input
+              type="number"
+              [value]="stock.available_no_of_units"
+              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+            />
+          </div>
+
+          <div class="z-50">
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Target Branch
+              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i>
+            </label>
+            <p-select
+              [options]="branches"
+              formControlName="target_branch_id"
+              [checkmark]="true"
+              optionLabel="label"
+              optionValue="value"
+              [showClear]="true"
+              placeholder="Select a Supplier"
+              class="w-full"
+              [filter]="true"
+              appendTo="body"
+            />
+            <span
+              class="text-red-500 text-xs"
+              *ngIf="
+                valForm.controls['target_branch_id'].hasError('required') &&
+                (valForm.controls['target_branch_id'].dirty ||
+                  valForm.controls['target_branch_id'].touched)
+              "
+              >This field is required</span
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Transfer Amount
+              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
+            ></label>
+            <input
+              type="number"
+              formControlName="transfer_amount"
+              class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+              min="0"
+              step="0.01"
+            />
+            <span
+              class="text-red-500 text-xs"
+              *ngIf="
+                valForm.controls['transfer_amount'].hasError('required') &&
+                (valForm.controls['transfer_amount'].dirty ||
+                  valForm.controls['transfer_amount'].touched)
+              "
+              >This field is required</span
+            >
+
+            <span
+              class="text-orange-500 text-xs"
+              *ngIf="
+                valForm.controls['transfer_amount'].hasError(
+                  'decimalNotAllowed'
+                )
+              "
+              >Decimal points are not allowed</span
+            >
+            <br />
+
+            <span
+              class="text-yellow-500 text-xs"
+              *ngIf="
+                stock.available_no_of_units <
+                this.valForm.controls['transfer_amount'].value
+              "
+              >Transfer amount must be equal or less than availabe stock</span
+            >
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-4">
+          <button
+            type="button"
+            class="px-4 py-2 border rounded text-gray-700 border-gray-400 hover:bg-gray-100"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            class="px-5 py-2 rounded text-white"
+            [ngClass]="
+              valForm.valid
+                ? 'bg-orange-500 hover:bg-orange-600'
+                : 'bg-orange-400 cursor-not-allowed'
+            "
+            [disabled]="valForm.invalid"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

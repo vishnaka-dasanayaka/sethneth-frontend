@@ -50,6 +50,11 @@ export class StockSummaryComponent {
     this.sharedService.openAddStockModal();
   }
 
+  openBulkTransferModal() {
+    this.sharedService.setBulkStockTransferData({ navigate: true });
+    this.sharedService.openBulkStockTransferModal();
+  }
+
   getAllStocks(event?: TableLazyLoadEvent) {
     const finalEvent = event ?? this.event1;
     this.event1 = finalEvent;

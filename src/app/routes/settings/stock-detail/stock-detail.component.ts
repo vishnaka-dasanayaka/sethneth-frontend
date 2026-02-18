@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../../core/_services/authentication.se
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
+import { SharedService } from "../../../core/_services/shared.service";
 
 @Component({
   selector: "app-stock-detail",
@@ -24,7 +25,8 @@ export class StockDetailComponent {
     private authservice: AuthenticationService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit(): void {
@@ -100,7 +102,7 @@ export class StockDetailComponent {
                     timeOut: 3000,
                     progressBar: true,
                     toastClass: "toast toast-sm", // <-- add your small class here
-                  }
+                  },
                 );
 
                 this.generateUniqueKey();
@@ -115,9 +117,17 @@ export class StockDetailComponent {
             },
             (error) => {
               alert("API ERROR [ERRCODE:001]");
-            }
+            },
           );
         }
       });
+  }
+
+  openAddModal() {
+    this.sharedService.setStockTransferData({
+      navigate: true,
+      stock: this.stock,
+    });
+    this.sharedService.openStockTransferModal();
   }
 }

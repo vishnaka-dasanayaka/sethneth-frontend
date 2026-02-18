@@ -40,7 +40,7 @@ export class AddOrderComponent {
     private patientService: PatientsService,
     private branchService: BranchesService,
     private orderService: OrderService,
-    private router: Router
+    private router: Router,
   ) {
     this.valForm = this.fb.group({
       patient: [null, Validators.required],
@@ -159,7 +159,8 @@ export class AddOrderComponent {
                 item.brand_name +
                 " | LKR " +
                 item.selling_price +
-                " | Out of Stock",
+                " | Out of Stock | " +
+                item.branch_code,
               value: item,
               disabled: true,
             });
@@ -173,7 +174,8 @@ export class AddOrderComponent {
                 item.selling_price +
                 " | In Stock (" +
                 item.available_no_of_units +
-                ")",
+                ") | " +
+                item.branch_code,
               value: item,
             });
           }
@@ -234,7 +236,7 @@ export class AddOrderComponent {
         },
         (error) => {
           alert("API ERROR [ERRCODE:001]");
-        }
+        },
       );
     }
   }
