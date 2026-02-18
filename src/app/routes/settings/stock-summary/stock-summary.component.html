@@ -20,9 +20,18 @@
       <h1 class="text-xl font-semibold">Stock Summary</h1>
       <h5 class="text-xs font-thin">Add/Edit and View your current stocks.</h5>
     </div>
-    <button (click)="openAddModal()" class="add_btn">
-      <i class="fa-solid fa-plus mr-2"></i>Add Stock
-    </button>
+    <div class="flex justify-center items-center gap-3">
+      <button
+        *ngIf="sysuser.id == 1 || sysuser.id == 11"
+        (click)="openBulkTransferModal()"
+        class="add_btn"
+      >
+        <i class="fa-solid fa-arrow-right-arrow-left mr-2"></i>Transfer Bulk
+      </button>
+      <button (click)="openAddModal()" class="add_btn">
+        <i class="fa-solid fa-plus mr-2"></i>Add Stock
+      </button>
+    </div>
   </div>
 
   <div *ngIf="!LoadUI" class="card">
@@ -137,11 +146,13 @@
 
               <div *ngSwitchCase="'supplier'">
                 <a
+                  *ngIf="rowData?.supplier_name"
                   class="text-[#ff820d] font-medium hover:underline"
                   routerLink="/settings/supplier-details/{{ rowData.id }}"
                 >
                   {{ rowData?.supplier_name }}
                 </a>
+                <span *ngIf="!rowData?.supplier_name">Transferred</span>
               </div>
 
               <div *ngSwitchCase="'branch'">
@@ -165,6 +176,10 @@
                   class="badge badge-success"
                 >
                   Approved
+                </span>
+
+                <span *ngIf="rowData[col.field] == 4" class="badge badge-teal">
+                  FT
                 </span>
 
                 <span
@@ -192,3 +207,5 @@
 </section>
 
 <app-add-stock (parentFun)="getAllStocks()"> </app-add-stock>
+<app-bulk-stock-transfer-modal (parentFun)="getAllStocks()">
+</app-bulk-stock-transfer-modal>

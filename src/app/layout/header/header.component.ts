@@ -80,6 +80,8 @@ export class HeaderComponent {
             progressBar: true,
             toastClass: "toast toast-sm", // <-- add your small class here
           });
+
+          window.location.reload();
         }
       });
   }

@@ -55,6 +55,8 @@ import { HasPermissionDirective } from "./directives/has-permission.directive";
 import { AddBranchComponent } from "./modals/add-branch/add-branch.component";
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
 import { NoteComponent } from "./modals/note/note.component";
+import { StockTransferModalComponent } from "./modals/stock-transfer-modal/stock-transfer-modal.component";
+import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-modal/bulk-stock-transfer-modal.component";
 
 @NgModule({
   imports: [
@@ -113,6 +115,8 @@ import { NoteComponent } from "./modals/note/note.component";
     AddBranchComponent,
     ChangePasswordComponent,
     NoteComponent,
+    StockTransferModalComponent,
+    BulkStockTransferModalComponent,
   ],
   exports: [
     BlockUIModule,
@@ -165,6 +169,8 @@ import { NoteComponent } from "./modals/note/note.component";
     AddBranchComponent,
     ChangePasswordComponent,
     NoteComponent,
+    StockTransferModalComponent,
+    BulkStockTransferModalComponent,
   ],
 })
 
