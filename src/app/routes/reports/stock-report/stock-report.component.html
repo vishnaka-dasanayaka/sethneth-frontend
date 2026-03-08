@@ -39,6 +39,122 @@
 
     <div *ngIf="LoadUI">
       <div class="bg-white rounded-lg mt-3 p-5">
+        <div class="grid mb-3 grid-cols-1 md:grid-cols-4 gap-3">
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Supplier
+            </label>
+
+            <p-multiselect
+              [options]="supplier_list"
+              [(ngModel)]="supplier"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select Supplier"
+              selectedItemsLabel="{0} suppliers selected"
+              [maxSelectedLabels]="3"
+              class="w-full"
+              [filter]="true"
+              [showClear]="true"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Branch
+            </label>
+
+            <p-multiselect
+              [options]="branch_list"
+              [(ngModel)]="branch"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select Branch"
+              selectedItemsLabel="{0} branches selected"
+              [maxSelectedLabels]="3"
+              class="w-full"
+              [filter]="true"
+              [showClear]="true"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Brand
+            </label>
+
+            <p-multiselect
+              [options]="brand_list"
+              [(ngModel)]="brand"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select Branch"
+              [maxSelectedLabels]="3"
+              selectedItemsLabel="{0} models selected"
+              class="w-full"
+              [filter]="true"
+              [showClear]="true"
+              (ngModelChange)="onBrandChange()"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Model
+            </label>
+
+            <p-multiselect
+              [options]="model_list"
+              [(ngModel)]="model"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select Branch"
+              [maxSelectedLabels]="3"
+              selectedItemsLabel="{0} models selected"
+              class="w-full"
+              [filter]="true"
+              [showClear]="true"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Status
+            </label>
+
+            <p-multiselect
+              [options]="status_list"
+              [(ngModel)]="status"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select Branch"
+              [maxSelectedLabels]="3"
+              selectedItemsLabel="{0} models selected"
+              class="w-full"
+              [filter]="true"
+              [showClear]="true"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Date Range
+            </label>
+            <div class="flex w-full items-center gap-1 justify-between">
+              <p-datepicker
+                [(ngModel)]="rangeDates"
+                selectionMode="range"
+                [readonlyInput]="true"
+                class="w-full"
+              />
+              <i
+                class="fa-regular text-red-500 fa-calendar-minus"
+                (click)="onClearDates()"
+              ></i>
+            </div>
+          </div>
+        </div>
+
         <button
           class="btn btn-warning"
           type="button"
@@ -64,28 +180,28 @@
 
           <div>
             <p class="text-2xl font-bold text-orange-500">
-              {{ totals?.totalAvailableItems }}
+              {{ totals?.totalAvailableItems || 0 }}
             </p>
             <p class="text-md text-gray-600 mt-1">Total Qty</p>
           </div>
 
           <div>
             <p class="text-2xl font-bold text-orange-500">
-              LKR {{ totals?.totalBuyingCost | number : "2.2" }}
+              LKR {{ totals?.totalBuyingCost || 0 | number: "1.2" }}
             </p>
             <p class="text-md text-gray-600 mt-1">Total Buying Value</p>
           </div>
 
           <div>
             <p class="text-2xl font-bold text-orange-500">
-              LKR {{ totals?.totalSellingValue | number : "2.2" }}
+              LKR {{ totals?.totalSellingValue || 0 | number: "1.2" }}
             </p>
             <p class="text-md text-gray-600 mt-1">Total Selling Value</p>
           </div>
 
           <div>
             <p class="text-2xl font-bold text-green-600">
-              LKR {{ totals?.totalProfitMargin | number : "2.2" }}
+              LKR {{ totals?.totalProfitMargin || 0 | number: "1.2" }}
             </p>
             <p class="text-md text-gray-600 mt-1">Total Profit</p>
           </div>
@@ -106,6 +222,7 @@
                 >
                   <th class="py-3 px-4 font-medium">Date</th>
                   <th class="py-3 px-4 font-medium">Supplier</th>
+                  <th class="py-3 px-4 font-medium">Branch</th>
                   <th class="py-3 px-4 font-medium">Category</th>
                   <th class="py-3 px-4 font-medium">Brand</th>
                   <th class="py-3 px-4 font-medium">Model</th>
@@ -120,9 +237,15 @@
               <tbody class="divide-y divide-gray-100">
                 <tr *ngFor="let item of stock_data" class="hover:bg-gray-50">
                   <td class="py-3 px-4 text-gray-700">
-                    {{ item?.adding_date | date : "mediumDate" }}
+                    {{ item?.adding_date | date: "mediumDate" }}
                   </td>
-                  <td class="py-3 px-4">{{ item?.supplier_name }}</td>
+                  <td class="py-3 px-4" *ngIf="item?.supplier_name">
+                    {{ item?.supplier_name }}
+                  </td>
+                  <td class="py-3 px-4" *ngIf="!item?.supplier_name">
+                    TRANSFERRED
+                  </td>
+                  <td class="py-3 px-4">{{ item?.branch_code }}</td>
                   <td class="py-3 px-4">{{ item?.category_name }}</td>
                   <td class="py-3 px-4">{{ item?.brand_name }}</td>
                   <td class="py-3 px-4">{{ item?.model_name }}</td>
@@ -146,12 +269,15 @@
                     <span *ngIf="item.status == -2" class="badge badge-danger">
                       Rejected
                     </span>
+                    <span *ngIf="item.status == 4" class="badge badge-teal">
+                      FT
+                    </span>
                   </td>
                   <td class="py-3 px-4 text-right">
-                    LKR {{ item?.buying_price | number : "2.2" }}
+                    LKR {{ item?.buying_price | number: "2.2" }}
                   </td>
                   <td class="py-3 px-4 text-right">
-                    LKR {{ item?.selling_price | number : "2.2" }}
+                    LKR {{ item?.selling_price | number: "2.2" }}
                   </td>
                 </tr>
               </tbody>
