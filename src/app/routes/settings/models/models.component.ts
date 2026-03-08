@@ -26,7 +26,7 @@ export class ModelsComponent {
     private authservice: AuthenticationService,
     private sharedService: SharedService,
     private settingsService: SettingsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class ModelsComponent {
       event: finalEvent,
     };
 
-    this.settingsService.getAllModels(obj).subscribe((data) => {
+    this.settingsService.getAllPagedModels(obj).subscribe((data) => {
       this.models = data.models;
       this.no_of_models = data.no_of_models;
     });
@@ -112,7 +112,7 @@ export class ModelsComponent {
                     timeOut: 3000,
                     progressBar: true,
                     toastClass: "toast toast-sm", // <-- add your small class here
-                  }
+                  },
                 );
 
                 this.generateUniqueKey();
@@ -127,7 +127,7 @@ export class ModelsComponent {
             },
             (error) => {
               alert("API ERROR [ERRCODE:001]");
-            }
+            },
           );
         }
       });
