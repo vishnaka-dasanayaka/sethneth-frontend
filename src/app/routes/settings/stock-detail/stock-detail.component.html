@@ -324,10 +324,104 @@
         <p-tabs value="0">
           <p-tablist>
             <p-tab value="0">Notes</p-tab>
+            <p-tab value="1">Stock Transfer Notes</p-tab>
           </p-tablist>
           <p-tabpanels>
             <p-tabpanel value="0">
               <app-note [f_key]="id" [type]="'STOCK'"></app-note>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+              <div
+                class="overflow-x-auto bg-white rounded-xl shadow border border-gray-200"
+              >
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr
+                      class="text-left text-sm font-semibold text-gray-600 uppercase tracking-wider"
+                    >
+                      <th class="px-6 py-3">From</th>
+                      <th class="px-6 py-3">To</th>
+                      <th class="px-6 py-3">Transfer Amount</th>
+                      <th class="px-6 py-3">By</th>
+                      <th class="px-6 py-3">On</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
+                    <tr
+                      *ngFor="let item of stock_transfer_notes"
+                      class="hover:bg-gray-50 transition"
+                    >
+                      <td class="px-6 py-4 font-medium text-gray-900">
+                        <a
+                          class="text-[#ff820d] font-medium hover:underline"
+                          routerLink="/settings/supplier-details/{{
+                            item?.from_branch.id
+                          }}"
+                        >
+                          {{ item?.from_branch.code }}
+                        </a>
+                        -
+                        <a
+                          class="text-[#ff820d] font-medium hover:underline"
+                          routerLink="/settings/stock-details/{{
+                            item?.from_stock.id
+                          }}"
+                        >
+                          <span
+                            [ngClass]="{
+                              'text-red-500 font-semibold':
+                                item?.from_stock.id == stock.id,
+                            }"
+                          >
+                            {{ item?.from_stock.code }}
+                          </span>
+                        </a>
+                      </td>
+
+                      <td class="px-6 py-4">
+                        <a
+                          class="text-[#ff820d] font-medium hover:underline"
+                          routerLink="/settings/supplier-details/{{
+                            item?.to_branch.id
+                          }}"
+                        >
+                          {{ item?.to_branch.code }}
+                        </a>
+                        -
+                        <a
+                          class="text-[#ff820d] font-medium hover:underline"
+                          routerLink="/settings/stock-details/{{
+                            item?.to_stock.id
+                          }}"
+                        >
+                          <span
+                            [ngClass]="{
+                              'text-red-500 font-semibold':
+                                item?.to_stock.id == stock.id,
+                            }"
+                          >
+                            {{ item?.to_stock.code }}
+                          </span>
+                        </a>
+                      </td>
+
+                      <td class="px-6 py-4 font-semibold text-blue-600">
+                        {{ item?.transfer_amount }}
+                      </td>
+
+                      <td class="px-6 py-4">
+                        {{ item?.created_by.firstname }}
+                        {{ item?.created_by.lastname }}
+                      </td>
+
+                      <td class="px-6 py-4 text-gray-500">
+                        {{ item?.created_on | date: "mediumDate" }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </p-tabpanel>
           </p-tabpanels>
         </p-tabs>

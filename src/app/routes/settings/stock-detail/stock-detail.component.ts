@@ -20,6 +20,7 @@ export class StockDetailComponent {
   private sub: any;
   id!: number;
   stock: any;
+  stock_transfer_notes: any[] = [];
 
   constructor(
     private authservice: AuthenticationService,
@@ -51,6 +52,7 @@ export class StockDetailComponent {
     this.settingsService.getStock({ id: id }).subscribe((data) => {
       if (data.status) {
         this.stock = data.stock;
+        this.stock_transfer_notes = data.stock_transfer_notes;
         this.LoadUI = true;
       }
     });
