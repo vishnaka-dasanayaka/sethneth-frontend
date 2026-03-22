@@ -27,7 +27,40 @@ export class ReportsService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
+    );
+  }
+
+  generateUserReport(obj: any) {
+    let APIurl = this.BaseAPIurl + "generate-user-report";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+  generatePatientReport(obj: any) {
+    let APIurl = this.BaseAPIurl + "generate-patient-report";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+  generateSupplierReport(obj: any) {
+    let APIurl = this.BaseAPIurl + "generate-supplier-report";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
     );
   }
 }
