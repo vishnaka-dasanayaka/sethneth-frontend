@@ -37,6 +37,69 @@
           <p class="text-sm text-gray-500">Generate stock summary reports</p>
         </div>
       </a>
+      <a
+        *hasPermission="[[14], sysuser]"
+        [routerLink]="['/reports/user-report']"
+        class="flex items-start p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+      >
+        <div
+          class="w-10 h-10 rounded-md bg-cyan-100 flex items-center justify-center text-cyan-600 mr-4"
+        >
+          <i class="fa-solid fa-people-group"></i>
+        </div>
+        <div>
+          <h3 class="text-gray-900 font-medium">User Report</h3>
+          <p class="text-sm text-gray-500">Generate user summary reports</p>
+        </div>
+      </a>
+
+      <a
+        *hasPermission="[[15], sysuser]"
+        [routerLink]="['/reports/patient-report']"
+        class="flex items-start p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+      >
+        <div
+          class="w-10 h-10 rounded-md bg-yellow-100 flex items-center justify-center text-yellow-600 mr-4"
+        >
+          <i class="fa-solid fa-stethoscope"></i>
+        </div>
+        <div>
+          <h3 class="text-gray-900 font-medium">Patient Report</h3>
+          <p class="text-sm text-gray-500">Generate patient summary reports</p>
+        </div>
+      </a>
+
+      <a
+        *hasPermission="[[16], sysuser]"
+        [routerLink]="['/reports/supplier-report']"
+        class="flex items-start p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+      >
+        <div
+          class="w-10 h-10 rounded-md bg-red-100 flex items-center justify-center text-red-600 mr-4"
+        >
+          <i class="fa-solid fa-truck-field-un"></i>
+        </div>
+        <div>
+          <h3 class="text-gray-900 font-medium">Supplier Report</h3>
+          <p class="text-sm text-gray-500">Generate supplier summary reports</p>
+        </div>
+      </a>
+
+      <a
+        *hasPermission="[[17], sysuser]"
+        [routerLink]="['/reports/order-report']"
+        class="flex items-start p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+      >
+        <div
+          class="w-10 h-10 rounded-md bg-purple-100 flex items-center justify-center text-purple-600 mr-4"
+        >
+          <i class="fa-solid fa-cart-arrow-down"></i>
+        </div>
+        <div>
+          <h3 class="text-gray-900 font-medium">Order Report</h3>
+          <p class="text-sm text-gray-500">Generate order summary reports</p>
+        </div>
+      </a>
     </div>
   </div>
 </section>
