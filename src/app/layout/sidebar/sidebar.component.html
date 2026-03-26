@@ -38,7 +38,7 @@
   [ngClass]="{
     '-translate-x-full': !isSidebarOpen,
     'translate-x-0': isSidebarOpen,
-    'lg:translate-x-0': true
+    'lg:translate-x-0': true,
   }"
 >
   <div class="flex flex-col h-[92vh]">
@@ -61,7 +61,7 @@
           [ngClass]="{
             'bg-[#ff820d] text-white': currentPath === '/home',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/home'
+              currentPath !== '/home',
           }"
           (click)="onClickMenu('/home', 4)"
         >
@@ -83,7 +83,7 @@
             'bg-[#ff820d] text-white':
               currentPath === '/patients/patient-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/patients/patient-summary'
+              currentPath !== '/patients/patient-summary',
           }"
           (click)="onClickMenu('/patients/patient-summary', 7)"
         >
@@ -104,7 +104,7 @@
           [ngClass]="{
             'bg-[#ff820d] text-white': currentPath === '/orders/order-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/orders/order-summary'
+              currentPath !== '/orders/order-summary',
           }"
           (click)="onClickMenu('/orders/order-summary', 4)"
         >
@@ -117,7 +117,7 @@
             'bg-[#ff820d] text-white':
               currentPath === '/invoices/invoice-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/invoices/invoice-summary'
+              currentPath !== '/invoices/invoice-summary',
           }"
           (click)="onClickMenu('/invoices/invoice-summary', 4)"
         >
@@ -131,7 +131,7 @@
             'bg-[#ff820d] text-white':
               currentPath === '/c-invoices/c-invoice-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/c-invoices/c-invoice-summary'
+              currentPath !== '/c-invoices/c-invoice-summary',
           }"
           (click)="onClickMenu('/c-invoices/c-invoice-summary', 4)"
         >
@@ -144,7 +144,7 @@
             'bg-[#ff820d] text-white':
               currentPath === '/payments/payment-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/payments/payment-summary'
+              currentPath !== '/payments/payment-summary',
           }"
           (click)="onClickMenu('/payments/payment-summary', 4)"
         >
@@ -166,7 +166,7 @@
             'bg-[#ff820d] text-white':
               currentPath === '/reports/report-summary',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/reports/report-summary'
+              currentPath !== '/reports/report-summary',
           }"
           (click)="onClickMenu('/reports/report-summary', 4)"
         >
@@ -188,12 +188,32 @@
             'bg-[#ff820d] text-white':
               currentPath === '/settings/settings-menu',
             'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
-              currentPath !== '/settings/settings-menu'
+              currentPath !== '/settings/settings-menu',
           }"
           (click)="onClickMenu('/settings/settings-menu', 4)"
         >
           <i class="fa-solid fa-gear w-5 mr-3"></i>
           <span class="text-sm font-medium">Settings</span>
+        </div>
+      </div>
+
+      <div>
+        <h3
+          class="text-xs uppercase font-semibold text-gray-500 dark:text-gray-400 px-3 mb-2"
+        >
+          HR
+        </h3>
+        <div
+          class="flex items-center py-2 px-3 rounded-lg cursor-pointer transition-all duration-200"
+          [ngClass]="{
+            'bg-[#ff820d] text-white': currentPath === '/hr/attendance-details',
+            'hover:bg-[#ff820d]/20 text-gray-700 dark:text-gray-200':
+              currentPath !== '/hr/attendance-details',
+          }"
+          (click)="onClickMenu('/hr/attendance-details', 4)"
+        >
+          <i class="fa-solid fa-gear w-5 mr-3"></i>
+          <span class="text-sm font-medium">Attendance</span>
         </div>
       </div>
     </div>

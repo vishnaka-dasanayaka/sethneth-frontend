@@ -70,7 +70,17 @@ export class BranchesService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
+    );
+  }
+
+  addLatLong(obj: any) {
+    let APIurl = this.BaseAPIurl + "add-lat-long";
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
     );
   }
 }
