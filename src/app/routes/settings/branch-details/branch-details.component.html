@@ -233,7 +233,7 @@
                 </div>
                 <!-- Confirm Button -->
                 <button
-                  *ngIf="sysuser.userlevel == 1"
+                  *ngIf="sysuser?.userlevel == 1"
                   (click)="confirmLocation()"
                   [disabled]="!selectedLat"
                   class="px-6 py-2 rounded-lg text-white font-medium disabled:opacity-50"

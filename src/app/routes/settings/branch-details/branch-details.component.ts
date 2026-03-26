@@ -173,6 +173,11 @@ export class BranchDetailsComponent {
       },
     );
 
+    const mapEl = this.mapElement?.nativeElement;
+    const inputEl = this.searchInput?.nativeElement;
+
+    if (!mapEl || !inputEl) return;
+
     this.map.panTo({ lat, lng });
   }
 
@@ -216,7 +221,11 @@ export class BranchDetailsComponent {
         this.branch = data.branch;
         this.LoadUI = true;
         this.selectedRadius = this.branch.radius || 0;
-        this.setMarker(this.branch.latitude, this.branch.longitude);
+
+        this.setMarker(
+          this.branch.latitude || 6.9271,
+          this.branch.longitude || 79.8612,
+        );
       }
     });
   }
