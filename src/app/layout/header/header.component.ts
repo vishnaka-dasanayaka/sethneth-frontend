@@ -17,7 +17,7 @@ export class HeaderComponent {
   private sub: any;
 
   branches: SelectItem[] = [];
-  selected_branch: number = 1;
+  selected_branch: number = 0;
 
   constructor(
     private router: Router,
@@ -33,7 +33,7 @@ export class HeaderComponent {
       .subscribe((sysuser) => {
         this.sysuser = sysuser;
         this.getBranches();
-        this.selected_branch = sysuser.branch.id;
+        this.selected_branch = sysuser.branch?.id || 0;
 
         // if (
         //   this.sysuser.app_settings.admin_settings.header_name &&
@@ -89,6 +89,8 @@ export class HeaderComponent {
   getBranches() {
     this.branchService.getAllActiveBranches().subscribe((data) => {
       if (data.status) {
+        this.branches = [];
+
         for (var item of data.branches) {
           this.branches.push({
             value: item.id,

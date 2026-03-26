@@ -34,7 +34,7 @@
         [disabled]="branch?.status == 1"
         class="mr-2 btn-lg btn-success"
         [ngClass]="{
-          'btn-disable': branch?.status == 1
+          'btn-disable': branch?.status == 1,
         }"
         (click)="updateStatus(1)"
       >
@@ -156,7 +156,7 @@
           <div>
             <p class="text-sm text-gray-500">Created On</p>
             <p class="font-medium">
-              {{ branch?.created_on | date : "mediumDate" }}
+              {{ branch?.created_on | date: "mediumDate" }}
             </p>
           </div>
         </div>
@@ -179,10 +179,69 @@
         <p-tabs value="0">
           <p-tablist>
             <p-tab value="0">Notes</p-tab>
+            <p-tab value="1">Location</p-tab>
           </p-tablist>
           <p-tabpanels>
             <p-tabpanel value="0">
               <app-note [f_key]="id" [type]="'BRANCH'"></app-note>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+              <div class="p-4 space-y-4">
+                <!-- Search Box -->
+                <input
+                  #searchInput
+                  type="text"
+                  placeholder="Search location..."
+                  class="w-1/2 px-4 py-2 border rounded-lg bg-white mt-5 focus:outline-none focus:ring-2"
+                  style="--tw-ring-color: #ff820d"
+                />
+
+                <!-- Map -->
+                <div
+                  #mapContainer
+                  class="w-full h-[400px] rounded-xl border"
+                ></div>
+                <!-- Selected Coordinates -->
+                <div
+                  *ngIf="selectedLat && selectedLng"
+                  class="p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-1"
+                >
+                  <div class="font-semibold text-gray-800">
+                    {{ selectedAddress || "Fetching address..." }}
+                  </div>
+                  <div class="text-xs text-gray-500">
+                    Coordinates: {{ selectedLat | number: "1.4-4" }},
+                    {{ selectedLng | number: "1.4-4" }}
+                  </div>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Allowable Radius (meters)
+                  </label>
+                  <div class="flex items-center space-y-0 gap-2">
+                    <input
+                      type="number"
+                      [(ngModel)]="selectedRadius"
+                      (input)="onRadiusChange()"
+                      placeholder="e.g. 500"
+                      class="w-1/3 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2"
+                      style="--tw-ring-color: #ff820d"
+                    />
+                    <span class="text-gray-500 text-sm">m</span>
+                  </div>
+                </div>
+                <!-- Confirm Button -->
+                <button
+                  *ngIf="sysuser.userlevel == 1"
+                  (click)="confirmLocation()"
+                  [disabled]="!selectedLat"
+                  class="px-6 py-2 rounded-lg text-white font-medium disabled:opacity-50"
+                  style="background-color: #ff820d"
+                >
+                  Confirm Location
+                </button>
+              </div>
             </p-tabpanel>
           </p-tabpanels>
         </p-tabs>
