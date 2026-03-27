@@ -22,7 +22,7 @@ import { LoaderComponent } from "./loader/loader.component";
 import { AddSupplierComponent } from "./modals/add-supplier/add-supplier.component";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { TableModule } from "primeng/table";
-
+import { ChartModule } from "primeng/chart";
 import { IconFieldModule } from "primeng/iconfield";
 import { InputIconModule } from "primeng/inputicon";
 import { InputTextModule } from "primeng/inputtext";
@@ -80,6 +80,7 @@ import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-mo
     EditorModule,
     SelectModule,
     MultiSelectModule,
+    ChartModule,
   ],
   providers: [],
   declarations: [
@@ -171,6 +172,7 @@ import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-mo
     NoteComponent,
     StockTransferModalComponent,
     BulkStockTransferModalComponent,
+    ChartModule,
   ],
 })
 
