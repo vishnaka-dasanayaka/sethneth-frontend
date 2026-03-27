@@ -58,6 +58,9 @@ export class AttendanceDetailComponent {
           this.last_checkin.length > 0 &&
           this.last_checkin[0].status == 0
         ) {
+          this.last_checkin[0].checkin = moment(
+            this.last_checkin[0].checkin,
+          ).utcOffset("+05:30");
           this.checkedIn = true;
           this.startTimer();
         }
