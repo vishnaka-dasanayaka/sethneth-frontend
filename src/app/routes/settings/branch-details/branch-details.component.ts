@@ -68,46 +68,40 @@ export class BranchDetailsComponent {
   }
 
   loadMap() {
-    setTimeout(() => {
-      const mapEl = this.mapElement?.nativeElement;
-      const inputEl = this.searchInput?.nativeElement;
+    const mapEl = this.mapElement?.nativeElement;
+    const inputEl = this.searchInput?.nativeElement;
 
-      if (!mapEl || !inputEl) return;
+    if (!mapEl) {
+      console.error("Map element not found in DOM");
+      return;
+    }
 
-      this.map = new google.maps.Map(mapEl, {
-        center: {
-          lat: this.branch?.latitude || 6.9271,
-          lng: this.branch.longitude || 79.8612,
-        },
-        zoom: 16,
-      });
+    // Ensure the container has height before Google Maps starts
+    this.map = new google.maps.Map(mapEl, {
+      center: {
+        lat: this.branch?.latitude || 6.9271,
+        lng: this.branch?.longitude || 79.8612,
+      },
+      zoom: 16,
+    });
 
-      if (this.selectedLat && this.selectedLng) {
-        this.setMarker(this.selectedLat, this.selectedLng);
+    // 2. ATTACH LISTENER HERE - Now this.map is guaranteed to exist
+    this.map.addListener("click", (event: any) => {
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+      this.setMarker(lat, lng);
+    });
 
-        // Also adjust zoom to see the branch clearly
-        this.map.setCenter({ lat: this.selectedLat, lng: this.selectedLng });
-        this.map.setZoom(16);
-      }
+    const searchBox = new google.maps.places.SearchBox(inputEl);
+    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputEl);
 
-      // 2. ATTACH LISTENER HERE - Now this.map is guaranteed to exist
-      this.map.addListener("click", (event: any) => {
-        const lat = event.latLng.lat();
-        const lng = event.latLng.lng();
-        this.setMarker(lat, lng);
-      });
+    searchBox.addListener("places_changed", () => {
+      const places = searchBox.getPlaces();
+      if (!places || !places[0].geometry) return;
 
-      const searchBox = new google.maps.places.SearchBox(inputEl);
-      this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(inputEl);
-
-      searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        if (!places || !places[0].geometry) return;
-
-        const location = places[0].geometry.location;
-        this.setMarker(location.lat(), location.lng());
-      });
-    }, 200);
+      const location = places[0].geometry.location;
+      this.setMarker(location.lat(), location.lng());
+    });
   }
 
   confirmLocation() {
@@ -207,6 +201,28 @@ export class BranchDetailsComponent {
       center: { lat, lng },
       radius: this.selectedRadius,
     });
+  }
+  onTabSelectionChange(value: any) {
+    console.log("GGG");
+
+    // Convert value to string/number depending on what you used in the template
+    if (value == "1") {
+      console.log("Location tab active");
+
+      // Give the DOM a millisecond to render the tab content
+      setTimeout(() => {
+        if (!this.map) {
+          this.loadMap();
+        } else {
+          // Force the map to recognize its new container size
+          google.maps.event.trigger(this.map, "resize");
+          this.map.setCenter({
+            lat: this.selectedLat || 6.9271,
+            lng: this.selectedLng || 79.8612,
+          });
+        }
+      }, 50);
+    }
   }
 
   generateUniqueKey() {

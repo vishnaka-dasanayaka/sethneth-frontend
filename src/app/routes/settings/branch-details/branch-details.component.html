@@ -176,7 +176,7 @@
   >
     <div class="row">
       <div class="card">
-        <p-tabs value="0">
+        <p-tabs value="0" (valueChange)="onTabSelectionChange($event)">
           <p-tablist>
             <p-tab value="0">Notes</p-tab>
             <p-tab value="1">Location</p-tab>
