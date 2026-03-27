@@ -608,6 +608,17 @@ export class SettingsService {
     );
   }
 
+  getDashboardChartDate() {
+    let APIurl = this.BaseAPIurl + "get-dashboard-chart-data";
+
+    return this.http.get<any>(APIurl).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
   branchConfirm() {
     let APIurl = this.BaseAPIurl + "branch-confirm";
 

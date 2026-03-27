@@ -232,7 +232,7 @@ export class AttendanceDetailComponent {
     const lastCheckinTime = moment(this.last_checkin[0].checkin);
     const now = moment();
 
-    const diffMinutes = now.diff(lastCheckinTime, "minutes");
+    const diffHours = now.diff(lastCheckinTime, "hours");
 
     const proceedCheckout = () => {
       navigator.geolocation.getCurrentPosition(
@@ -309,11 +309,11 @@ export class AttendanceDetailComponent {
       );
     };
 
-    if (diffMinutes < 10) {
+    if (diffHours < 10) {
       swal
         .fire({
           title: "Confirm Early Checkout",
-          text: `You are trying to checkout within ${diffMinutes} minutes of check-in. Are you sure?`,
+          text: `You are trying to checkout within ${diffHours} hours of check-in. Are you sure?`,
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#28a745",
