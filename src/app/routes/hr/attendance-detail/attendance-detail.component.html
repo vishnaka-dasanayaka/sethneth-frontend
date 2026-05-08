@@ -216,7 +216,9 @@
                   <span
                     class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100"
                   >
-                    {{ item.checkout | date: "h:mm a" : "+5:30" }}
+                    <span *ngIf="item.checkout">
+                      {{ item.checkout | date: "h:mm a" : "+5:30" }}</span
+                    >
                     <span *ngIf="!item.checkout">Pending</span>
                   </span>
                 </td>
@@ -231,7 +233,6 @@
                       *ngIf="!item.checkout"
                       class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100"
                     >
-                      {{ item.checkout | date: "h:mm a" : "+5:30" }}
                       <span *ngIf="!item.checkout">Pending</span>
                     </span>
 

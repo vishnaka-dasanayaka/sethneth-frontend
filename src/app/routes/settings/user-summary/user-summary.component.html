@@ -53,7 +53,7 @@
           'firstname',
           'lastname',
           'userlevel',
-          'designation'
+          'designation',
         ]"
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -136,6 +136,9 @@
                   {{ rowData?.rolename }}
                 </span>
                 <span class="badge badge-cyan" *ngIf="rowData?.userlevel == 3">
+                  {{ rowData?.rolename }}
+                </span>
+                <span class="badge badge-info" *ngIf="rowData?.userlevel == 4">
                   {{ rowData?.rolename }}
                 </span>
               </div>
