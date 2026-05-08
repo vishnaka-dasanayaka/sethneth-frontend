@@ -53,6 +53,13 @@ export class AttendanceDetailComponent {
         this.LoadUI = true;
         this.checkedIn = false;
 
+        for (var item of this.last_checkin) {
+          item.checkin = moment(item.checkin).subtract("5:30");
+          item.checkout = item.checkout
+            ? moment(item.checkout).subtract("5:30")
+            : null;
+        }
+
         if (
           this.last_checkin &&
           this.last_checkin.length > 0 &&
