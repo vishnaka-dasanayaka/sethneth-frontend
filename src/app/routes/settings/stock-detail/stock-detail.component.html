@@ -172,7 +172,7 @@
         </div>
 
         <div class="space-y-4">
-          <div>
+          <div *hasPermission="[[21], sysuser]">
             <p class="text-sm text-gray-500">Buying Price</p>
             <p class="font-medium">
               LKR {{ stock?.buying_price | number: "1.2-2" }}
