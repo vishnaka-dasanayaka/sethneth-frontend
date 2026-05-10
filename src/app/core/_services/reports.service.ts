@@ -1,9 +1,5 @@
 import { Injectable } from "@angular/core";
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { GlobalVariable } from "./globals";
 import { map, catchError } from "rxjs/operators";
 import { Observable, throwError } from "rxjs";
@@ -66,6 +62,17 @@ export class ReportsService {
 
   generateSupplierReport(obj: any) {
     let APIurl = this.BaseAPIurl + "generate-supplier-report";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+  generateAttendanceReport(obj: any) {
+    let APIurl = this.BaseAPIurl + "generate-attendance-report";
 
     return this.http.post<any>(APIurl, obj).pipe(
       map((response) => {
