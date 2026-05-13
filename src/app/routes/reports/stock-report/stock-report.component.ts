@@ -31,9 +31,7 @@ export class StockReportComponent implements OnInit {
   branch_list: SelectItem[] = [];
   brand_list: SelectItem[] = [];
   supplier_list: SelectItem[] = [];
-  model_list: SelectItem[] = [
-    { label: "Select a brand first", value: null, disabled: true },
-  ];
+  model_list: SelectItem[] = [{ label: "Select a brand first", value: null, disabled: true }];
   status_list: SelectItem[] = [
     { label: "Please select a status", value: null, disabled: true },
     { label: "Approved", value: 2 },
@@ -71,17 +69,14 @@ export class StockReportComponent implements OnInit {
     ) {
       swal.fire({
         title: "Warning!",
-        text: "Supplier, Branch, Brand, Model and Status are mandetory",
+        text: "Supplier, Branch, Brand, Model and Status are mandatory ",
         icon: "warning",
         confirmButtonColor: "#ff820d",
       });
       return;
     }
 
-    if (
-      this.rangeDates &&
-      (this.rangeDates[0] == null || this.rangeDates[1] == null)
-    ) {
+    if (this.rangeDates && (this.rangeDates[0] == null || this.rangeDates[1] == null)) {
       swal.fire({
         title: "Warning!",
         text: "Invalid Date Range",
@@ -91,12 +86,8 @@ export class StockReportComponent implements OnInit {
       return;
     }
 
-    this.from_date = this.rangeDates
-      ? moment(this.rangeDates[0]).startOf("day").format("YYYY-MM-DD HH:MM:ss")
-      : null;
-    this.to_date = this.rangeDates
-      ? moment(this.rangeDates[1]).endOf("day").format("YYYY-MM-DD HH:mm:ss")
-      : null;
+    this.from_date = this.rangeDates ? moment(this.rangeDates[0]).startOf("day").format("YYYY-MM-DD HH:MM:ss") : null;
+    this.to_date = this.rangeDates ? moment(this.rangeDates[1]).endOf("day").format("YYYY-MM-DD HH:mm:ss") : null;
 
     var obj = {
       from_date: this.from_date,
@@ -157,19 +148,17 @@ export class StockReportComponent implements OnInit {
   }
 
   onBrandChange() {
-    this.settingsService
-      .getActiveModelsPerBrands({ brands: this.brand })
-      .subscribe((data) => {
-        if (data.status) {
-          this.model_list = [
-            { label: "Please select a model", value: null, disabled: true },
-            ...data.models.map((item: any) => ({
-              label: item.name,
-              value: item.id,
-            })),
-          ];
-        }
-      });
+    this.settingsService.getActiveModelsPerBrands({ brands: this.brand }).subscribe((data) => {
+      if (data.status) {
+        this.model_list = [
+          { label: "Please select a model", value: null, disabled: true },
+          ...data.models.map((item: any) => ({
+            label: item.name,
+            value: item.id,
+          })),
+        ];
+      }
+    });
   }
 
   onClearDates() {
@@ -177,8 +166,7 @@ export class StockReportComponent implements OnInit {
   }
 
   printReport() {
-    const printContents =
-      document.getElementById("stockReportTable")?.innerHTML;
+    const printContents = document.getElementById("stockReportTable")?.innerHTML;
     if (!printContents) return;
 
     const printWindow = window.open("", "", "height=800,width=1200");

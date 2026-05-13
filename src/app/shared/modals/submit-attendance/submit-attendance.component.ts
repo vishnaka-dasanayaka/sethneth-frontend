@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { UserService } from "../../../core/_services/user.service";
 import moment from "moment";
 import { HrService } from "../../../core/_services/hr.service";
+import { BranchesService } from "../../../core/_services/branches.service";
 
 @Component({
   selector: "app-submit-attendance",
@@ -22,6 +23,7 @@ export class SubmitAttendanceComponent {
   @Output() parentFun: EventEmitter<any> = new EventEmitter();
 
   users: SelectItem[] = [];
+  branch_list: SelectItem[] = [];
 
   valForm: FormGroup;
   uniqueid: string = "";
@@ -36,17 +38,17 @@ export class SubmitAttendanceComponent {
   constructor(
     private sharedService: SharedService,
     private fb: FormBuilder,
-    private settingsService: SettingsService,
     private toastr: ToastrService,
-    private router: Router,
     private userService: UserService,
     private hrService: HrService,
+    private branchService: BranchesService,
   ) {
     this.valForm = this.fb.group({
       user: [null, Validators.required],
       date: ["", Validators.required],
       checkin_time: ["", Validators.required],
       checkout_time: [""],
+      branch: [null, Validators.required],
     });
 
     this.clickEventSubscription = this.sharedService
@@ -93,6 +95,24 @@ export class SubmitAttendanceComponent {
         alert("API ERROR [ERRCODE:001]");
       },
     );
+
+    this.branchService.getAllActiveBranches().subscribe((data) => {
+      if (data.status) {
+        this.branch_list = [];
+        this.branch_list.push({
+          label: "Please select a branch",
+          value: null,
+          disabled: true,
+        });
+
+        for (var branch of data.branches) {
+          this.branch_list.push({
+            label: branch.code + " : " + branch.name,
+            value: branch.id,
+          });
+        }
+      }
+    });
   }
 
   getDataRow() {
@@ -129,6 +149,10 @@ export class SubmitAttendanceComponent {
             this.valForm.patchValue({
               checkout_time: checkout_time,
             });
+
+            if (data.attendance.branch) {
+              this.valForm.patchValue({ branch: data.attendance.branch });
+            }
           } else {
             this.valForm.patchValue({
               checkin_time: "08:00",
