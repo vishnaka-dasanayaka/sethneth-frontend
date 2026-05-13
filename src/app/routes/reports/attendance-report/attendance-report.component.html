@@ -41,7 +41,9 @@
       <div class="bg-white rounded-lg mt-3 p-5">
         <div class="grid mb-3 grid-cols-1 md:grid-cols-4 gap-3">
           <div>
-            <label class="block text-sm font-medium mb-1 text-gray-700">User </label>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >User
+            </label>
 
             <p-multiselect
               [options]="user_list"
@@ -58,15 +60,32 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-1 text-gray-700">Month </label>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Month
+            </label>
             <div class="flex w-full items-center gap-1 justify-between">
-              <p-datepicker [(ngModel)]="month" view="month" dateFormat="mm/yy" [readonlyInput]="true" class="w-full" />
-              <i class="fa-regular text-red-500 fa-calendar-minus" (click)="onClearDates()"></i>
+              <p-datepicker
+                [(ngModel)]="month"
+                view="month"
+                dateFormat="mm/yy"
+                [readonlyInput]="true"
+                class="w-full"
+              />
+              <i
+                class="fa-regular text-red-500 fa-calendar-minus"
+                (click)="onClearDates()"
+              ></i>
             </div>
           </div>
         </div>
 
-        <button class="btn btn-warning" type="button" (click)="generateReport()">Generate Report</button>
+        <button
+          class="btn btn-warning"
+          type="button"
+          (click)="generateReport()"
+        >
+          Generate Report
+        </button>
       </div>
 
       <div class="w-full mt-3 bg-orange-50 rounded-2xl shadow-sm p-8">
@@ -78,18 +97,23 @@
             <p class="text-2xl font-bold text-orange-500">
               {{ total_records.length }}
             </p>
-            <p class="text-md text-gray-600 mt-1">Total Records</p>
+            <p class="text-md text-gray-600 mt-1">Total Attendance Records</p>
           </div>
         </div>
       </div>
 
       <div class="bg-gray-50 mt-3 flex items-center justify-center">
-        <div id="stockReportTable" class="bg-white p-6 rounded-xl shadow-md w-full">
+        <div
+          id="attendanceReportTable"
+          class="bg-white p-6 rounded-xl shadow-md w-full"
+        >
           <!-- Table -->
           <div class="overflow-x-auto">
             <table class="min-w-full text-sm border-collapse">
               <thead>
-                <tr class="border-b text-center bg-gray-100 text-gray-600 uppercase text-xs">
+                <tr
+                  class="border-b text-center bg-gray-100 text-gray-600 uppercase text-xs"
+                >
                   <th class="py-3 px-4 font-medium">User</th>
                   <th class="py-3 px-4 font-medium">Date</th>
                   <th class="py-3 px-4 font-medium">Branch</th>
@@ -109,22 +133,39 @@
                   </td>
 
                   <td class="py-3 px-4">
-                    <span>{{ item?.branch || "N/A" }}</span>
+                    <span *ngIf="item.branch"
+                      >{{ item?.branch_code }} : {{ item.branch_name }}</span
+                    >
+                    <span *ngIf="!item.branch">N/A</span>
                   </td>
                   <td class="py-3 px-4">
-                    <span>{{ item?.checkin | date: "mediumDate" }}</span>
+                    <span>{{ item?.checkin | date: "h:mm a" : "-5:30" }}</span>
+                    <span *ngIf="!item?.checkin">[ Not Marked ]</span>
                   </td>
                   <td class="py-3 px-4">
-                    <span>{{ item?.checkout | date: "mediumDate" }}</span>
+                    <span *ngIf="item?.checkout">{{
+                      item?.checkout | date: "h:mm a" : "-5:30"
+                    }}</span>
+                    <span *ngIf="!item?.checkout">[ Not Marked ]</span>
                   </td>
 
                   <td class="py-3 px-4">
-                    <span>{{ item?.duration_minutes }}</span>
+                    <span>{{ calc(item.checkout, item.checkin) }}</span>
                   </td>
 
                   <td class="py-3 px-4 text-center">
-                    <span *ngIf="item.session_completed == 1" class="badge badge-success"> Completed </span>
-                    <span *ngIf="item.session_completed == 0" class="badge badge-primary"> Not Completed </span>
+                    <span
+                      *ngIf="item.session_completed == 1"
+                      class="badge badge-success"
+                    >
+                      Completed
+                    </span>
+                    <span
+                      *ngIf="item.session_completed == 0"
+                      class="badge badge-primary"
+                    >
+                      Not Completed
+                    </span>
                   </td>
                 </tr>
               </tbody>

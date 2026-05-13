@@ -59,7 +59,7 @@ export class AttendanceReportComponent {
           });
 
           for (var item of data.users) {
-            if (item.id != 1) {
+            if (item.id != 1 || true) {
               this.user_list.push({
                 label: item.firstname + " " + item.lastname,
                 value: item.id,
@@ -110,10 +110,37 @@ export class AttendanceReportComponent {
     this.reportsService.generateAttendanceReport(obj).subscribe((data) => {
       if (data.status) {
         this.total_records = [];
-        console.log(data);
         this.total_records = data.attendance_summary;
+
+        for (var item of this.total_records) {
+          item.checkin = item.checkin
+            ? moment(item.checkin).subtract("6:30")
+            : null;
+          item.checkout = item.checkout
+            ? moment(item.checkout).subtract("6:30")
+            : null;
+        }
       }
     });
+  }
+
+  calc(checkout: any, checkin: any): string {
+    if (!checkout || !checkin) return " - ";
+
+    const inTime = new Date(checkin).getTime();
+    const outTime = new Date(checkout).getTime();
+
+    const diffMs = outTime - inTime;
+
+    if (diffMs <= 0) return "0h 0m";
+
+    const totalMinutes = Math.floor(diffMs / (1000 * 60));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return `${hours.toString().padStart(2, "0")}h ${minutes
+      .toString()
+      .padStart(2, "0")}m`;
   }
 
   onClearDates() {
@@ -121,14 +148,16 @@ export class AttendanceReportComponent {
   }
 
   printReport() {
-    const printContents = document.getElementById("stockReportTable")?.innerHTML;
+    const printContents = document.getElementById(
+      "attendanceReportTable",
+    )?.innerHTML;
     if (!printContents) return;
 
     const printWindow = window.open("", "", "height=800,width=1200");
     printWindow?.document.write(`
         <html>
           <head>
-            <title>Supplier Report</title>
+            <title>Attendance Report</title>
             <style>
               body {
                 font-family: Arial, sans-serif;
@@ -159,7 +188,7 @@ export class AttendanceReportComponent {
             </style>
           </head>
           <body>
-            <h2 style="text-align:center;">Supplier Report</h2>
+            <h2 style="text-align:center;">Attendance Report</h2>
             ${printContents}
           </body>
         </html>
