@@ -42,15 +42,10 @@ export class UserReportComponent {
   }
 
   generateReport() {
-    if (
-      this.userlevel == null ||
-      this.userlevel.length == 0 ||
-      this.status == null ||
-      this.status.length == 0
-    ) {
+    if (this.userlevel == null || this.userlevel.length == 0 || this.status == null || this.status.length == 0) {
       swal.fire({
         title: "Warning!",
-        text: "User level and Status are mandetory",
+        text: "User level and Status are mandatory ",
         icon: "warning",
         confirmButtonColor: "#ff820d",
       });
@@ -89,8 +84,7 @@ export class UserReportComponent {
   }
 
   printReport() {
-    const printContents =
-      document.getElementById("stockReportTable")?.innerHTML;
+    const printContents = document.getElementById("stockReportTable")?.innerHTML;
     if (!printContents) return;
 
     const printWindow = window.open("", "", "height=800,width=1200");

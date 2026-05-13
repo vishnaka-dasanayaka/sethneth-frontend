@@ -51,25 +51,17 @@ export class PatientReportComponent {
   }
 
   generateReport() {
-    if (
-      this.gender == null ||
-      this.gender.length == 0 ||
-      this.status == null ||
-      this.status.length == 0
-    ) {
+    if (this.gender == null || this.gender.length == 0 || this.status == null || this.status.length == 0) {
       swal.fire({
         title: "Warning!",
-        text: "Gender and Status are mandetory",
+        text: "Gender and Status are mandatory ",
         icon: "warning",
         confirmButtonColor: "#ff820d",
       });
       return;
     }
 
-    if (
-      this.rangeDates &&
-      (this.rangeDates[0] == null || this.rangeDates[1] == null)
-    ) {
+    if (this.rangeDates && (this.rangeDates[0] == null || this.rangeDates[1] == null)) {
       swal.fire({
         title: "Warning!",
         text: "Invalid Date Range",
@@ -79,12 +71,8 @@ export class PatientReportComponent {
       return;
     }
 
-    this.from_date = this.rangeDates
-      ? moment(this.rangeDates[0]).startOf("day").format("YYYY-MM-DD HH:MM:ss")
-      : null;
-    this.to_date = this.rangeDates
-      ? moment(this.rangeDates[1]).endOf("day").format("YYYY-MM-DD HH:mm:ss")
-      : null;
+    this.from_date = this.rangeDates ? moment(this.rangeDates[0]).startOf("day").format("YYYY-MM-DD HH:MM:ss") : null;
+    this.to_date = this.rangeDates ? moment(this.rangeDates[1]).endOf("day").format("YYYY-MM-DD HH:mm:ss") : null;
 
     var obj = {
       from_date: this.from_date,
@@ -106,8 +94,7 @@ export class PatientReportComponent {
   }
 
   printReport() {
-    const printContents =
-      document.getElementById("stockReportTable")?.innerHTML;
+    const printContents = document.getElementById("stockReportTable")?.innerHTML;
     if (!printContents) return;
 
     const printWindow = window.open("", "", "height=800,width=1200");
