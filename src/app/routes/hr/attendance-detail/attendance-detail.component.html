@@ -137,6 +137,7 @@
             </div>
 
             <button
+              (click)="openAddModal()"
               *hasPermission="[[18], sysuser]"
               class="mt-5 text-xs underline font-thin cursor-pointer"
             >
@@ -249,3 +250,5 @@
     </div>
   </div>
 </section>
+
+<app-submit-attendance (parentFun)="getLastCheckin()"></app-submit-attendance>
