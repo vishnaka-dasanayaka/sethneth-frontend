@@ -59,7 +59,7 @@ export class AttendanceReportComponent {
           });
 
           for (var item of data.users) {
-            if (item.id != 1 || true) {
+            if (item.id != 1) {
               this.user_list.push({
                 label: item.firstname + " " + item.lastname,
                 value: item.id,
@@ -113,12 +113,8 @@ export class AttendanceReportComponent {
         this.total_records = data.attendance_summary;
 
         for (var item of this.total_records) {
-          item.checkin = item.checkin
-            ? moment(item.checkin).subtract("6:30")
-            : null;
-          item.checkout = item.checkout
-            ? moment(item.checkout).subtract("6:30")
-            : null;
+          item.checkin = item.checkin ? moment(item.checkin) : null;
+          item.checkout = item.checkout ? moment(item.checkout) : null;
         }
       }
     });
