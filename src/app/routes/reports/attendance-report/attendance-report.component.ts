@@ -113,8 +113,12 @@ export class AttendanceReportComponent {
         this.total_records = data.attendance_summary;
 
         for (var item of this.total_records) {
-          item.checkin = item.checkin ? moment(item.checkin) : null;
-          item.checkout = item.checkout ? moment(item.checkout) : null;
+          item.checkin = item.checkin
+            ? moment(item.checkin).subtract("5:30")
+            : null;
+          item.checkout = item.checkout
+            ? moment(item.checkout).subtract("5:30")
+            : null;
         }
       }
     });
