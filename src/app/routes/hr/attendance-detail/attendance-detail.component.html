@@ -173,6 +173,13 @@
                 >
                   Date
                 </th>
+
+                <th
+                  scope="col"
+                  class="py-4 px-6 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
+                >
+                  Branch
+                </th>
                 <th
                   scope="col"
                   class="py-4 px-6 text-left text-xs font-bold text-gray-500 uppercase tracking-wider"
@@ -204,6 +211,14 @@
                   </div>
                   <div class="text-[10px] text-gray-400 font-medium uppercase">
                     {{ getDayName(item.checkin) }}
+                  </div>
+                </td>
+                <td class="py-4 px-6 whitespace-nowrap">
+                  <div class="text-sm font-semibold text-gray-900">
+                    <span *ngIf="item.branch"
+                      >{{ item?.branch?.code }} : {{ item?.branch?.name }}</span
+                    >
+                    <span *ngIf="!item.branch">[ Not Mentioned ]</span>
                   </div>
                 </td>
                 <td class="py-4 px-6 whitespace-nowrap">

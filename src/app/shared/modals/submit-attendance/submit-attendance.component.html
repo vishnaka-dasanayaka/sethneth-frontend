@@ -119,6 +119,33 @@
               [timeOnly]="true"
             />
           </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1 text-gray-700"
+              >Branch
+              <i class="fa-solid fa-asterisk fa-2xs" style="color: #ff0000"></i
+            ></label>
+            <p-select
+              [options]="branch_list"
+              formControlName="branch"
+              [checkmark]="true"
+              optionLabel="label"
+              optionValue="value"
+              [showClear]="true"
+              placeholder="Select a branch"
+              class="w-full"
+              [filter]="true"
+            />
+            <span
+              class="text-red-500 text-xs"
+              *ngIf="
+                valForm.controls['branch'].hasError('required') &&
+                (valForm.controls['branch'].dirty ||
+                  valForm.controls['branch'].touched)
+              "
+              >This field is required</span
+            >
+          </div>
         </div>
 
         <div class="flex justify-end space-x-2 pt-4">
