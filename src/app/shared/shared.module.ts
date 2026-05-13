@@ -57,6 +57,7 @@ import { ChangePasswordComponent } from "./modals/change-password/change-passwor
 import { NoteComponent } from "./modals/note/note.component";
 import { StockTransferModalComponent } from "./modals/stock-transfer-modal/stock-transfer-modal.component";
 import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-modal/bulk-stock-transfer-modal.component";
+import { SubmitAttendanceComponent } from "./modals/submit-attendance/submit-attendance.component";
 
 @NgModule({
   imports: [
@@ -118,6 +119,7 @@ import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-mo
     NoteComponent,
     StockTransferModalComponent,
     BulkStockTransferModalComponent,
+    SubmitAttendanceComponent,
   ],
   exports: [
     BlockUIModule,
@@ -173,6 +175,7 @@ import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-mo
     StockTransferModalComponent,
     BulkStockTransferModalComponent,
     ChartModule,
+    SubmitAttendanceComponent,
   ],
 })
 

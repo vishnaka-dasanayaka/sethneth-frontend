@@ -49,4 +49,24 @@ export class HrService {
       catchError(this.handleError),
     );
   }
+
+  getAttendanceRecordPerUserPerDay(obj: any) {
+    let APIurl = this.BaseAPIurl + "get-attendance-record-per-user-per-day";
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
+
+  sumbitAttendanceForAnother(obj: any) {
+    let APIurl = this.BaseAPIurl + "sumbit-attendance-foranother";
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
+    );
+  }
 }

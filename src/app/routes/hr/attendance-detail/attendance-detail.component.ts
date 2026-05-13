@@ -5,6 +5,7 @@ import { HrService } from "../../../core/_services/hr.service";
 import { ToastrService } from "ngx-toastr";
 import swal from "sweetalert2";
 import moment from "moment";
+import { SharedService } from "../../../core/_services/shared.service";
 
 @Component({
   selector: "app-attendance-detail",
@@ -37,6 +38,7 @@ export class AttendanceDetailComponent {
     private authservice: AuthenticationService,
     private hrService: HrService,
     private toastr: ToastrService,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit(): void {
@@ -341,5 +343,10 @@ export class AttendanceDetailComponent {
     } else {
       proceedCheckout();
     }
+  }
+
+  openAddModal() {
+    this.sharedService.setAttendanceRecordData({ navigate: true });
+    this.sharedService.openAddAttendanceRecordModal();
   }
 }

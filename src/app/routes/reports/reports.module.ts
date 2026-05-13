@@ -8,6 +8,7 @@ import { UserReportComponent } from "./user-report/user-report.component";
 import { PatientReportComponent } from "./patient-report/patient-report.component";
 import { SupplierReportComponent } from "./supplier-report/supplier-report.component";
 import { OrderReportComponent } from "./order-report/order-report.component";
+import { AttendanceReportComponent } from "./attendance-report/attendance-report.component";
 
 const routes: Routes = [
   { path: "report-summary", component: ReportsSummaryComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: "patient-report", component: PatientReportComponent },
   { path: "supplier-report", component: SupplierReportComponent },
   { path: "order-report", component: OrderReportComponent },
+  { path: "attendance-report", component: AttendanceReportComponent },
 ];
 
 @NgModule({
@@ -26,6 +28,7 @@ const routes: Routes = [
     PatientReportComponent,
     SupplierReportComponent,
     OrderReportComponent,
+    AttendanceReportComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],

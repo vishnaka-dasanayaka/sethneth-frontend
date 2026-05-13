@@ -597,4 +597,22 @@ export class SharedService {
   getBulkStockTransferData(): any {
     return this.bulk_stock_transfer_data;
   }
+
+  // Attendance
+
+  private add_attendance_record = new Subject<void>();
+  private attendance_record_data: any = undefined;
+
+  setAttendanceRecordData(data: any) {
+    this.attendance_record_data = data;
+  }
+  openAddAttendanceRecordModal() {
+    this.add_attendance_record.next();
+  }
+  getAddAttendanceRecordClickEvent(): Observable<any> {
+    return this.add_attendance_record.asObservable();
+  }
+  getAttendanceRecordData(): any {
+    return this.attendance_record_data;
+  }
 }
