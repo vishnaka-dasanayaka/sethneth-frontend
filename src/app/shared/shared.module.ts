@@ -58,6 +58,7 @@ import { NoteComponent } from "./modals/note/note.component";
 import { StockTransferModalComponent } from "./modals/stock-transfer-modal/stock-transfer-modal.component";
 import { BulkStockTransferModalComponent } from "./modals/bulk-stock-transfer-modal/bulk-stock-transfer-modal.component";
 import { SubmitAttendanceComponent } from "./modals/submit-attendance/submit-attendance.component";
+import { EditUserComponent } from "./modals/edit-user/edit-user.component";
 
 @NgModule({
   imports: [
@@ -120,6 +121,7 @@ import { SubmitAttendanceComponent } from "./modals/submit-attendance/submit-att
     StockTransferModalComponent,
     BulkStockTransferModalComponent,
     SubmitAttendanceComponent,
+    EditUserComponent,
   ],
   exports: [
     BlockUIModule,
@@ -176,6 +178,7 @@ import { SubmitAttendanceComponent } from "./modals/submit-attendance/submit-att
     BulkStockTransferModalComponent,
     ChartModule,
     SubmitAttendanceComponent,
+    EditUserComponent,
   ],
 })
 

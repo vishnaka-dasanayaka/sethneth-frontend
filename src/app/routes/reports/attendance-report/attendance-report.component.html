@@ -5,7 +5,7 @@
         [routerLink]="['/reports/report-summary']"
         routerLinkActive="router-link-active"
         class="text-blue-500 cursor-pointer"
-        >Report</span
+        >Reports</span
       >
 
       > Attendance Report
@@ -95,7 +95,7 @@
         <div class="flex justify-around text-center">
           <div>
             <p class="text-2xl font-bold text-orange-500">
-              {{ total_records.length }}
+              {{ attendance_data.length }}
             </p>
             <p class="text-md text-gray-600 mt-1">Total Attendance Records</p>
           </div>
@@ -124,7 +124,10 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
-                <tr *ngFor="let item of total_records" class="hover:bg-gray-50">
+                <tr
+                  *ngFor="let item of attendance_data"
+                  class="hover:bg-gray-50"
+                >
                   <td class="py-3 px-4 text-gray-700">
                     {{ item?.user }}
                   </td>

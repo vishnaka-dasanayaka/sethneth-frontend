@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import swal from "sweetalert2";
 import { AuthenticationService } from "../../../core/_services/authentication.service";
-import { SettingsService } from "../../../core/_services/settings.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { UserService } from "../../../core/_services/user.service";
+import { SharedService } from "../../../core/_services/shared.service";
 
 @Component({
   selector: "app-user-detail",
@@ -23,10 +23,10 @@ export class UserDetailComponent implements OnInit {
 
   constructor(
     private authservice: AuthenticationService,
-    private settingsService: SettingsService,
+    private sharedService: SharedService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +63,7 @@ export class UserDetailComponent implements OnInit {
       },
       (error) => {
         alert("API ERROR [ERRCODE:001]");
-      }
+      },
     );
   }
 
@@ -114,7 +114,7 @@ export class UserDetailComponent implements OnInit {
                     timeOut: 3000,
                     progressBar: true,
                     toastClass: "toast toast-sm",
-                  }
+                  },
                 );
                 this.generateUniqueKey();
                 this.getData(this.id);
@@ -128,9 +128,16 @@ export class UserDetailComponent implements OnInit {
             },
             (error) => {
               alert("API ERROR [ERRCODE:001]");
-            }
+            },
           );
         }
       });
+  }
+
+  openOrderEditModal() {
+    var obj = this.user;
+
+    this.sharedService.setUserData(obj);
+    this.sharedService.openEditUserModal();
   }
 }

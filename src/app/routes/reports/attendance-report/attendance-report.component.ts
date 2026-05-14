@@ -18,11 +18,11 @@ export class AttendanceReportComponent {
   sysuser: any;
   LoadUI: boolean = false;
 
-  user: any = null;
-
-  total_records: any[] = [];
+  attendance_data: any[] = [];
 
   user_list: SelectItem[] = [];
+  user: any = null;
+
   month: any = null;
 
   constructor(
@@ -84,7 +84,7 @@ export class AttendanceReportComponent {
     if (this.user == null || this.user.length == 0) {
       swal.fire({
         title: "Warning!",
-        text: "user is mandatory ",
+        text: "User is mandatory ",
         icon: "warning",
         confirmButtonColor: "#ff820d",
       });
@@ -94,7 +94,7 @@ export class AttendanceReportComponent {
     if (this.month == null) {
       swal.fire({
         title: "Warning!",
-        text: "month is mandatory ",
+        text: "Month is mandatory ",
         icon: "warning",
         confirmButtonColor: "#ff820d",
       });
@@ -109,10 +109,10 @@ export class AttendanceReportComponent {
 
     this.reportsService.generateAttendanceReport(obj).subscribe((data) => {
       if (data.status) {
-        this.total_records = [];
-        this.total_records = data.attendance_summary;
+        this.attendance_data = [];
+        this.attendance_data = data.attendance_summary;
 
-        for (var item of this.total_records) {
+        for (var item of this.attendance_data) {
           item.checkin = item.checkin
             ? moment(item.checkin).subtract("5:30")
             : null;

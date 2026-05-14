@@ -468,7 +468,7 @@ export class SharedService {
   // User
 
   private add_user = new Subject<void>();
-  private edit_user = new Subject<any>();
+  private edit_user = new Subject<void>();
   private user_data: any = undefined;
 
   setUserData(data: any) {
@@ -483,14 +483,12 @@ export class SharedService {
   getUserData(): any {
     return this.user_data;
   }
-
-  // openEditClientModal() {
-  //   this.edit_supplier.next();
-  // }
-
-  // getEditClientClickEvent(): Observable<any> {
-  //   return this.edit_supplier.asObservable();
-  // }
+  openEditUserModal() {
+    this.edit_user.next();
+  }
+  getEditUserClickEvent(): Observable<any> {
+    return this.edit_user.asObservable();
+  }
 
   // User Level
   private add_user_level = new Subject<void>();
