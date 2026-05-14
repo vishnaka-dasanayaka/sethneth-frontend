@@ -23,7 +23,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -34,7 +34,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -44,7 +44,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -55,7 +55,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -66,7 +66,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -77,7 +77,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -88,7 +88,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -99,7 +99,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -110,7 +110,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -121,7 +121,7 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
     );
   }
 
@@ -132,7 +132,18 @@ export class UserService {
       map((response) => {
         return response;
       }),
-      catchError(this.handleError)
+      catchError(this.handleError),
+    );
+  }
+
+  editUser(obj: any) {
+    let APIurl = this.BaseAPIurl + "/edit-user";
+
+    return this.http.post<any>(APIurl, obj).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError(this.handleError),
     );
   }
 }
